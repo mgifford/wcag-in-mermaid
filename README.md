@@ -6,6 +6,24 @@
 
 [![Sync Accessibility Data](https://github.com/mgifford/wcag-in-mermaid/actions/workflows/sync_accessibility.yml/badge.svg)](https://github.com/mgifford/wcag-in-mermaid/actions/workflows/sync_accessibility.yml)
 
+---
+
+> [!WARNING]
+> **🚧 Experimental — AI-generated content, not yet validated**
+>
+> Most of this site was generated with AI assistance. **All content needs to be
+> validated in real-world conditions before it is relied upon.**
+>
+> - Impacts may vary significantly depending on where and how the tool is implemented.
+> - People with experience conducting studies on accessibility impact and the cost of
+>   AI cycles should be involved in any evaluation or adoption decisions.
+> - **Please provide feedback in the
+>   [issue queue](https://github.com/mgifford/wcag-in-mermaid/issues)** if you have
+>   positive or negative results from using this tool. Include links and references so
+>   that claims can be discussed and verified.
+
+---
+
 ## Live Demo
 
 **[mgifford.github.io/wcag-in-mermaid](https://mgifford.github.io/wcag-in-mermaid)**

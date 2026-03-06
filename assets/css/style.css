@@ -1124,6 +1124,44 @@ main {
 
 /* ----- Footer ---------------------------------------------- */
 
+/* ----- Experimental notice banner -------------------------- */
+
+.experimental-notice {
+  background: #fff8e1;
+  border: 2px solid #f9a825;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 0 0 8px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #4e3900;
+}
+
+.experimental-notice strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.experimental-notice ul {
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+.experimental-notice ul li {
+  margin-bottom: 4px;
+}
+
+.experimental-notice a {
+  color: #7b4f00;
+  text-decoration: underline;
+}
+
+.experimental-notice a:hover,
+.experimental-notice a:focus {
+  color: #4e3900;
+}
+
 footer {
   text-align: center;
   padding: 20px;
@@ -1162,6 +1200,21 @@ footer {
     --color-text: #e2e8f0;
     --color-muted: #94a3b8;
     --color-primary-light: #0d2137;
+  }
+
+  .experimental-notice {
+    background: #2d2200;
+    border-color: #f9a825;
+    color: #ffe082;
+  }
+
+  .experimental-notice a {
+    color: #ffd54f;
+  }
+
+  .experimental-notice a:hover,
+  .experimental-notice a:focus {
+    color: #ffe082;
   }
 
   .tag-act  { background: #2d1b3d; color: #d8a8f0; }
