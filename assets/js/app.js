@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateRoleFilter(spineData.success_criteria);
     bindControls();
     showLoading(false);
-    switchView("cards");   // sets aria-selected and shows correct panel
+    switchView("cards", false);   // sets aria-selected and shows correct panel
     applyFilters();
     handleHashNavigation();
   } catch (err) {
@@ -188,8 +188,11 @@ function updateSummaryBar() {
 /*  View switching                                                      */
 /* ------------------------------------------------------------------ */
 
-function switchView(view) {
+function switchView(view, updateHash = true) {
   currentView = view;
+  if (updateHash) {
+    history.replaceState(null, "", "#" + view);
+  }
   document.querySelectorAll(".tab-btn").forEach(b => {
     b.setAttribute("aria-selected", String(b.dataset.view === view));
   });
@@ -789,15 +792,22 @@ function sanitiseMermaid(str) {
 /* ------------------------------------------------------------------ */
 
 function handleHashNavigation() {
-  const hash = window.location.hash.slice(1); // e.g. "2.4.11"
+  const hash = window.location.hash.slice(1); // e.g. "cards", "diagram", "2.4.11"
   if (!hash) return;
+
+  // If the hash is a known tab name, switch to that tab
+  const TAB_VIEWS = ["cards", "diagram", "table", "act"];
+  if (TAB_VIEWS.includes(hash)) {
+    switchView(hash);
+    return;
+  }
 
   // Normalise: allow both "2.4.11" and "sc-2_4_11"
   const scNum = hash.replace(/^sc-/, "").replace(/_/g, ".");
   const cardId = `sc-${scNum.replace(/\./g, "_")}`;
 
-  // If we're not on cards view, switch to it
-  if (currentView !== "cards") switchView("cards");
+  // If we're not on cards view, switch to it (don't overwrite the SC hash)
+  if (currentView !== "cards") switchView("cards", false);
 
   // Ensure the SC is visible (reset filters if needed)
   if (!filteredSC[scNum]) {
