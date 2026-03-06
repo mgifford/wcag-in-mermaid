@@ -478,6 +478,7 @@ function buildCard(num, entry) {
           ${escapeHTML(entry.title)}
         </a>
       </span>
+      <a class="sc-card-anchor" href="#sc-${escapeAttr(num.replace(/\./g, "_"))}" aria-label="Permalink to SC ${escapeAttr(num)} ${escapeAttr(entry.title)}">#</a>
       <span class="level-badge level-${escapeHTML(entry.level)}" aria-label="Level ${escapeHTML(entry.level)}">
         ${escapeHTML(entry.level)}
       </span>
@@ -1325,7 +1326,8 @@ function handleHashNavigation() {
   requestAnimationFrame(() => {
     const el = document.getElementById(cardId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      el.scrollIntoView({ behavior: prefersReducedMotion ? "instant" : "smooth", block: "center" });
       el.classList.remove("highlighted");
       void el.offsetWidth; // trigger reflow
       el.classList.add("highlighted");
