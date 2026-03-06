@@ -564,7 +564,7 @@ def _build_principle_diagram(sc_dict: dict, axe_version: str = AXE_VERSION_FALLB
             node_lines.append(f'    A_alfa_{safe}["{alfa_label}"]:::alfa --> {sc_node}')
             click_lines.append(
                 f'    click A_alfa_{safe} href '
-                '"https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank'
+                f'"https://alfa.siteimprove.com/rules/{alfa_ids[0].lower()}" _blank'
             )
 
         # --- Role nodes (point OUT of the SC) ---
