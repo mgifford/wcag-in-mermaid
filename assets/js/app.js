@@ -27,6 +27,12 @@ const DATA_URL = "data/master_spine.json";
 const ARRM_IDS_IN_NODE = 5;
 
 /**
+ * Maximum number of Trusted Tester step IDs to show inline in a single Mermaid
+ * diagram node.  Must match _TT_IDS_IN_NODE in sync_data.py.
+ */
+const TT_IDS_IN_NODE = 4;
+
+/**
  * Maps ARRM role / ownership names to their W3C WAI role pages.
  * Used to render linked role names in the Cards and Table views.
  *
@@ -132,7 +138,8 @@ function applyFilters() {
     if (query) {
       const arrmTaskText = (entry.manual?.arrm_tasks ?? [])
         .map(t => `${t.id} ${t.task}`).join(" ");
-      const haystack = `${num} ${entry.title} ${(entry.manual?.roles ?? []).join(" ")} ${arrmTaskText}`.toLowerCase();
+      const ttStepText = (entry.manual?.tt_steps ?? []).join(" ");
+      const haystack = `${num} ${entry.title} ${(entry.manual?.roles ?? []).join(" ")} ${arrmTaskText} ${ttStepText}`.toLowerCase();
       if (!haystack.includes(query)) continue;
     }
     filteredSC[num] = entry;
@@ -286,9 +293,17 @@ function buildCard(num, entry) {
              </ul>`
         }
         ${steps.length > 0
-          ? `<ul class="step-list" aria-label="Trusted Tester steps">
-              ${steps.map(s => `<li>${escapeHTML(s)}</li>`).join("")}
-             </ul>`
+          ? `<div class="tt-section">
+              <div class="tt-sub-header">
+                🔬 <a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" target="_blank" rel="noopener noreferrer" title="W3C WAI: Trusted Tester implementation overview">Trusted Tester v5</a>
+              </div>
+              <ul class="step-list" aria-label="Trusted Tester test steps">
+                ${steps.map(s => {
+                  const stepId = s.split(" - ")[0];
+                  return `<li><a class="tt-step-link" href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer" title="Trusted Tester step ${escapeAttr(stepId)}">${escapeHTML(s)}</a></li>`;
+                }).join("")}
+              </ul>
+            </div>`
           : ""
         }
         ${arrmTasks.length > 0
@@ -347,6 +362,13 @@ function renderTable() {
       `<a href="${escapeAttr(t.category_url)}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(t.task)}">${escapeHTML(t.id)}</a>`
     );
 
+    // Trusted Tester step IDs, each linked to section508.gov
+    const ttSteps = e.manual?.tt_steps ?? [];
+    const ttStepLinks = ttSteps.map(s => {
+      const stepId = s.split(" - ")[0];
+      return `<a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
+    });
+
     return `
       <tr>
         <td>${escapeHTML(num)}</td>
@@ -355,6 +377,7 @@ function renderTable() {
         <td>${escapeHTML(e.principle ?? "")}</td>
         <td>${allRuleLinks.length ? allRuleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${roleLinks.length ? roleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
+        <td>${ttStepLinks.length ? ttStepLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${arrmTaskLinks.length ? arrmTaskLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${automationCount(e)}/3</td>
       </tr>`;
@@ -370,6 +393,7 @@ function renderTable() {
           <th scope="col">Principle</th>
           <th scope="col">Automated Rules</th>
           <th scope="col">Roles</th>
+          <th scope="col"><a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" target="_blank" rel="noopener noreferrer" style="color:#fff">Trusted Tester</a></th>
           <th scope="col">ARRM Tasks</th>
           <th scope="col">Coverage</th>
         </tr>
@@ -402,6 +426,7 @@ function renderDiagram() {
   lines.push("  classDef auto fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000");
   lines.push("  classDef manual fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000");
   lines.push("  classDef arrm fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#000");
+  lines.push("  classDef tt fill:#e0f2f1,stroke:#00695c,stroke-width:2px,color:#000");
   lines.push("");
 
   const prevId = [];
@@ -417,24 +442,28 @@ function renderDiagram() {
       ...(a.alfa ?? []).map(i => sanitiseMermaid(i)),
     ];
     const manualItems = [
-      ...(m.roles    ?? []).map(r => sanitiseMermaid(r)),
-      ...(m.tt_steps ?? []).map(s => sanitiseMermaid(s.split(" - ")[0])),
+      ...(m.roles ?? []).map(r => sanitiseMermaid(r)),
     ];
     const arrmTaskIds = (m.arrm_tasks ?? []).map(t => t.id);
+    const ttStepIds   = (m.tt_steps  ?? []).map(s => s.split(" - ")[0]);
 
     const autoLabel  = autoItems.length
       ? `🤖 ${autoItems.slice(0, 4).join(", ")}${autoItems.length > 4 ? " …" : ""}`
       : "🤖 No automated rules";
     const manualLabel = manualItems.length
       ? `👤 ${manualItems.slice(0, 3).join(", ")}${manualItems.length > 3 ? " …" : ""}`
-      : "👤 No manual steps";
+      : "👤 No roles mapped";
     const arrmLabel = arrmTaskIds.length
       ? `🎯 ${arrmTaskIds.slice(0, ARRM_IDS_IN_NODE).join(", ")}${arrmTaskIds.length > ARRM_IDS_IN_NODE ? ` +${arrmTaskIds.length - ARRM_IDS_IN_NODE} more` : ""}`
+      : null;
+    const ttLabel = ttStepIds.length
+      ? `🔬 TT: ${ttStepIds.slice(0, TT_IDS_IN_NODE).join(", ")}${ttStepIds.length > TT_IDS_IN_NODE ? ` +${ttStepIds.length - TT_IDS_IN_NODE} more` : ""}`
       : null;
 
     const autoId  = `AUTO_${safeNum}`;
     const manId   = `MAN_${safeNum}`;
     const arrmId  = `ARRM_${safeNum}`;
+    const ttId    = `TT_${safeNum}`;
     const autoEsc  = autoLabel.replace(/"/g, "'");
     const manEsc   = manualLabel.replace(/"/g, "'");
     const scTitle  = `${num}: ${entry.title}`.replace(/"/g, "'");
@@ -450,6 +479,11 @@ function renderDiagram() {
       const arrmEsc = arrmLabel.replace(/"/g, "'");
       lines.push(`    ${arrmId}["${arrmEsc}"]:::arrm`);
       lines.push(`    ${scId} --- ${arrmId}`);
+    }
+    if (ttLabel) {
+      const ttEsc = ttLabel.replace(/"/g, "'");
+      lines.push(`    ${ttId}["${ttEsc}"]:::tt`);
+      lines.push(`    ${scId} --- ${ttId}`);
     }
     lines.push("  end");
     lines.push("");
@@ -468,6 +502,12 @@ function renderDiagram() {
     if (arrmLabel) {
       const arrmTaskUrl = (m.arrm_tasks[0]?.category_url) ?? "https://www.w3.org/WAI/planning/arrm/tasks/";
       lines.push(`  click ${arrmId} href "${arrmTaskUrl}" _blank`);
+      lines.push("");
+    }
+
+    // TT click → W3C WAI Trusted Tester implementations page
+    if (ttLabel) {
+      lines.push(`  click ${ttId} href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank`);
       lines.push("");
     }
 
