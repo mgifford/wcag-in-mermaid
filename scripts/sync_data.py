@@ -29,6 +29,34 @@ ACT_RULES_URL = (
 )
 
 # ---------------------------------------------------------------------------
+# ARRM URL mappings
+# ---------------------------------------------------------------------------
+ARRM_BASE_URL = "https://www.w3.org/WAI/planning/arrm"
+
+# Maps the task ID prefix (e.g. "IMG") to the anchor on the ARRM tasks page.
+# Headings come from https://www.w3.org/WAI/planning/arrm/tasks/
+ARRM_TASK_CATEGORY_URLS: dict[str, str] = {
+    "IMG": f"{ARRM_BASE_URL}/tasks/#images-and-graphs",
+    "SEM": f"{ARRM_BASE_URL}/tasks/#semantic-structure",
+    "INP": f"{ARRM_BASE_URL}/tasks/#input-modalities",
+    "FRM": f"{ARRM_BASE_URL}/tasks/#form-interactions",
+    "CSS": f"{ARRM_BASE_URL}/tasks/#css-and-presentation",
+    "NAV": f"{ARRM_BASE_URL}/tasks/#navigation",
+    "TAB": f"{ARRM_BASE_URL}/tasks/#data-tables",
+    "ANM": f"{ARRM_BASE_URL}/tasks/#animation-and-movement",
+    "SCT": f"{ARRM_BASE_URL}/tasks/#static-content",
+    "DYN": f"{ARRM_BASE_URL}/tasks/#dynamic-interactions",
+}
+
+# Maps the Primary Ownership role name to the ARRM role-specific page.
+ARRM_ROLE_URLS: dict[str, str] = {
+    "Content Authoring":          f"{ARRM_BASE_URL}/content-author/",
+    "Front-End Development":      f"{ARRM_BASE_URL}/front-end/",
+    "User Experience (UX) Design": f"{ARRM_BASE_URL}/user-experience/",
+    "Visual Design":              f"{ARRM_BASE_URL}/visual-designer/",
+}
+
+# ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -143,19 +171,34 @@ def fetch_arrm_roles() -> dict[str, list[str]]:
     return sc_to_roles
 
 
-def fetch_arrm_tasks() -> dict[str, list[str]]:
+def fetch_arrm_tasks() -> dict[str, list[dict]]:
     """
-    Download arrm-all-tasks.csv and return:
-      { "X.Y.Z": ["task description", ...], ... }
+    Download arrm-all-tasks.csv and return a mapping of SC number to a list of
+    structured task objects:
+      {
+        "X.Y.Z": [
+          {
+            "id":                  "IMG-001",
+            "task":                "Informative alternate text …",
+            "primary_ownership":   "Content Authoring",
+            "secondary_ownership": "User Experience (UX) Design",
+            "category_url":        "https://…/tasks/#images-and-graphs",
+            "role_url":            "https://…/content-author/"
+          },
+          ...
+        ],
+        ...
+      }
     """
-    sc_to_tasks: dict[str, list[str]] = {}
+    sc_to_tasks: dict[str, list[dict]] = {}
     raw = fetch_text(ARRM_ALL_TASKS_URL)
     if raw is None:
         return sc_to_tasks
     reader = csv.DictReader(StringIO(raw))
     for row in reader:
         sc_raw = (
-            row.get("sc_num")
+            row.get("WCAG SC")
+            or row.get("sc_num")
             or row.get("scNum")
             or row.get("sc-num")
             or row.get("sc")
@@ -165,15 +208,35 @@ def fetch_arrm_tasks() -> dict[str, list[str]]:
         sc = normalise_sc(sc_raw)
         if not sc:
             continue
-        task = (
-            row.get("task")
-            or row.get("Task")
-            or row.get("description")
-            or row.get("taskDescription")
-            or ""
-        ).strip()
-        if task and task not in sc_to_tasks.get(sc, []):
-            sc_to_tasks.setdefault(sc, []).append(task)
+
+        task_id = (row.get("ID") or "").strip()
+        task_desc = (row.get("Task") or row.get("task") or row.get("description") or "").strip()
+        if not task_id or not task_desc:
+            continue
+
+        primary = (row.get("Primary Ownership") or row.get("primary_ownership") or "").strip()
+        secondary = (row.get("Secondary Ownership") or row.get("secondary_ownership") or "").strip()
+        if secondary.lower() == "none":
+            secondary = ""
+
+        # Derive URLs from the prefix (e.g. "IMG" from "IMG-001")
+        prefix = task_id.split("-")[0] if "-" in task_id else ""
+        category_url = ARRM_TASK_CATEGORY_URLS.get(prefix, f"{ARRM_BASE_URL}/tasks/")
+        role_url = ARRM_ROLE_URLS.get(primary, "")
+
+        task_obj = {
+            "id":                  task_id,
+            "task":                task_desc,
+            "primary_ownership":   primary,
+            "secondary_ownership": secondary,
+            "category_url":        category_url,
+            "role_url":            role_url,
+        }
+
+        existing_ids = {t["id"] for t in sc_to_tasks.get(sc, [])}
+        if task_id not in existing_ids:
+            sc_to_tasks.setdefault(sc, []).append(task_obj)
+
     return sc_to_tasks
 
 
@@ -197,14 +260,16 @@ def merge_into_spine(spine: dict, act_map: dict, roles_map: dict, tasks_map: dic
             merged_roles = list(dict.fromkeys(entry["manual"]["roles"] + live_roles))
             entry["manual"]["roles"] = merged_roles
 
-        # --- ARRM tasks (map to tt_steps if they look like TT IDs) ---
+        # --- ARRM structured tasks ---
+        # Stored separately from tt_steps (Trusted Tester procedures).
         live_tasks = tasks_map.get(sc_num, [])
         if live_tasks:
-            existing = set(entry["manual"]["tt_steps"])
+            existing = entry["manual"].setdefault("arrm_tasks", [])
+            existing_ids = {t["id"] for t in existing}
             for t in live_tasks:
-                if t not in existing:
-                    entry["manual"]["tt_steps"].append(t)
-                    existing.add(t)
+                if t["id"] not in existing_ids:
+                    existing.append(t)
+                    existing_ids.add(t["id"])
 
 
 # ---------------------------------------------------------------------------

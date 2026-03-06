@@ -20,6 +20,22 @@
 
 const DATA_URL = "data/master_spine.json";
 
+/**
+ * Maps ARRM role / ownership names to their W3C WAI role pages.
+ * Used to render linked role names in the Cards and Table views.
+ *
+ * Both short ("UX Design") and full ("User Experience (UX) Design") variants
+ * are included because arrm-wcag-sc.csv uses the short form while
+ * arrm-all-tasks.csv uses the full form.
+ */
+const ARRM_ROLE_URLS = {
+  "Content Authoring":           "https://www.w3.org/WAI/planning/arrm/content-author/",
+  "Front-End Development":       "https://www.w3.org/WAI/planning/arrm/front-end/",
+  "UX Design":                   "https://www.w3.org/WAI/planning/arrm/user-experience/",
+  "User Experience (UX) Design": "https://www.w3.org/WAI/planning/arrm/user-experience/",
+  "Visual Design":               "https://www.w3.org/WAI/planning/arrm/visual-designer/",
+};
+
 /** @type {{ meta: object, success_criteria: Record<string, SCEntry> } | null} */
 let spineData = null;
 
@@ -184,13 +200,36 @@ function buildCard(num, entry) {
 
   const a = entry.automation ?? {};
   const m = entry.manual ?? {};
-  const actIds  = a.act  ?? [];
-  const axeIds  = a.axe  ?? [];
-  const alfaIds = a.alfa ?? [];
-  const roles   = m.roles    ?? [];
-  const steps   = m.tt_steps ?? [];
+  const actIds    = a.act        ?? [];
+  const axeIds    = a.axe        ?? [];
+  const alfaIds   = a.alfa       ?? [];
+  const roles     = m.roles      ?? [];
+  const steps     = m.tt_steps   ?? [];
+  const arrmTasks = m.arrm_tasks ?? [];
 
   const wcagUrl = entry.url ?? `https://www.w3.org/WAI/WCAG22/Understanding/`;
+
+  // Build role list items, linking to the ARRM role page when available.
+  const roleItems = roles.map(r => {
+    const url = ARRM_ROLE_URLS[r];
+    return url
+      ? `<li><a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(r)}</a></li>`
+      : `<li>${escapeHTML(r)}</li>`;
+  }).join("");
+
+  // Build ARRM task list items.
+  // Each task ID links to the task-category section; a secondary link goes to
+  // the primary ownership role page.
+  const arrmTaskItems = arrmTasks.map(t => {
+    const idLink = `<a class="arrm-task-id" href="${escapeAttr(t.category_url)}" target="_blank" rel="noopener noreferrer" title="View ${escapeAttr(t.id)} in ARRM task list">${escapeHTML(t.id)}</a>`;
+    const roleLink = t.role_url
+      ? `<a class="arrm-task-role" href="${escapeAttr(t.role_url)}" target="_blank" rel="noopener noreferrer" title="View ${escapeAttr(t.primary_ownership)} responsibilities">${escapeHTML(t.primary_ownership)}</a>`
+      : `<span class="arrm-task-role">${escapeHTML(t.primary_ownership)}</span>`;
+    return `<li class="arrm-task-item">
+      <span class="arrm-task-header">${idLink} — ${roleLink}</span>
+      <span class="arrm-task-desc">${escapeHTML(t.task)}</span>
+    </li>`;
+  }).join("");
 
   card.innerHTML = `
     <header class="sc-card-header">
@@ -235,13 +274,24 @@ function buildCard(num, entry) {
         ${roles.length === 0
           ? `<p class="no-data">No roles mapped</p>`
           : `<ul class="role-list" aria-label="Responsible roles">
-              ${roles.map(r => `<li>${escapeHTML(r)}</li>`).join("")}
+              ${roleItems}
              </ul>`
         }
         ${steps.length > 0
           ? `<ul class="step-list" aria-label="Trusted Tester steps">
               ${steps.map(s => `<li>${escapeHTML(s)}</li>`).join("")}
              </ul>`
+          : ""
+        }
+        ${arrmTasks.length > 0
+          ? `<details class="arrm-tasks-details">
+              <summary class="arrm-tasks-summary">
+                ARRM Tasks (<a href="https://www.w3.org/WAI/planning/arrm/tasks/" target="_blank" rel="noopener noreferrer">${arrmTasks.length} task${arrmTasks.length !== 1 ? "s" : ""}</a>)
+              </summary>
+              <ul class="arrm-task-list" aria-label="ARRM tasks for SC ${escapeHTML(num)}">
+                ${arrmTaskItems}
+              </ul>
+            </details>`
           : ""
         }
       </div>
@@ -274,6 +324,21 @@ function renderTable() {
       `<a href="https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" target="_blank" rel="noopener noreferrer" title="Alfa rule ${escapeHTML(i)}">${escapeHTML(i)}</a>`
     );
     const allRuleLinks = [...actLinks, ...axeLinks, ...alfaLinks];
+
+    // Roles with optional links to ARRM role pages
+    const roleLinks = (e.manual?.roles ?? []).map(r => {
+      const url = ARRM_ROLE_URLS[r];
+      return url
+        ? `<a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(r)}</a>`
+        : escapeHTML(r);
+    });
+
+    // ARRM task IDs with links to the task category section
+    const arrmTasks = e.manual?.arrm_tasks ?? [];
+    const arrmTaskLinks = arrmTasks.map(t =>
+      `<a href="${escapeAttr(t.category_url)}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(t.task)}">${escapeHTML(t.id)}</a>`
+    );
+
     return `
       <tr>
         <td>${escapeHTML(num)}</td>
@@ -281,7 +346,8 @@ function renderTable() {
         <td><span class="level-badge level-${escapeHTML(e.level)}">${escapeHTML(e.level)}</span></td>
         <td>${escapeHTML(e.principle ?? "")}</td>
         <td>${allRuleLinks.length ? allRuleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
-        <td>${escapeHTML((e.manual?.roles ?? []).join(", ") || "—")}</td>
+        <td>${roleLinks.length ? roleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
+        <td>${arrmTaskLinks.length ? arrmTaskLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${automationCount(e)}/3</td>
       </tr>`;
   }).join("");
@@ -296,6 +362,7 @@ function renderTable() {
           <th scope="col">Principle</th>
           <th scope="col">Automated Rules</th>
           <th scope="col">Roles</th>
+          <th scope="col">ARRM Tasks</th>
           <th scope="col">Coverage</th>
         </tr>
       </thead>

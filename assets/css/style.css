@@ -333,6 +333,86 @@ main {
   margin-top: 3px;
 }
 
+/* ----- ARRM Tasks (collapsible details) -------------------- */
+
+.arrm-tasks-details {
+  margin-top: 8px;
+}
+
+.arrm-tasks-summary {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  color: var(--color-manual);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+}
+
+.arrm-tasks-summary::before {
+  content: "▶";
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.6rem;
+}
+
+.arrm-tasks-details[open] > .arrm-tasks-summary::before {
+  transform: rotate(90deg);
+}
+
+.arrm-tasks-summary::-webkit-details-marker { display: none; }
+.arrm-tasks-summary::marker { display: none; }
+
+.arrm-task-list {
+  list-style: none;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.arrm-task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 6px;
+  background: var(--color-bg);
+  border-left: 2px solid var(--color-manual);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.78rem;
+}
+
+.arrm-task-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.arrm-task-id {
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--color-manual);
+  text-decoration: none;
+}
+
+.arrm-task-id:hover { text-decoration: underline; }
+
+.arrm-task-role {
+  font-size: 0.72rem;
+  color: var(--color-primary);
+}
+
+.arrm-task-desc {
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
 .no-data {
   font-size: 0.8rem;
   color: var(--color-muted);
@@ -496,6 +576,8 @@ footer {
   .tag-act  { background: #2d1b3d; color: #d8a8f0; }
   .tag-axe  { background: #0d2137; color: #90caf9; }
   .tag-alfa { background: #0d2a0d; color: #81c784; }
+
+  .arrm-task-item { background: #0f1b2d; }
 
   #sc-table thead th { background: #0d47a1; }
   #sc-table tbody tr:hover { background: #0d2137; }
