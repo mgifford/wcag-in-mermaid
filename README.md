@@ -50,19 +50,29 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 
 ```
 wcag-in-mermaid/
-├── index.html                     # GitHub Pages entry point
+├── index.html                          # GitHub Pages entry point
 ├── assets/
-│   ├── css/style.css              # Dashboard styles
-│   └── js/app.js                  # Frontend logic (filtering, Mermaid, routing)
+│   ├── css/style.css                   # Dashboard styles
+│   └── js/app.js                       # Frontend logic (filtering, Mermaid, routing)
 ├── data/
-│   └── master_spine.json          # Merged WCAG 2.2 data (auto-updated daily)
+│   └── master_spine.json               # Merged WCAG 2.2 data (auto-updated daily)
 ├── scripts/
-│   └── sync_data.py               # Python data orchestrator
+│   └── sync_data.py                    # Python data orchestrator
+├── wcag-sc-roles-diagram.md            # Index linking to per-principle diagrams
+├── wcag-perceivable-diagram.md         # Principle 1 – Perceivable (1.x.x)
+├── wcag-operable-diagram.md            # Principle 2 – Operable (2.x.x)
+├── wcag-understandable-diagram.md      # Principle 3 – Understandable (3.x.x)
+├── wcag-robust-diagram.md              # Principle 4 – Robust (4.x.x)
 ├── .github/
 │   └── workflows/
-│       └── sync_accessibility.yml # Daily sync + GitHub Pages deploy
+│       └── sync_accessibility.yml      # Daily sync + GitHub Pages deploy
 └── requirements.txt
 ```
+
+> **Note on diagram splitting:** GitHub enforces a maximum text size for Mermaid
+> diagrams. To stay within that limit, the diagrams are split one file per WCAG
+> principle (Perceivable / Operable / Understandable / Robust). The overview file
+> [`wcag-sc-roles-diagram.md`](wcag-sc-roles-diagram.md) links to each.
 
 ---
 

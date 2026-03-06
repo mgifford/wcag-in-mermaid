@@ -83,6 +83,21 @@ SEED_FILE = DATA_DIR / "master_spine.json"
 OUTPUT_FILE = DATA_DIR / "master_spine.json"
 MERMAID_FILE = REPO_ROOT / "wcag-sc-roles-diagram.md"
 
+# Per-principle diagram files (split to stay within GitHub's Mermaid size limit)
+MERMAID_PRINCIPLE_FILES: dict[str, Path] = {
+    "1": REPO_ROOT / "wcag-perceivable-diagram.md",
+    "2": REPO_ROOT / "wcag-operable-diagram.md",
+    "3": REPO_ROOT / "wcag-understandable-diagram.md",
+    "4": REPO_ROOT / "wcag-robust-diagram.md",
+}
+
+PRINCIPLE_NAMES: dict[str, str] = {
+    "1": "Perceivable",
+    "2": "Operable",
+    "3": "Understandable",
+    "4": "Robust",
+}
+
 
 # ---------------------------------------------------------------------------
 # Utilities
@@ -318,47 +333,37 @@ _ARRM_IDS_IN_NODE = 5
 _TT_IDS_IN_NODE = 4
 
 
-def generate_mermaid_md(spine: dict) -> None:
+_LEGEND = (
+    "**Legend**\n"
+    "\n"
+    "| Colour | Meaning |\n"
+    "|--------|---------|\n"
+    "| 🔵 Blue | Success Criterion |\n"
+    "| 🟠 Orange | Responsible Role |\n"
+    "| 🟣 Purple | ACT Automated Rules |\n"
+    "| 🟡 Yellow | AXE Automated Rules |\n"
+    "| 🩷 Pink | Alfa Automated Rules |\n"
+    "| 🟦 Indigo | ARRM Task IDs |\n"
+    "| 🟩 Teal | Trusted Tester v5 |\n"
+)
+
+_DIAGRAM_INTRO = (
+    "SC nodes form a **vertical spine** running top to bottom in the centre.\n"
+    "Automated testing tools (ACT, AXE, Alfa) branch off to the **left** of each SC.\n"
+    "Responsible roles branch off to the **right** of each SC.\n"
+    "ARRM task IDs and Trusted Tester steps branch off from each SC node.\n"
+    "(`graph LR` is used so that root SC nodes stack vertically, not horizontally.)\n"
+)
+
+
+def _build_principle_diagram(sc_dict: dict) -> str:
     """
-    Regenerate wcag-sc-roles-diagram.md from the in-memory spine so that
-    every SC node is accompanied by an ARRM-task node listing the mapped
-    task IDs (e.g. IMG-001, IMG-002 …).
+    Build the Mermaid ``graph LR`` block for the given subset of SCs.
 
-    Layout
-    ------
-    ::graph LR::
-      AUTO  -->  SC  -->  ROLE(s)
-                  |
-                 ARRM task-IDs node  (new – indigo)
-
-    All ``click`` directives are collected and written at the end of the
-    diagram block so the node definitions stay readable.
+    Returns the full diagram as a string (including the fenced code block).
+    All ``click`` directives are appended after the node definitions so the
+    node declarations stay readable.
     """
-    sc_dict = spine.get("success_criteria", {})
-
-    header = (
-        "# WCAG 2.2 Success Criteria – Roles & Testing\n"
-        "\n"
-        "SC nodes form a **vertical spine** running top to bottom in the centre.\n"
-        "Automated testing tools (ACT, AXE, Alfa) branch off to the **left** of each SC.\n"
-        "Responsible roles branch off to the **right** of each SC.\n"
-        "ARRM task IDs and Trusted Tester steps branch off from each SC node.\n"
-        "(`graph LR` is used so that root SC nodes stack vertically, not horizontally.)\n"
-        "\n"
-        "**Legend**\n"
-        "\n"
-        "| Colour | Meaning |\n"
-        "|--------|---------|\n"
-        "| 🔵 Blue | Success Criterion |\n"
-        "| 🟠 Orange | Responsible Role |\n"
-        "| 🟣 Purple | ACT Automated Rules |\n"
-        "| 🟡 Yellow | AXE Automated Rules |\n"
-        "| 🩷 Pink | Alfa Automated Rules |\n"
-        "| 🟦 Indigo | ARRM Task IDs |\n"
-        "| 🟩 Teal | Trusted Tester v5 |\n"
-        "\n"
-    )
-
     node_lines: list[str] = []
     click_lines: list[str] = []
 
@@ -475,12 +480,80 @@ def generate_mermaid_md(spine: dict) -> None:
 
         node_lines.append("")
 
-    # Combine
     diagram_lines = node_lines + click_lines + ["```"]
+    return "\n".join(diagram_lines) + "\n"
 
-    content = header + "\n".join(diagram_lines) + "\n"
-    MERMAID_FILE.write_text(content, encoding="utf-8")
-    print(f"  → Wrote {MERMAID_FILE} ({len(sc_dict)} SCs)")
+
+def generate_mermaid_md(spine: dict) -> None:
+    """
+    Regenerate the per-principle Mermaid diagram files from the in-memory spine.
+
+    GitHub enforces a maximum diagram text size, so a single diagram covering
+    all 86 WCAG 2.2 SCs exceeds that limit.  Instead we generate one file per
+    WCAG principle (Perceivable / Operable / Understandable / Robust) plus an
+    overview index (wcag-sc-roles-diagram.md) that links to each principle file.
+
+    Layout (per diagram)
+    --------------------
+    graph LR
+      AUTO  -->  SC  -->  ROLE(s)
+                  |
+                 ARRM task-IDs node  (indigo)
+                  |
+                 TT steps node       (teal)
+
+    All ``click`` directives are collected and written at the end of the
+    diagram block so the node definitions stay readable.
+    """
+    sc_dict = spine.get("success_criteria", {})
+
+    # --- Write one diagram file per WCAG principle ---
+    for prefix, out_path in MERMAID_PRINCIPLE_FILES.items():
+        principle_name = PRINCIPLE_NAMES[prefix]
+        principle_scs = {
+            num: entry
+            for num, entry in sc_dict.items()
+            if num.startswith(f"{prefix}.")
+        }
+
+        header = (
+            f"# WCAG 2.2 Principle {prefix}: {principle_name} – Roles & Testing\n"
+            "\n"
+            f"Success Criteria {prefix}.x.x ({len(principle_scs)} SCs).\n"
+            "\n"
+        ) + _DIAGRAM_INTRO + "\n" + _LEGEND + "\n"
+
+        content = header + _build_principle_diagram(principle_scs)
+        out_path.write_text(content, encoding="utf-8")
+        print(f"  → Wrote {out_path} ({len(principle_scs)} SCs, {len(content)} chars)")
+
+    # --- Write the overview index ---
+    index_lines = [
+        "# WCAG 2.2 Success Criteria – Roles & Testing",
+        "",
+        "The full diagram has been split into four files by WCAG principle to stay",
+        "within GitHub's maximum Mermaid diagram size.",
+        "",
+        "| Principle | File | SCs |",
+        "|-----------|------|-----|",
+    ]
+    for prefix, out_path in MERMAID_PRINCIPLE_FILES.items():
+        principle_name = PRINCIPLE_NAMES[prefix]
+        principle_scs = [num for num in sc_dict if num.startswith(f"{prefix}.")]
+        index_lines.append(
+            f"| {prefix}. {principle_name} | [{out_path.name}]({out_path.name}) | {len(principle_scs)} |"
+        )
+
+    index_lines += [
+        "",
+        "---",
+        "",
+        _DIAGRAM_INTRO,
+        _LEGEND,
+    ]
+
+    MERMAID_FILE.write_text("\n".join(index_lines) + "\n", encoding="utf-8")
+    print(f"  → Wrote {MERMAID_FILE} (index, {len(sc_dict)} total SCs)")
 
 
 # ---------------------------------------------------------------------------
