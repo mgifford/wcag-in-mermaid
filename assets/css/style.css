@@ -568,6 +568,226 @@ main {
   100% { outline-color: transparent; }
 }
 
+/* ----- ACT Rules view -------------------------------------- */
+
+#act-view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.act-intro {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  box-shadow: var(--shadow);
+}
+
+.act-intro p + p {
+  margin-top: 6px;
+}
+
+.act-intro code {
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-size: 0.85em;
+  background: var(--color-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.act-section-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.act-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.act-rule-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.act-rule-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #f3e5f5;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.act-rule-id {
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #6a1b9a;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.act-rule-id:hover {
+  text-decoration: underline;
+}
+
+.act-rule-engines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.act-engine-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.act-engine-badge-axe  { background: var(--color-AA-bg); color: var(--color-AA); }
+.act-engine-badge-alfa { background: var(--color-A-bg);  color: var(--color-A);  }
+.act-engine-badge-ea   { background: #fff3e0; color: #7a2b00; }
+.act-engine-badge-qw   { background: var(--color-A-bg); color: var(--color-A); }
+.act-engine-badge-none { background: var(--color-bg); color: var(--color-muted); border: 1px solid var(--color-border); }
+
+.act-rule-body {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.act-sc-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.act-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-muted);
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.act-sc-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.act-sc-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1px solid #90caf9;
+  text-decoration: none;
+}
+
+.act-sc-badge:hover {
+  background: #c5e2fa;
+  text-decoration: underline;
+}
+
+.act-impl-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 10px;
+  align-items: start;
+  font-size: 0.82rem;
+}
+
+.act-engine {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.act-engine-axe  { color: var(--color-AA); }
+.act-engine-alfa { color: var(--color-A); }
+.act-engine-ea   { color: #7a2b00; }
+.act-engine-qw   { color: var(--color-A); }
+
+.act-impl-list dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.act-no-impl {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Engine-specific section */
+
+.act-engine-specific {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+
+.act-engine-specific-note {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: 12px;
+}
+
+.act-engine-specific-note code {
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-size: 0.85em;
+  background: var(--color-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* Tag styles for Equal Access and QualWeb */
+
+.tag-ea { background: #fff3e0; color: #7a2b00; border: 1px solid #ffb74d; }
+.tag-qw { background: var(--color-A-bg); color: var(--color-A); border: 1px solid #a5d6a7; }
+
+/* Dark mode overrides for ACT view */
+
+@media (prefers-color-scheme: dark) {
+  .act-rule-header { background: #2d1b3d; }
+  .act-rule-id { color: #d8a8f0; }
+  .act-engine-badge-axe  { background: #0d2137; color: #90caf9; }
+  .act-engine-badge-alfa { background: #0d2a0d; color: #81c784; }
+  .act-engine-badge-ea   { background: #1a1000; color: #ffb74d; }
+  .act-engine-badge-qw   { background: #001a00; color: #66bb6a; }
+  .act-sc-badge { background: #0d2137; color: #90caf9; border-color: #1e3a5f; }
+  .act-sc-badge:hover { background: #1e3a5f; }
+  .tag-ea { background: #1a1000; color: #ffb74d; border-color: #bf8a00; }
+  .tag-qw { background: #001a00; color: #66bb6a; border-color: #1b5e20; }
+}
+
 /* ----- Footer ---------------------------------------------- */
 
 footer {

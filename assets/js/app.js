@@ -196,12 +196,14 @@ function switchView(view) {
   document.getElementById("diagram-view").hidden = view !== "diagram";
   document.getElementById("cards-view").hidden   = view !== "cards";
   document.getElementById("table-view").hidden   = view !== "table";
+  document.getElementById("act-view").hidden     = view !== "act";
   renderCurrentView();
 }
 
 function renderCurrentView() {
   if (currentView === "diagram") renderDiagram();
   else if (currentView === "cards") renderCards();
+  else if (currentView === "act") renderActRules();
   else renderTable();
 }
 
@@ -422,8 +424,221 @@ function renderTable() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Mermaid diagram view                                                */
+/*  ACT Rules view                                                      */
 /* ------------------------------------------------------------------ */
+
+/**
+ * ACT Rules view — shows W3C ACT rules found in the currently filtered set of
+ * Success Criteria, grouped by ACT rule ID.
+ *
+ * For each ACT rule the card shows:
+ *   • Link to the W3C ACT rule page
+ *   • Which WCAG SCs the rule addresses
+ *   • Which engine rules implement it (axe-core, Alfa, Equal Access, QualWeb)
+ *     when ``meta.act_implementations`` data is available
+ *
+ * Below the ACT rule cards a second section lists any engine-specific rules
+ * that have not been mapped to an ACT rule, grouped by engine.
+ *
+ * When no ACT rules are found in the filtered set an appropriate empty-state
+ * message is shown.
+ */
+function renderActRules() {
+  const container = document.getElementById("act-view");
+  const entries = Object.entries(filteredSC);
+
+  if (entries.length === 0) {
+    container.innerHTML = emptyStateHTML("No Success Criteria match your filters.");
+    return;
+  }
+
+  // --- Build ACT rule → SC mapping from filtered SCs ---
+  // actRuleToScs: { actRuleId → [scNum, ...] }
+  const actRuleToScs = {};
+  for (const [num, entry] of entries) {
+    for (const actId of (entry.automation?.act ?? [])) {
+      actRuleToScs[actId] = actRuleToScs[actId] ?? [];
+      if (!actRuleToScs[actId].includes(num)) actRuleToScs[actId].push(num);
+    }
+  }
+
+  // --- Implementation data from meta (may be absent) ---
+  const actImpls = spineData?.meta?.act_implementations ?? {};
+
+  // Determine which axe / alfa / equal_access / qualweb rules are ACT-aligned
+  // (i.e. listed as an implementation of at least one ACT rule in `actImpls`).
+  const actAlignedAxe         = new Set();
+  const actAlignedAlfa        = new Set();
+  const actAlignedEqualAccess = new Set();
+  const actAlignedQualweb     = new Set();
+  for (const impl of Object.values(actImpls)) {
+    (impl.axe         ?? []).forEach(r => actAlignedAxe.add(r));
+    (impl.alfa        ?? []).forEach(r => actAlignedAlfa.add(r));
+    (impl.equal_access ?? []).forEach(r => actAlignedEqualAccess.add(r));
+    (impl.qualweb     ?? []).forEach(r => actAlignedQualweb.add(r));
+  }
+
+  // --- Collect engine-specific (non-ACT) rules from the filtered SCs ---
+  const engineSpecific = { axe: new Set(), alfa: new Set(), equal_access: new Set(), qualweb: new Set() };
+  for (const [, entry] of entries) {
+    (entry.automation?.axe  ?? []).forEach(r => { if (!actAlignedAxe.has(r))         engineSpecific.axe.add(r); });
+    (entry.automation?.alfa ?? []).forEach(r => { if (!actAlignedAlfa.has(r))        engineSpecific.alfa.add(r); });
+  }
+
+  const hasActRules = Object.keys(actRuleToScs).length > 0;
+  const hasImplData = Object.keys(actImpls).length > 0;
+  // Only show engine-specific section when we have implementation data to determine
+  // which rules are ACT-aligned vs proprietary.  Without it, we cannot distinguish.
+  const hasEngineSpecific = hasImplData && Object.values(engineSpecific).some(s => s.size > 0);
+
+  const fragment = document.createDocumentFragment();
+
+  // --- Intro bar ---
+  const intro = document.createElement("div");
+  intro.className = "act-intro";
+  const actCount = Object.keys(actRuleToScs).length;
+  intro.innerHTML = hasActRules
+    ? `<p>
+        <strong>${actCount} ACT rule${actCount !== 1 ? "s" : ""}</strong> found across the
+        ${entries.length} filtered Success Criteria.
+        ${hasImplData
+          ? "Engine implementation data is available — see which tools cover each rule below."
+          : "Run <code>python scripts/sync_data.py</code> to fetch engine implementation mappings."}
+       </p>
+       <p>
+        <a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules overview</a> ·
+        <a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/" target="_blank" rel="noopener noreferrer">Implementations</a>
+       </p>`
+    : `<p>No ACT rules are mapped to the currently filtered Success Criteria.</p>`;
+  fragment.appendChild(intro);
+
+  // --- ACT rule cards ---
+  if (hasActRules) {
+    const grid = document.createElement("div");
+    grid.className = "act-rules-grid";
+    grid.setAttribute("role", "list");
+
+    for (const [actId, scNums] of Object.entries(actRuleToScs).sort()) {
+      const impl = actImpls[actId] ?? {};
+      const axeRules   = impl.axe         ?? [];
+      const alfaRules  = impl.alfa        ?? [];
+      const eaRules    = impl.equal_access ?? [];
+      const qwRules    = impl.qualweb     ?? [];
+
+      const hasAnyImpl = axeRules.length + alfaRules.length + eaRules.length + qwRules.length > 0;
+
+      const card = document.createElement("article");
+      card.className = "act-rule-card";
+      card.setAttribute("role", "listitem");
+
+      const scLinks = scNums
+        .sort()
+        .map(n => {
+          const e = spineData.success_criteria[n];
+          const href = e?.url ?? `#sc-${n.replace(/\./g, "_")}`;
+          return `<a class="act-sc-badge" href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(e?.title ?? n)}">
+            ${escapeHTML(n)}
+          </a>`;
+        })
+        .join("");
+
+      const engineRows = hasAnyImpl ? `
+        <dl class="act-impl-list">
+          ${axeRules.length ? `
+            <dt class="act-engine act-engine-axe">axe-core</dt>
+            <dd>${axeRules.map(r =>
+              `<a class="tag tag-axe" href="${axeRuleUrl(r)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(r)}">${escapeHTML(r)}</a>`
+            ).join(" ")}</dd>` : ""}
+          ${alfaRules.length ? `
+            <dt class="act-engine act-engine-alfa">Alfa</dt>
+            <dd>${alfaRules.map(r =>
+              `<span class="tag tag-alfa" title="Alfa rule ${escapeHTML(r)}">${escapeHTML(r)}</span>`
+            ).join(" ")}</dd>` : ""}
+          ${eaRules.length ? `
+            <dt class="act-engine act-engine-ea">Equal Access</dt>
+            <dd>${eaRules.map(r =>
+              `<a class="tag tag-ea" href="https://www.ibm.com/able/requirements/checker-rule-sets" target="_blank" rel="noopener noreferrer" title="Equal Access rule ${escapeHTML(r)}">${escapeHTML(r)}</a>`
+            ).join(" ")}</dd>` : ""}
+          ${qwRules.length ? `
+            <dt class="act-engine act-engine-qw">QualWeb</dt>
+            <dd>${qwRules.map(r =>
+              `<a class="tag tag-qw" href="https://qualweb.di.fc.ul.pt/evaluator" target="_blank" rel="noopener noreferrer" title="QualWeb rule ${escapeHTML(r)}">${escapeHTML(r)}</a>`
+            ).join(" ")}</dd>` : ""}
+        </dl>` : `<p class="no-data act-no-impl">No engine implementation data. Run sync to fetch mappings.</p>`;
+
+      card.innerHTML = `
+        <header class="act-rule-header">
+          <a class="act-rule-id" href="https://www.w3.org/WAI/standards-guidelines/act/rules/${encodeURIComponent(actId)}/" target="_blank" rel="noopener noreferrer" title="View ACT Rule ${escapeHTML(actId)} on W3C WAI">
+            ${escapeHTML(actId)}
+          </a>
+          <span class="act-rule-engines" aria-label="${hasAnyImpl ? "Implemented by" : "No implementation data"}">
+            ${hasAnyImpl
+              ? `${axeRules.length ? `<span class="act-engine-badge act-engine-badge-axe" title="${axeRules.length} axe-core rule${axeRules.length !== 1 ? "s" : ""}">axe</span>` : ""}${alfaRules.length ? `<span class="act-engine-badge act-engine-badge-alfa" title="${alfaRules.length} Alfa rule${alfaRules.length !== 1 ? "s" : ""}">Alfa</span>` : ""}${eaRules.length ? `<span class="act-engine-badge act-engine-badge-ea" title="${eaRules.length} Equal Access rule${eaRules.length !== 1 ? "s" : ""}">Equal Access</span>` : ""}${qwRules.length ? `<span class="act-engine-badge act-engine-badge-qw" title="${qwRules.length} QualWeb rule${qwRules.length !== 1 ? "s" : ""}">QualWeb</span>` : ""}`
+              : `<span class="act-engine-badge act-engine-badge-none">no impl. data</span>`}
+          </span>
+        </header>
+        <div class="act-rule-body">
+          <div class="act-sc-section">
+            <span class="act-section-label">WCAG SC</span>
+            <span class="act-sc-list" aria-label="WCAG Success Criteria covered by this ACT rule">${scLinks}</span>
+          </div>
+          ${engineRows}
+        </div>`;
+
+      grid.appendChild(card);
+    }
+    fragment.appendChild(grid);
+  }
+
+  // --- Engine-specific rules section ---
+  if (hasEngineSpecific) {
+    const section = document.createElement("section");
+    section.className = "act-engine-specific";
+    section.setAttribute("aria-labelledby", "act-engine-specific-heading");
+
+    const heading = document.createElement("h2");
+    heading.id = "act-engine-specific-heading";
+    heading.className = "act-section-heading";
+    heading.textContent = "Engine-specific rules (not mapped to an ACT rule)";
+    section.appendChild(heading);
+
+    const note = document.createElement("p");
+    note.className = "act-engine-specific-note";
+    note.innerHTML = hasImplData
+      ? "These rules from axe-core or Alfa are present in the filtered Success Criteria but are <strong>not listed as implementations</strong> of any W3C ACT rule. They may be proprietary rules or newly added rules not yet covered by ACT."
+      : "Engine-specific status cannot be determined without implementation data. Run <code>python scripts/sync_data.py</code> to fetch mappings.";
+    section.appendChild(note);
+
+    if (engineSpecific.axe.size > 0) {
+      const dl = document.createElement("dl");
+      dl.className = "act-impl-list";
+      dl.innerHTML = `
+        <dt class="act-engine act-engine-axe">axe-core (engine-specific)</dt>
+        <dd>${[...engineSpecific.axe].sort().map(r =>
+          `<a class="tag tag-axe" href="${axeRuleUrl(r)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(r)}">${escapeHTML(r)}</a>`
+        ).join(" ")}</dd>`;
+      section.appendChild(dl);
+    }
+
+    if (engineSpecific.alfa.size > 0) {
+      const dl = document.createElement("dl");
+      dl.className = "act-impl-list";
+      dl.innerHTML = `
+        <dt class="act-engine act-engine-alfa">Alfa (engine-specific)</dt>
+        <dd>${[...engineSpecific.alfa].sort().map(r =>
+          `<span class="tag tag-alfa" title="Alfa rule ${escapeHTML(r)}">${escapeHTML(r)}</span>`
+        ).join(" ")}</dd>`;
+      section.appendChild(dl);
+    }
+
+    fragment.appendChild(section);
+  }
+
+  container.innerHTML = "";
+  container.appendChild(fragment);
+}
+
+
 
 function renderDiagram() {
   const container = document.getElementById("mermaid-container");
@@ -619,6 +834,7 @@ function showLoading(show) {
   document.getElementById("diagram-view").hidden = show || currentView !== "diagram";
   document.getElementById("cards-view").hidden   = show || currentView !== "cards";
   document.getElementById("table-view").hidden   = show || currentView !== "table";
+  document.getElementById("act-view").hidden     = show || currentView !== "act";
 }
 
 function showError(msg) {

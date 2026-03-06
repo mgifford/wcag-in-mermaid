@@ -113,6 +113,14 @@
       id="tab-table"
       aria-controls="table-view"
     >Table</button>
+    <button
+      class="tab-btn"
+      role="tab"
+      aria-selected="false"
+      data-view="act"
+      id="tab-act"
+      aria-controls="act-view"
+    >ACT Rules</button>
   </div>
 
   <!-- ================================================================ -->
@@ -153,6 +161,16 @@
       hidden
     >
       <!-- Table injected by app.js -->
+    </section>
+
+    <!-- ACT Rules view -->
+    <section
+      id="act-view"
+      aria-labelledby="tab-act"
+      role="tabpanel"
+      hidden
+    >
+      <!-- ACT rule cards injected by app.js -->
     </section>
 
   </main>

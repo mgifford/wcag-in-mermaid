@@ -10,7 +10,109 @@
       "trusted_tester": "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/",
       "section508_coordinators": "https://github.com/Section508Coordinators"
     },
-    "axe_version": "4.11"
+    "axe_version": "4.11",
+    "act_implementations": {
+      "23a2a8": {
+        "axe": [
+          "input-image-alt"
+        ],
+        "alfa": [
+          "SIA-R26"
+        ],
+        "equal_access": [],
+        "qualweb": [
+          "QW-ACT-R27"
+        ]
+      },
+      "3ea0c8": {
+        "axe": [
+          "image-alt"
+        ],
+        "alfa": [
+          "SIA-R2"
+        ],
+        "equal_access": [],
+        "qualweb": [
+          "QW-ACT-R2"
+        ]
+      },
+      "59796f": {
+        "axe": [],
+        "alfa": [],
+        "equal_access": [],
+        "qualweb": []
+      },
+      "cae760": {
+        "axe": [
+          "image-alt"
+        ],
+        "alfa": [
+          "SIA-R2"
+        ],
+        "equal_access": [],
+        "qualweb": []
+      },
+      "b5c3f8": {
+        "axe": [
+          "html-has-lang"
+        ],
+        "alfa": [
+          "SIA-R4"
+        ],
+        "equal_access": [],
+        "qualweb": [
+          "QW-ACT-R3"
+        ]
+      },
+      "5b7ae0": {
+        "axe": [
+          "html-lang-valid"
+        ],
+        "alfa": [
+          "SIA-R5"
+        ],
+        "equal_access": [],
+        "qualweb": []
+      },
+      "bf051a": {
+        "axe": [
+          "document-title"
+        ],
+        "alfa": [
+          "SIA-R1"
+        ],
+        "equal_access": [],
+        "qualweb": [
+          "QW-ACT-R1"
+        ]
+      },
+      "2779a5": {
+        "axe": [
+          "document-title"
+        ],
+        "alfa": [],
+        "equal_access": [],
+        "qualweb": []
+      },
+      "e086e5": {
+        "axe": [
+          "label"
+        ],
+        "alfa": [
+          "SIA-R8"
+        ],
+        "equal_access": [],
+        "qualweb": [
+          "QW-ACT-R4"
+        ]
+      },
+      "cc0f0a": {
+        "axe": [],
+        "alfa": [],
+        "equal_access": [],
+        "qualweb": []
+      }
+    }
   },
   "success_criteria": {
     "1.1.1": {

@@ -170,20 +170,110 @@ def load_seed() -> dict:
 # ACT Rules
 # ---------------------------------------------------------------------------
 
-def fetch_act_rules() -> dict[str, list[str]]:
+def _extract_rule_ids(items: object) -> list[str]:
+    """Extract rule ID strings from a value that may be a list of strings or dicts.
+
+    For dict entries the first non-empty string among the keys ``id``,
+    ``ruleId``, and ``rule`` is used.  The ``or`` chain intentionally treats
+    empty strings as "missing" — rule IDs should never be empty strings.
     """
-    Download ACT rules JSON and return a mapping:
-      { "X.Y.Z": ["rule_id", ...], ... }
+    result: list[str] = []
+    if not isinstance(items, list):
+        return result
+    for item in items:
+        if isinstance(item, str) and item:
+            result.append(item)
+        elif isinstance(item, dict):
+            rule_id = item.get("id") or item.get("ruleId") or item.get("rule") or ""
+            if rule_id:
+                result.append(rule_id)
+    return result
+
+
+def _extract_implementations(rule: dict) -> dict[str, list[str]]:
+    """
+    Extract per-engine implementation rule IDs from an ACT rule dict.
+
+    Handles two known formats from W3C rules.json:
+      1. ``implementations`` is a dict keyed by consistency level whose values
+         are dicts keyed by tool name:
+         ``{"consistent": {"axe-core": [...], "Alfa": [...]}, ...}``
+      2. ``implementations`` is a flat list of dicts each with ``technology``
+         (or ``tool``) and ``rule`` (or ``id`` / ``ruleId``) fields:
+         ``[{"technology": "axe-core", "rule": "image-alt"}, ...]``
+
+    Returns a dict with keys ``axe``, ``alfa``, ``equal_access``, ``qualweb``
+    mapping to sorted, deduplicated lists of rule ID strings.
+    """
+    axe_rules: list[str] = []
+    alfa_rules: list[str] = []
+    equal_access_rules: list[str] = []
+    qualweb_rules: list[str] = []
+
+    implementations = rule.get("implementations", {})
+
+    if isinstance(implementations, dict):
+        # Format 1: keyed by consistency level
+        for tools in implementations.values():
+            if not isinstance(tools, dict):
+                continue
+            axe_rules.extend(_extract_rule_ids(tools.get("axe-core") or tools.get("axe") or []))
+            alfa_rules.extend(_extract_rule_ids(tools.get("Alfa") or tools.get("alfa") or []))
+            equal_access_rules.extend(
+                _extract_rule_ids(tools.get("Equal Access") or tools.get("equal_access") or [])
+            )
+            qualweb_rules.extend(
+                _extract_rule_ids(tools.get("QualWeb") or tools.get("qualweb") or [])
+            )
+    elif isinstance(implementations, list):
+        # Format 2: flat list of tool entries
+        for impl in implementations:
+            if not isinstance(impl, dict):
+                continue
+            tech = (impl.get("technology") or impl.get("tool") or "").lower()
+            # Empty strings treated as missing — rule IDs should never be empty.
+            rule_id = (
+                impl.get("rule") or impl.get("id") or impl.get("ruleId") or ""
+            )
+            if not rule_id:
+                continue
+            if "axe" in tech:
+                axe_rules.append(str(rule_id))
+            elif "alfa" in tech:
+                alfa_rules.append(str(rule_id))
+            elif "equal" in tech or "ibm" in tech:
+                equal_access_rules.append(str(rule_id))
+            elif "qualweb" in tech:
+                qualweb_rules.append(str(rule_id))
+
+    return {
+        "axe": sorted(set(axe_rules)),
+        "alfa": sorted(set(alfa_rules)),
+        "equal_access": sorted(set(equal_access_rules)),
+        "qualweb": sorted(set(qualweb_rules)),
+    }
+
+
+def fetch_act_rules() -> tuple[dict[str, list[str]], dict[str, dict]]:
+    """
+    Download ACT rules JSON and return:
+      1. SC-to-ACT mapping: ``{ "X.Y.Z": ["rule_id", ...], ... }``
+      2. ACT-rule-to-implementations mapping:
+         ``{ "rule_id": {"axe": [...], "alfa": [...], "equal_access": [...], "qualweb": [...]}, ... }``
+
+    The second dict is populated only when the source JSON includes
+    ``implementations`` data for each rule; it will be empty otherwise.
     """
     sc_to_act: dict[str, list[str]] = {}
+    act_implementations: dict[str, dict] = {}
     raw = fetch_text(ACT_RULES_URL)
     if raw is None:
-        return sc_to_act
+        return sc_to_act, act_implementations
     try:
         rules = json.loads(raw)
     except json.JSONDecodeError as exc:
         print(f"  WARNING: ACT rules JSON decode error: {exc}", file=sys.stderr)
-        return sc_to_act
+        return sc_to_act, act_implementations
 
     # The rules.json structure may vary; support both list and dict forms.
     rule_list = rules if isinstance(rules, list) else rules.get("rules", [])
@@ -196,7 +286,14 @@ def fetch_act_rules() -> dict[str, list[str]]:
                 sc_to_act.setdefault(sc, [])
                 if rule_id and rule_id not in sc_to_act[sc]:
                     sc_to_act[sc].append(rule_id)
-    return sc_to_act
+
+        # Extract per-engine implementation data when present.
+        if rule_id:
+            impl = _extract_implementations(rule)
+            if any(impl.values()):
+                act_implementations[rule_id] = impl
+
+    return sc_to_act, act_implementations
 
 
 # ---------------------------------------------------------------------------
@@ -312,7 +409,7 @@ def fetch_arrm_tasks() -> dict[str, list[dict]]:
 # Merge logic
 # ---------------------------------------------------------------------------
 
-def merge_into_spine(spine: dict, act_map: dict, roles_map: dict, tasks_map: dict) -> None:
+def merge_into_spine(spine: dict, act_map: dict, roles_map: dict, tasks_map: dict, act_implementations: dict | None = None) -> None:
     """Merge fetched data into the in-memory spine (mutates in place)."""
     sc_dict = spine.get("success_criteria", {})
     for sc_num, entry in sc_dict.items():
@@ -338,6 +435,21 @@ def merge_into_spine(spine: dict, act_map: dict, roles_map: dict, tasks_map: dic
                 if t["id"] not in existing_ids:
                     existing.append(t)
                     existing_ids.add(t["id"])
+
+    # --- ACT implementation data ---
+    # Stored in meta so the frontend can show which engine rules implement each
+    # ACT rule without needing to change the per-SC automation arrays.
+    if act_implementations:
+        # Merge into any existing data (e.g. partial data from a previous sync).
+        existing_impl = spine.setdefault("meta", {}).setdefault("act_implementations", {})
+        for act_id, impl in act_implementations.items():
+            if act_id not in existing_impl:
+                existing_impl[act_id] = impl
+            else:
+                # Merge each engine's list while preserving order.
+                for engine in ("axe", "alfa", "equal_access", "qualweb"):
+                    merged = list(dict.fromkeys(existing_impl[act_id].get(engine, []) + impl.get(engine, [])))
+                    existing_impl[act_id][engine] = merged
 
 
 # ---------------------------------------------------------------------------
@@ -611,8 +723,10 @@ def main() -> None:
     print(f"  → axe-core version: {axe_version}")
 
     print("Fetching ACT rules …")
-    act_map = fetch_act_rules()
+    act_map, act_implementations = fetch_act_rules()
     print(f"  → {sum(len(v) for v in act_map.values())} ACT rule/SC mappings found")
+    if act_implementations:
+        print(f"  → Implementation data found for {len(act_implementations)} ACT rules")
 
     print("Fetching ARRM roles …")
     roles_map = fetch_arrm_roles()
@@ -623,7 +737,7 @@ def main() -> None:
     print(f"  → {sum(len(v) for v in tasks_map.values())} task/SC mappings found")
 
     print("Merging data …")
-    merge_into_spine(spine, act_map, roles_map, tasks_map)
+    merge_into_spine(spine, act_map, roles_map, tasks_map, act_implementations)
 
     spine["meta"]["generated"] = date.today().isoformat()
     spine["meta"]["axe_version"] = axe_version
