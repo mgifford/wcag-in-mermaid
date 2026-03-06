@@ -314,6 +314,9 @@ def sanitise_label(text: str) -> str:
 # appending "+N more".
 _ARRM_IDS_IN_NODE = 5
 
+# Maximum Trusted Tester step IDs to show inline in a single diagram node.
+_TT_IDS_IN_NODE = 4
+
 
 def generate_mermaid_md(spine: dict) -> None:
     """
@@ -451,7 +454,6 @@ def generate_mermaid_md(spine: dict) -> None:
         # --- Trusted Tester node ---
         if tt_steps:
             step_ids = [s.split(" - ")[0] for s in tt_steps]
-            _TT_IDS_IN_NODE = 4
             if len(step_ids) <= _TT_IDS_IN_NODE:
                 tt_label = "TT: " + ", ".join(step_ids)
             else:

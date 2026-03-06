@@ -27,6 +27,12 @@ const DATA_URL = "data/master_spine.json";
 const ARRM_IDS_IN_NODE = 5;
 
 /**
+ * Maximum number of Trusted Tester step IDs to show inline in a single Mermaid
+ * diagram node.  Must match _TT_IDS_IN_NODE in sync_data.py.
+ */
+const TT_IDS_IN_NODE = 4;
+
+/**
  * Maps ARRM role / ownership names to their W3C WAI role pages.
  * Used to render linked role names in the Cards and Table views.
  *
@@ -450,7 +456,6 @@ function renderDiagram() {
     const arrmLabel = arrmTaskIds.length
       ? `🎯 ${arrmTaskIds.slice(0, ARRM_IDS_IN_NODE).join(", ")}${arrmTaskIds.length > ARRM_IDS_IN_NODE ? ` +${arrmTaskIds.length - ARRM_IDS_IN_NODE} more` : ""}`
       : null;
-    const TT_IDS_IN_NODE = 4;
     const ttLabel = ttStepIds.length
       ? `🔬 TT: ${ttStepIds.slice(0, TT_IDS_IN_NODE).join(", ")}${ttStepIds.length > TT_IDS_IN_NODE ? ` +${ttStepIds.length - TT_IDS_IN_NODE} more` : ""}`
       : null;
