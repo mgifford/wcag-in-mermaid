@@ -32,6 +32,12 @@ TT_IMPLEMENTATIONS_URL = (
 )
 # Section 508 Coordinator resources: https://github.com/Section508Coordinators
 
+# npm registry endpoint to resolve the latest published axe-core version
+AXE_NPM_DIST_TAGS_URL = "https://registry.npmjs.org/-/package/axe-core/dist-tags"
+
+# Fallback axe-core version used when the npm registry is unreachable
+AXE_VERSION_FALLBACK = "4.11"
+
 # ---------------------------------------------------------------------------
 # ARRM URL mappings
 # ---------------------------------------------------------------------------
@@ -115,6 +121,34 @@ def fetch_text(url: str, timeout: int = 30) -> str | None:
     except (urllib.error.URLError, urllib.error.HTTPError, OSError) as exc:
         print(f"  WARNING: Could not fetch {url}: {exc}", file=sys.stderr)
         return None
+
+
+def fetch_axe_version() -> str:
+    """
+    Return the latest published axe-core major.minor version string (e.g. "4.10").
+
+    Resolves the version from the npm registry dist-tags endpoint.  If the
+    registry is unreachable the hard-coded ``AXE_VERSION_FALLBACK`` is used so
+    that the sync can still complete offline.
+    """
+    raw = fetch_text(AXE_NPM_DIST_TAGS_URL)
+    if raw is not None:
+        try:
+            tags = json.loads(raw)
+            full_version = tags.get("latest", "")
+            # Keep only major.minor (e.g. "4.10.2" → "4.10")
+            parts = full_version.split(".")
+            if len(parts) >= 2:
+                return f"{parts[0]}.{parts[1]}"
+            print(
+                f"  WARNING: Unexpected axe-core version format '{full_version}'; "
+                f"using fallback {AXE_VERSION_FALLBACK}",
+                file=sys.stderr,
+            )
+        except (json.JSONDecodeError, AttributeError) as exc:
+            print(f"  WARNING: Could not parse axe-core version: {exc}", file=sys.stderr)
+    print(f"  WARNING: Using axe-core fallback version {AXE_VERSION_FALLBACK}", file=sys.stderr)
+    return AXE_VERSION_FALLBACK
 
 
 def normalise_sc(raw: str) -> str | None:
@@ -356,13 +390,16 @@ _DIAGRAM_INTRO = (
 )
 
 
-def _build_principle_diagram(sc_dict: dict) -> str:
+def _build_principle_diagram(sc_dict: dict, axe_version: str = AXE_VERSION_FALLBACK) -> str:
     """
     Build the Mermaid ``graph LR`` block for the given subset of SCs.
 
     Returns the full diagram as a string (including the fenced code block).
     All ``click`` directives are appended after the node definitions so the
     node declarations stay readable.
+
+    ``axe_version`` is the axe-core major.minor string (e.g. ``"4.10"``) used
+    to build versioned Deque University rule URLs.
     """
     node_lines: list[str] = []
     click_lines: list[str] = []
@@ -407,7 +444,7 @@ def _build_principle_diagram(sc_dict: dict) -> str:
             node_lines.append(f'    A_axe_{safe}["{axe_label}"]:::axe --> {sc_node}')
             click_lines.append(
                 f'    click A_axe_{safe} href '
-                f'"https://dequeuniversity.com/rules/axe/latest/{axe_ids[0]}" _blank'
+                f'"https://dequeuniversity.com/rules/axe/{axe_version}/{axe_ids[0]}" _blank'
             )
 
         if alfa_ids:
@@ -484,7 +521,7 @@ def _build_principle_diagram(sc_dict: dict) -> str:
     return "\n".join(diagram_lines) + "\n"
 
 
-def generate_mermaid_md(spine: dict) -> None:
+def generate_mermaid_md(spine: dict, axe_version: str = AXE_VERSION_FALLBACK) -> None:
     """
     Regenerate the per-principle Mermaid diagram files from the in-memory spine.
 
@@ -504,6 +541,9 @@ def generate_mermaid_md(spine: dict) -> None:
 
     All ``click`` directives are collected and written at the end of the
     diagram block so the node definitions stay readable.
+
+    ``axe_version`` is the axe-core major.minor string (e.g. ``"4.10"``) used
+    to build versioned Deque University rule URLs.
     """
     sc_dict = spine.get("success_criteria", {})
 
@@ -523,7 +563,7 @@ def generate_mermaid_md(spine: dict) -> None:
             "\n"
         ) + _DIAGRAM_INTRO + "\n" + _LEGEND + "\n"
 
-        content = header + _build_principle_diagram(principle_scs)
+        content = header + _build_principle_diagram(principle_scs, axe_version=axe_version)
         out_path.write_text(content, encoding="utf-8")
         print(f"  → Wrote {out_path} ({len(principle_scs)} SCs, {len(content)} chars)")
 
@@ -566,6 +606,10 @@ def main() -> None:
     print("Loading seed data …")
     spine = load_seed()
 
+    print("Fetching axe-core version …")
+    axe_version = fetch_axe_version()
+    print(f"  → axe-core version: {axe_version}")
+
     print("Fetching ACT rules …")
     act_map = fetch_act_rules()
     print(f"  → {sum(len(v) for v in act_map.values())} ACT rule/SC mappings found")
@@ -582,6 +626,7 @@ def main() -> None:
     merge_into_spine(spine, act_map, roles_map, tasks_map)
 
     spine["meta"]["generated"] = date.today().isoformat()
+    spine["meta"]["axe_version"] = axe_version
     spine["meta"].setdefault("sources", {})["trusted_tester"] = TT_IMPLEMENTATIONS_URL
     spine["meta"]["sources"]["section508_coordinators"] = "https://github.com/Section508Coordinators"
 
@@ -594,7 +639,7 @@ def main() -> None:
     print(f"Done — {total_sc} Success Criteria written to {OUTPUT_FILE}")
 
     print("Generating Mermaid diagram …")
-    generate_mermaid_md(spine)
+    generate_mermaid_md(spine, axe_version=axe_version)
 
 
 if __name__ == "__main__":

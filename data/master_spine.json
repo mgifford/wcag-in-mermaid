@@ -9,7 +9,8 @@
       "alfa": "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md",
       "trusted_tester": "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/",
       "section508_coordinators": "https://github.com/Section508Coordinators"
-    }
+    },
+    "axe_version": "4.11"
   },
   "success_criteria": {
     "1.1.1": {

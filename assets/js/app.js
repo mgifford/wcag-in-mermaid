@@ -88,6 +88,25 @@ async function fetchSpine() {
   return res.json();
 }
 
+/**
+ * Return the Deque University URL for an axe-core rule.
+ *
+ * Uses the ``axe_version`` stored in ``meta`` (e.g. ``"4.10"``) so links
+ * point at the correct versioned documentation page.  Falls back to ``"4.11"``
+ * when the version is unavailable.
+ *
+ * Must only be called after ``spineData`` has been populated (i.e. after the
+ * initial data fetch completes).  The optional-chaining fallback ensures a
+ * working URL is still returned if called earlier.
+ *
+ * @param {string} ruleId  The axe rule identifier, e.g. ``"image-alt"``.
+ * @returns {string}
+ */
+function axeRuleUrl(ruleId) {
+  const version = spineData?.meta?.axe_version ?? "4.11";
+  return `https://dequeuniversity.com/rules/axe/${encodeURIComponent(version)}/${encodeURIComponent(ruleId)}`;
+}
+
 /* ------------------------------------------------------------------ */
 /*  Controls & filtering                                                */
 /* ------------------------------------------------------------------ */
@@ -269,7 +288,7 @@ function buildCard(num, entry) {
                 `<li><a class="tag tag-act" href="https://www.w3.org/WAI/standards-guidelines/act/rules/${encodeURIComponent(id)}/" target="_blank" rel="noopener noreferrer" title="ACT Rule ${escapeHTML(id)}">ACT:${escapeHTML(id)}</a></li>`
               ).join("")}
               ${axeIds.map(id =>
-                `<li><a class="tag tag-axe" href="https://dequeuniversity.com/rules/axe/latest/${encodeURIComponent(id)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(id)}">axe:${escapeHTML(id)}</a></li>`
+                `<li><a class="tag tag-axe" href="${axeRuleUrl(id)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(id)}">axe:${escapeHTML(id)}</a></li>`
               ).join("")}
               ${alfaIds.map(id =>
                 `<li><span class="tag tag-alfa" title="Alfa rule ${escapeHTML(id)}">${escapeHTML(id)}</span></li>`
@@ -341,7 +360,7 @@ function renderTable() {
       `<a href="https://www.w3.org/WAI/standards-guidelines/act/rules/${encodeURIComponent(i)}/" target="_blank" rel="noopener noreferrer" title="ACT Rule ${escapeHTML(i)}">ACT:${escapeHTML(i)}</a>`
     );
     const axeLinks  = (a.axe  ?? []).map(i =>
-      `<a href="https://dequeuniversity.com/rules/axe/latest/${encodeURIComponent(i)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(i)}">axe:${escapeHTML(i)}</a>`
+      `<a href="${axeRuleUrl(i)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(i)}">axe:${escapeHTML(i)}</a>`
     );
     const alfaLinks = (a.alfa ?? []).map(i =>
       `<a href="https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" target="_blank" rel="noopener noreferrer" title="Alfa rule ${escapeHTML(i)}">${escapeHTML(i)}</a>`
