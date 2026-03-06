@@ -49,14 +49,14 @@ graph LR
 
     click A_act_4_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/" _blank
     click A_axe_4_1_2 href "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr" _blank
-    click A_alfa_4_1_2 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_4_1_2 href "https://alfa.siteimprove.com/rules/sia-r11" _blank
     click T_4_1_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_4_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_4_1_2 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N4_1_2 href "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html" _blank
     click A_act_4_1_3 href "https://www.w3.org/WAI/standards-guidelines/act/rules/0sstp9/" _blank
     click A_axe_4_1_3 href "https://dequeuniversity.com/rules/axe/4.11/status-messages" _blank
-    click A_alfa_4_1_3 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_4_1_3 href "https://alfa.siteimprove.com/rules/sia-r90" _blank
     click T_4_1_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#dynamic-interactions" _blank
-    click TT_4_1_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_4_1_3 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N4_1_3 href "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html" _blank
 ```

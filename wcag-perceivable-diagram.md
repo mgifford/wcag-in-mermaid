@@ -218,113 +218,113 @@ graph LR
 
     click A_act_1_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/23a2a8/" _blank
     click A_axe_1_1_1 href "https://dequeuniversity.com/rules/axe/4.11/area-alt" _blank
-    click A_alfa_1_1_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_1_1 href "https://alfa.siteimprove.com/rules/sia-r2" _blank
     click T_1_1_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#images-and-graphs" _blank
-    click TT_1_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_1_1 href "https://section508coordinators.github.io/TrustedTester/images.html" _blank
     click N1_1_1 href "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html" _blank
     click T_1_2_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_1 href "https://section508coordinators.github.io/TrustedTester/audiovideo.html" _blank
     click N1_2_1 href "https://www.w3.org/WAI/WCAG22/Understanding/audio-only-and-video-only-prerecorded.html" _blank
     click A_act_1_2_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/eac66b/" _blank
     click A_axe_1_2_2 href "https://dequeuniversity.com/rules/axe/4.11/video-caption" _blank
     click T_1_2_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_2 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_2 href "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html" _blank
     click T_1_2_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_3 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_3 href "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded.html" _blank
     click T_1_2_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_4 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_4 href "https://www.w3.org/WAI/WCAG22/Understanding/captions-live.html" _blank
     click T_1_2_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_5 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_5 href "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html" _blank
     click T_1_2_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_6 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_6 href "https://www.w3.org/WAI/WCAG22/Understanding/sign-language-prerecorded.html" _blank
     click T_1_2_7 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_7 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_7 href "https://www.w3.org/WAI/WCAG22/Understanding/extended-audio-description-prerecorded.html" _blank
     click T_1_2_8 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_8 href "https://section508coordinators.github.io/TrustedTester/media.html" _blank
     click N1_2_8 href "https://www.w3.org/WAI/WCAG22/Understanding/media-alternative-prerecorded.html" _blank
     click T_1_2_9 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_2_9 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_2_9 href "https://section508coordinators.github.io/TrustedTester/audiovideo.html" _blank
     click N1_2_9 href "https://www.w3.org/WAI/WCAG22/Understanding/audio-only-live.html" _blank
     click A_act_1_3_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/307n5z/" _blank
     click A_axe_1_3_1 href "https://dequeuniversity.com/rules/axe/4.11/definition-list" _blank
-    click A_alfa_1_3_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_3_1 href "https://alfa.siteimprove.com/rules/sia-r1" _blank
     click T_1_3_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_1_3_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_1 href "https://section508coordinators.github.io/TrustedTester/structure.html" _blank
     click N1_3_1 href "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html" _blank
     click T_1_3_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_1_3_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_2 href "https://section508coordinators.github.io/TrustedTester/css-content-position.html" _blank
     click N1_3_2 href "https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence.html" _blank
     click T_1_3_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_3_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_3 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_3_3 href "https://www.w3.org/WAI/WCAG22/Understanding/sensory-characteristics.html" _blank
     click A_act_1_3_4 href "https://www.w3.org/WAI/standards-guidelines/act/rules/b33eff/" _blank
     click A_axe_1_3_4 href "https://dequeuniversity.com/rules/axe/4.11/css-orientation-lock" _blank
-    click A_alfa_1_3_4 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_3_4 href "https://alfa.siteimprove.com/rules/sia-r9" _blank
     click T_1_3_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_3_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_4 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N1_3_4 href "https://www.w3.org/WAI/WCAG22/Understanding/orientation.html" _blank
     click A_act_1_3_5 href "https://www.w3.org/WAI/standards-guidelines/act/rules/135hje/" _blank
     click A_axe_1_3_5 href "https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid" _blank
-    click A_alfa_1_3_5 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_3_5 href "https://alfa.siteimprove.com/rules/sia-r8" _blank
     click T_1_3_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_1_3_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_5 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N1_3_5 href "https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html" _blank
     click T_1_3_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_1_3_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_3_6 href "https://section508coordinators.github.io/TrustedTester/structure.html" _blank
     click N1_3_6 href "https://www.w3.org/WAI/WCAG22/Understanding/identify-purpose.html" _blank
     click T_1_4_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_1 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_1 href "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" _blank
     click T_1_4_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_4_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_2 href "https://section508coordinators.github.io/TrustedTester/auto.html" _blank
     click N1_4_2 href "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html" _blank
     click A_act_1_4_3 href "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/" _blank
     click A_axe_1_4_3 href "https://dequeuniversity.com/rules/axe/4.11/color-contrast" _blank
-    click A_alfa_1_4_3 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_4_3 href "https://alfa.siteimprove.com/rules/sia-r69" _blank
     click T_1_4_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_3 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_3 href "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" _blank
     click A_axe_1_4_4 href "https://dequeuniversity.com/rules/axe/4.11/meta-viewport" _blank
     click T_1_4_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_4 href "https://section508coordinators.github.io/TrustedTester/resize.html" _blank
     click N1_4_4 href "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html" _blank
     click T_1_4_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#images-and-graphs" _blank
-    click TT_1_4_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_5 href "https://section508coordinators.github.io/TrustedTester/images.html" _blank
     click N1_4_5 href "https://www.w3.org/WAI/WCAG22/Understanding/images-of-text.html" _blank
     click A_axe_1_4_6 href "https://dequeuniversity.com/rules/axe/4.11/color-contrast-enhanced" _blank
     click T_1_4_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_6 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_6 href "https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html" _blank
     click T_1_4_7 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_1_4_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_7 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_7 href "https://www.w3.org/WAI/WCAG22/Understanding/low-or-no-background-audio.html" _blank
     click T_1_4_8 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_1_4_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_8 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_8 href "https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation.html" _blank
     click T_1_4_9 href "https://www.w3.org/WAI/planning/arrm/tasks/#images-and-graphs" _blank
-    click TT_1_4_9 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_9 href "https://section508coordinators.github.io/TrustedTester/images.html" _blank
     click N1_4_9 href "https://www.w3.org/WAI/WCAG22/Understanding/images-of-text-no-exception.html" _blank
     click T_1_4_10 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_10 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_10 href "https://section508coordinators.github.io/TrustedTester/resize.html" _blank
     click N1_4_10 href "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" _blank
     click A_act_1_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/rules/4c31df/" _blank
     click A_axe_1_4_11 href "https://dequeuniversity.com/rules/axe/4.11/non-text-color-contrast" _blank
-    click A_alfa_1_4_11 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_4_11 href "https://alfa.siteimprove.com/rules/sia-r70" _blank
     click T_1_4_11 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_11 href "https://section508coordinators.github.io/TrustedTester/sensory.html" _blank
     click N1_4_11 href "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" _blank
     click A_act_1_4_12 href "https://www.w3.org/WAI/standards-guidelines/act/rules/9e45ec/" _blank
-    click A_alfa_1_4_12 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_1_4_12 href "https://alfa.siteimprove.com/rules/sia-r86" _blank
     click T_1_4_12 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_1_4_12 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_12 href "https://section508coordinators.github.io/TrustedTester/resize.html" _blank
     click N1_4_12 href "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" _blank
     click T_1_4_13 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_1_4_13 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_1_4_13 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N1_4_13 href "https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html" _blank
 ```

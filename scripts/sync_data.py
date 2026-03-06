@@ -32,6 +32,127 @@ TT_IMPLEMENTATIONS_URL = (
 )
 # Section 508 Coordinator resources: https://github.com/Section508Coordinators
 
+TT_BASE_URL = "https://section508coordinators.github.io/TrustedTester/"
+
+# Maps each WCAG SC number to the most relevant TrustedTester section page.
+# SCs not covered by TT v5 (WCAG 2.1/2.2 or AAA) are mapped to the closest
+# equivalent section.  Source: appendixa.html cross-reference table.
+TT_SC_PAGE: dict[str, str] = {
+    # 1.1 – Text Alternatives
+    "1.1.1": "images.html",
+    # 1.2 – Time-based Media
+    "1.2.1": "audiovideo.html",
+    "1.2.2": "media.html",
+    "1.2.3": "media.html",
+    "1.2.4": "media.html",
+    "1.2.5": "media.html",
+    "1.2.6": "media.html",
+    "1.2.7": "media.html",
+    "1.2.8": "media.html",
+    "1.2.9": "audiovideo.html",
+    # 1.3 – Adaptable
+    "1.3.1": "structure.html",
+    "1.3.2": "css-content-position.html",
+    "1.3.3": "sensory.html",
+    "1.3.4": "keyboard.html",
+    "1.3.5": "forms.html",
+    "1.3.6": "structure.html",
+    # 1.4 – Distinguishable
+    "1.4.1": "sensory.html",
+    "1.4.2": "auto.html",
+    "1.4.3": "sensory.html",
+    "1.4.4": "resize.html",
+    "1.4.5": "images.html",
+    "1.4.6": "sensory.html",
+    "1.4.7": "sensory.html",
+    "1.4.8": "sensory.html",
+    "1.4.9": "images.html",
+    "1.4.10": "resize.html",
+    "1.4.11": "sensory.html",
+    "1.4.12": "resize.html",
+    "1.4.13": "keyboard.html",
+    # 2.1 – Keyboard Accessible
+    "2.1.1": "keyboard.html",
+    "2.1.2": "keyboard.html",
+    "2.1.3": "keyboard.html",
+    "2.1.4": "keyboard.html",
+    # 2.2 – Enough Time
+    "2.2.1": "timelimits.html",
+    "2.2.2": "auto.html",
+    "2.2.3": "timelimits.html",
+    "2.2.4": "timelimits.html",
+    "2.2.5": "timelimits.html",
+    "2.2.6": "timelimits.html",
+    # 2.3 – Seizures and Physical Reactions
+    "2.3.1": "flashing.html",
+    "2.3.2": "flashing.html",
+    "2.3.3": "flashing.html",
+    # 2.4 – Navigable
+    "2.4.1": "repetitive.html",
+    "2.4.2": "titles.html",
+    "2.4.3": "keyboard.html",
+    "2.4.4": "links.html",
+    "2.4.5": "multiple.html",
+    "2.4.6": "structure.html",
+    "2.4.7": "keyboard.html",
+    "2.4.8": "repetitive.html",
+    "2.4.9": "links.html",
+    "2.4.10": "structure.html",
+    "2.4.11": "keyboard.html",
+    "2.4.12": "keyboard.html",
+    "2.4.13": "keyboard.html",
+    # 2.5 – Input Modalities
+    "2.5.1": "keyboard.html",
+    "2.5.2": "keyboard.html",
+    "2.5.3": "forms.html",
+    "2.5.4": "keyboard.html",
+    "2.5.5": "keyboard.html",
+    "2.5.6": "keyboard.html",
+    "2.5.7": "keyboard.html",
+    "2.5.8": "keyboard.html",
+    # 3.1 – Readable
+    "3.1.1": "language.html",
+    "3.1.2": "language.html",
+    "3.1.3": "language.html",
+    "3.1.4": "language.html",
+    "3.1.5": "language.html",
+    "3.1.6": "language.html",
+    # 3.2 – Predictable
+    "3.2.1": "keyboard.html",
+    "3.2.2": "forms.html",
+    "3.2.3": "repetitive.html",
+    "3.2.4": "repetitive.html",
+    "3.2.5": "repetitive.html",
+    "3.2.6": "repetitive.html",
+    # 3.3 – Input Assistance
+    "3.3.1": "forms.html",
+    "3.3.2": "forms.html",
+    "3.3.3": "forms.html",
+    "3.3.4": "forms.html",
+    "3.3.5": "forms.html",
+    "3.3.6": "forms.html",
+    "3.3.7": "forms.html",
+    "3.3.8": "forms.html",
+    "3.3.9": "forms.html",
+    # 4.1 – Compatible
+    "4.1.1": "parsing.html",
+    "4.1.2": "forms.html",
+    "4.1.3": "forms.html",
+}
+
+
+def _tt_sc_url(sc_num: str) -> str:
+    """Return the full TrustedTester URL for a WCAG SC number (e.g. '1.4.2').
+
+    Falls back to appendixa.html for any SC not present in TT_SC_PAGE.
+
+    Note: Mermaid diagram TT nodes represent all test steps for an SC at once,
+    so only SC-level URLs are needed here.  Step-level overrides (e.g. 1.3.1.B
+    → tables.html) are handled by ttStepUrl() in assets/js/app.js for the
+    Cards and Table views.
+    """
+    return TT_BASE_URL + TT_SC_PAGE.get(sc_num, "appendixa.html")
+
 # npm registry endpoint to resolve the latest published axe-core version
 AXE_NPM_DIST_TAGS_URL = "https://registry.npmjs.org/-/package/axe-core/dist-tags"
 
@@ -618,8 +739,7 @@ def _build_principle_diagram(sc_dict: dict, axe_version: str = AXE_VERSION_FALLB
             tt_node = f"TT_{safe}"
             node_lines.append(f'    {sc_node} --> {tt_node}["{tt_label}"]:::tt')
             click_lines.append(
-                f'    click {tt_node} href '
-                '"https://section508coordinators.github.io/TrustedTester/index.html" _blank'
+                f'    click {tt_node} href "{_tt_sc_url(sc_num)}" _blank'
             )
 
         # SC click

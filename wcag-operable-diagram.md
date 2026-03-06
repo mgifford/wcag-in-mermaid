@@ -241,122 +241,122 @@ graph LR
     N2_5_8 --> TT_2_5_8["TT: 2.5.8.A"]:::tt
 
     click T_2_1_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_1_1 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_1_1 href "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html" _blank
     click T_2_1_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_1_2 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_1_2 href "https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html" _blank
     click T_2_1_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_1_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_1_3 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_1_3 href "https://www.w3.org/WAI/WCAG22/Understanding/keyboard-no-exception.html" _blank
     click T_2_1_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_1_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_1_4 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_1_4 href "https://www.w3.org/WAI/WCAG22/Understanding/character-key-shortcuts.html" _blank
     click T_2_2_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_2_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_1 href "https://section508coordinators.github.io/TrustedTester/timelimits.html" _blank
     click N2_2_1 href "https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html" _blank
     click T_2_2_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_2_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_2 href "https://section508coordinators.github.io/TrustedTester/auto.html" _blank
     click N2_2_2 href "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html" _blank
     click T_2_2_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_2_2_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_3 href "https://section508coordinators.github.io/TrustedTester/timelimits.html" _blank
     click N2_2_3 href "https://www.w3.org/WAI/WCAG22/Understanding/no-timing.html" _blank
     click T_2_2_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_2_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_4 href "https://section508coordinators.github.io/TrustedTester/timelimits.html" _blank
     click N2_2_4 href "https://www.w3.org/WAI/WCAG22/Understanding/interruptions.html" _blank
     click T_2_2_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_2_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_5 href "https://section508coordinators.github.io/TrustedTester/timelimits.html" _blank
     click N2_2_5 href "https://www.w3.org/WAI/WCAG22/Understanding/re-authenticating.html" _blank
     click T_2_2_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_2_2_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_2_6 href "https://section508coordinators.github.io/TrustedTester/timelimits.html" _blank
     click N2_2_6 href "https://www.w3.org/WAI/WCAG22/Understanding/timeouts.html" _blank
     click T_2_3_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_2_3_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_3_1 href "https://section508coordinators.github.io/TrustedTester/flashing.html" _blank
     click N2_3_1 href "https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html" _blank
     click T_2_3_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_2_3_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_3_2 href "https://section508coordinators.github.io/TrustedTester/flashing.html" _blank
     click N2_3_2 href "https://www.w3.org/WAI/WCAG22/Understanding/three-flashes.html" _blank
     click T_2_3_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#animation-and-movement" _blank
-    click TT_2_3_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_3_3 href "https://section508coordinators.github.io/TrustedTester/flashing.html" _blank
     click N2_3_3 href "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html" _blank
     click A_act_2_4_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/3e11da/" _blank
     click A_axe_2_4_1 href "https://dequeuniversity.com/rules/axe/4.11/bypass" _blank
-    click A_alfa_2_4_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_2_4_1 href "https://alfa.siteimprove.com/rules/sia-r87" _blank
     click T_2_4_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_2_4_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_1 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N2_4_1 href "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html" _blank
     click A_act_2_4_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/2779a5/" _blank
     click A_axe_2_4_2 href "https://dequeuniversity.com/rules/axe/4.11/document-title" _blank
-    click A_alfa_2_4_2 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_2_4_2 href "https://alfa.siteimprove.com/rules/sia-r1" _blank
     click T_2_4_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_2_4_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_2 href "https://section508coordinators.github.io/TrustedTester/titles.html" _blank
     click N2_4_2 href "https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html" _blank
     click T_2_4_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_2_4_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_3 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_4_3 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" _blank
     click A_act_2_4_4 href "https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/" _blank
     click A_axe_2_4_4 href "https://dequeuniversity.com/rules/axe/4.11/link-name" _blank
-    click A_alfa_2_4_4 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_2_4_4 href "https://alfa.siteimprove.com/rules/sia-r10" _blank
     click T_2_4_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_4_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_4 href "https://section508coordinators.github.io/TrustedTester/links.html" _blank
     click N2_4_4 href "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html" _blank
     click T_2_4_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_4_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_5 href "https://section508coordinators.github.io/TrustedTester/multiple.html" _blank
     click N2_4_5 href "https://www.w3.org/WAI/WCAG22/Understanding/multiple-ways.html" _blank
     click T_2_4_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
-    click TT_2_4_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_6 href "https://section508coordinators.github.io/TrustedTester/structure.html" _blank
     click N2_4_6 href "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html" _blank
     click T_2_4_7 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_4_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_7 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_4_7 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" _blank
     click T_2_4_8 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_4_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_8 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N2_4_8 href "https://www.w3.org/WAI/WCAG22/Understanding/location.html" _blank
     click T_2_4_9 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_4_9 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_9 href "https://section508coordinators.github.io/TrustedTester/links.html" _blank
     click N2_4_9 href "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html" _blank
     click T_2_4_10 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_2_4_10 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_10 href "https://section508coordinators.github.io/TrustedTester/structure.html" _blank
     click N2_4_10 href "https://www.w3.org/WAI/WCAG22/Understanding/section-headings.html" _blank
     click A_act_2_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/rules/04639e/" _blank
     click A_axe_2_4_11 href "https://dequeuniversity.com/rules/axe/4.11/focus-not-obscured" _blank
-    click A_alfa_2_4_11 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
-    click TT_2_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click A_alfa_2_4_11 href "https://alfa.siteimprove.com/rules/sia-r109" _blank
+    click TT_2_4_11 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_4_11 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html" _blank
-    click TT_2_4_12 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_4_12 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_4_12 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-enhanced.html" _blank
     click A_act_2_4_13 href "https://www.w3.org/WAI/standards-guidelines/act/rules/674b10/" _blank
     click A_axe_2_4_13 href "https://dequeuniversity.com/rules/axe/4.11/focus-appearance" _blank
-    click A_alfa_2_4_13 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
-    click TT_2_4_13 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click A_alfa_2_4_13 href "https://alfa.siteimprove.com/rules/sia-r110" _blank
+    click TT_2_4_13 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_4_13 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" _blank
     click T_2_5_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_5_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_1 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_1 href "https://www.w3.org/WAI/WCAG22/Understanding/pointer-gestures.html" _blank
     click T_2_5_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_5_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_2 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_2 href "https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html" _blank
     click A_act_2_5_3 href "https://www.w3.org/WAI/standards-guidelines/act/rules/2ee8b8/" _blank
     click A_axe_2_5_3 href "https://dequeuniversity.com/rules/axe/4.11/label-content-name-mismatch" _blank
-    click A_alfa_2_5_3 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_2_5_3 href "https://alfa.siteimprove.com/rules/sia-r14" _blank
     click T_2_5_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_5_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_3 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N2_5_3 href "https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html" _blank
     click T_2_5_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_2_5_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_4 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_4 href "https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html" _blank
     click T_2_5_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#css-and-presentation" _blank
-    click TT_2_5_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_5 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_5 href "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html" _blank
     click T_2_5_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_2_5_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_6 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_6 href "https://www.w3.org/WAI/WCAG22/Understanding/concurrent-input-mechanisms.html" _blank
     click A_axe_2_5_7 href "https://dequeuniversity.com/rules/axe/4.11/dragging-movements" _blank
-    click TT_2_5_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_2_5_7 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_7 href "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html" _blank
     click A_act_2_5_8 href "https://www.w3.org/WAI/standards-guidelines/act/rules/a25f45/" _blank
     click A_axe_2_5_8 href "https://dequeuniversity.com/rules/axe/4.11/target-size" _blank
-    click A_alfa_2_5_8 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
-    click TT_2_5_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click A_alfa_2_5_8 href "https://alfa.siteimprove.com/rules/sia-r101" _blank
+    click TT_2_5_8 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N2_5_8 href "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" _blank
 ```

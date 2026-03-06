@@ -48,6 +48,157 @@ const ARRM_ROLE_URLS = {
   "Visual Design":               "https://www.w3.org/WAI/planning/arrm/visual-designer/",
 };
 
+/** Base URL for the Section 508 Trusted Tester v5 reference site. */
+const TT_BASE_URL = "https://section508coordinators.github.io/TrustedTester/";
+
+/**
+ * Maps each WCAG SC number to the most relevant TrustedTester section page.
+ * Where a WCAG SC is covered by multiple TT sections the primary section is
+ * used.  SCs not covered by TT v5 (WCAG 2.1 / 2.2 additions or AAA criteria)
+ * are mapped to the closest equivalent section.
+ *
+ * Source: https://section508coordinators.github.io/TrustedTester/appendixa.html
+ * (Section 508 / WCAG Requirement → Trusted Tester Test cross-reference)
+ */
+const TT_SC_PAGE = {
+  // 1.1 – Text Alternatives
+  "1.1.1": "images.html",
+  // 1.2 – Time-based Media
+  "1.2.1": "audiovideo.html",
+  "1.2.2": "media.html",
+  "1.2.3": "media.html",
+  "1.2.4": "media.html",
+  "1.2.5": "media.html",
+  "1.2.6": "media.html",
+  "1.2.7": "media.html",
+  "1.2.8": "media.html",
+  "1.2.9": "audiovideo.html",
+  // 1.3 – Adaptable
+  "1.3.1": "structure.html",          // primary; 1.3.1.B overridden to tables.html via TT_STEP_PAGE_OVERRIDE
+  "1.3.2": "css-content-position.html",
+  "1.3.3": "sensory.html",
+  "1.3.4": "keyboard.html",           // WCAG 2.1 – closest: keyboard/focus
+  "1.3.5": "forms.html",              // WCAG 2.1 – identify input purpose
+  "1.3.6": "structure.html",          // WCAG 2.2 – identify purpose
+  // 1.4 – Distinguishable
+  "1.4.1": "sensory.html",
+  "1.4.2": "auto.html",
+  "1.4.3": "sensory.html",
+  "1.4.4": "resize.html",
+  "1.4.5": "images.html",
+  "1.4.6": "sensory.html",
+  "1.4.7": "sensory.html",
+  "1.4.8": "sensory.html",
+  "1.4.9": "images.html",
+  "1.4.10": "resize.html",            // WCAG 2.1 – reflow
+  "1.4.11": "sensory.html",           // WCAG 2.1 – non-text contrast
+  "1.4.12": "resize.html",            // WCAG 2.1 – text spacing
+  "1.4.13": "keyboard.html",          // WCAG 2.1 – content on hover/focus
+  // 2.1 – Keyboard Accessible
+  "2.1.1": "keyboard.html",
+  "2.1.2": "keyboard.html",
+  "2.1.3": "keyboard.html",
+  "2.1.4": "keyboard.html",           // WCAG 2.1
+  // 2.2 – Enough Time
+  "2.2.1": "timelimits.html",
+  "2.2.2": "auto.html",
+  "2.2.3": "timelimits.html",
+  "2.2.4": "timelimits.html",
+  "2.2.5": "timelimits.html",
+  "2.2.6": "timelimits.html",         // WCAG 2.1
+  // 2.3 – Seizures and Physical Reactions
+  "2.3.1": "flashing.html",
+  "2.3.2": "flashing.html",
+  "2.3.3": "flashing.html",           // WCAG 2.1
+  // 2.4 – Navigable
+  "2.4.1": "repetitive.html",
+  "2.4.2": "titles.html",
+  "2.4.3": "keyboard.html",
+  "2.4.4": "links.html",
+  "2.4.5": "multiple.html",
+  "2.4.6": "structure.html",          // primary; 2.4.6.B overridden to forms.html via TT_STEP_PAGE_OVERRIDE
+  "2.4.7": "keyboard.html",
+  "2.4.8": "repetitive.html",
+  "2.4.9": "links.html",
+  "2.4.10": "structure.html",
+  "2.4.11": "keyboard.html",          // WCAG 2.2
+  "2.4.12": "keyboard.html",          // WCAG 2.2
+  "2.4.13": "keyboard.html",          // WCAG 2.2
+  // 2.5 – Input Modalities (WCAG 2.1 / 2.2)
+  "2.5.1": "keyboard.html",
+  "2.5.2": "keyboard.html",
+  "2.5.3": "forms.html",
+  "2.5.4": "keyboard.html",
+  "2.5.5": "keyboard.html",
+  "2.5.6": "keyboard.html",
+  "2.5.7": "keyboard.html",
+  "2.5.8": "keyboard.html",
+  // 3.1 – Readable
+  "3.1.1": "language.html",
+  "3.1.2": "language.html",
+  "3.1.3": "language.html",
+  "3.1.4": "language.html",
+  "3.1.5": "language.html",
+  "3.1.6": "language.html",
+  // 3.2 – Predictable
+  "3.2.1": "keyboard.html",
+  "3.2.2": "forms.html",
+  "3.2.3": "repetitive.html",
+  "3.2.4": "repetitive.html",
+  "3.2.5": "repetitive.html",
+  "3.2.6": "repetitive.html",         // WCAG 2.2
+  // 3.3 – Input Assistance
+  "3.3.1": "forms.html",
+  "3.3.2": "forms.html",
+  "3.3.3": "forms.html",
+  "3.3.4": "forms.html",
+  "3.3.5": "forms.html",
+  "3.3.6": "forms.html",
+  "3.3.7": "forms.html",              // WCAG 2.2
+  "3.3.8": "forms.html",              // WCAG 2.2
+  "3.3.9": "forms.html",              // WCAG 2.2
+  // 4.1 – Compatible
+  "4.1.1": "parsing.html",
+  "4.1.2": "forms.html",
+  "4.1.3": "forms.html",              // WCAG 2.1 – status messages
+};
+
+/**
+ * Step-level URL overrides: maps a full TT step ID (e.g. "1.3.1.B") to a
+ * more precise TT page when the SC-level mapping would be less specific.
+ */
+const TT_STEP_PAGE_OVERRIDE = {
+  "1.3.1.B": "tables.html",   // Data Table Structure
+  "2.4.6.B": "forms.html",    // Label Descriptiveness
+};
+
+/**
+ * Returns the full TrustedTester URL for a given step ID (e.g. "1.4.2.A").
+ * Checks TT_STEP_PAGE_OVERRIDE first, then falls back to the SC-level mapping
+ * in TT_SC_PAGE, and finally to appendixa.html for any unmapped SC.
+ *
+ * @param {string} stepId - TT step ID in "X.Y.Z.Letter" format.
+ * @returns {string} Full URL to the relevant TrustedTester section page.
+ */
+function ttStepUrl(stepId) {
+  if (TT_STEP_PAGE_OVERRIDE[stepId]) {
+    return TT_BASE_URL + TT_STEP_PAGE_OVERRIDE[stepId];
+  }
+  const sc = stepId.split(".").slice(0, 3).join(".");
+  return TT_BASE_URL + (TT_SC_PAGE[sc] ?? "appendixa.html");
+}
+
+/**
+ * Returns the full TrustedTester URL for a given WCAG SC number (e.g. "1.4.2").
+ * Falls back to appendixa.html for any unmapped SC.
+ *
+ * @param {string} scNum - WCAG SC number in "X.Y.Z" format.
+ * @returns {string} Full URL to the relevant TrustedTester section page.
+ */
+function ttScUrl(scNum) {
+  return TT_BASE_URL + (TT_SC_PAGE[scNum] ?? "appendixa.html");
+}
+
 /** @type {{ meta: object, success_criteria: Record<string, SCEntry> } | null} */
 let spineData = null;
 
@@ -373,7 +524,7 @@ function buildCard(num, entry) {
               <ul class="step-list" aria-label="Trusted Tester test steps">
                 ${steps.map(s => {
                   const stepId = s.split(" - ")[0];
-                  return `<li><a class="tt-step-link" href="https://section508coordinators.github.io/TrustedTester/appendixa.html" target="_blank" rel="noopener noreferrer" title="Trusted Tester step ${escapeAttr(stepId)}">${escapeHTML(s)}</a></li>`;
+                  return `<li><a class="tt-step-link" href="${escapeAttr(ttStepUrl(stepId))}" target="_blank" rel="noopener noreferrer" title="Trusted Tester step ${escapeAttr(stepId)}">${escapeHTML(s)}</a></li>`;
                 }).join("")}
               </ul>
             </div>`
@@ -439,7 +590,7 @@ function renderTable() {
     const ttSteps = e.manual?.tt_steps ?? [];
     const ttStepLinks = ttSteps.map(s => {
       const stepId = s.split(" - ")[0];
-      return `<a href="https://section508coordinators.github.io/TrustedTester/appendixa.html" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
+      return `<a href="${escapeAttr(ttStepUrl(stepId))}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
     });
 
     return `
@@ -1097,9 +1248,9 @@ function renderDiagram() {
       lines.push("");
     }
 
-    // TT click → W3C WAI Trusted Tester implementations page
+    // TT click → most relevant TrustedTester section page for this SC
     if (ttLabel) {
-      lines.push(`  click ${ttId} href "https://section508coordinators.github.io/TrustedTester/index.html" _blank`);
+      lines.push(`  click ${ttId} href "${ttScUrl(num)}" _blank`);
       lines.push("");
     }
 

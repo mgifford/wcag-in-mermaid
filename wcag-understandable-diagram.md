@@ -156,69 +156,69 @@ graph LR
 
     click A_act_3_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/bf051a/" _blank
     click A_axe_3_1_1 href "https://dequeuniversity.com/rules/axe/4.11/html-has-lang" _blank
-    click A_alfa_3_1_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_3_1_1 href "https://alfa.siteimprove.com/rules/sia-r4" _blank
     click T_3_1_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_1 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_1 href "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html" _blank
     click A_act_3_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/de46e4/" _blank
     click A_axe_3_1_2 href "https://dequeuniversity.com/rules/axe/4.11/valid-lang" _blank
-    click A_alfa_3_1_2 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
+    click A_alfa_3_1_2 href "https://alfa.siteimprove.com/rules/sia-r5" _blank
     click T_3_1_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_2 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_2 href "https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html" _blank
     click T_3_1_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_3 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_3 href "https://www.w3.org/WAI/WCAG22/Understanding/unusual-words.html" _blank
     click T_3_1_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_4 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_4 href "https://www.w3.org/WAI/WCAG22/Understanding/abbreviations.html" _blank
     click T_3_1_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_5 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_5 href "https://www.w3.org/WAI/WCAG22/Understanding/reading-level.html" _blank
     click T_3_1_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
-    click TT_3_1_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_1_6 href "https://section508coordinators.github.io/TrustedTester/language.html" _blank
     click N3_1_6 href "https://www.w3.org/WAI/WCAG22/Understanding/pronunciation.html" _blank
     click T_3_2_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_2_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_1 href "https://section508coordinators.github.io/TrustedTester/keyboard.html" _blank
     click N3_2_1 href "https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html" _blank
     click T_3_2_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
-    click TT_3_2_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_2 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_2_2 href "https://www.w3.org/WAI/WCAG22/Understanding/on-input.html" _blank
     click T_3_2_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_3_2_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_3 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N3_2_3 href "https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html" _blank
     click T_3_2_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_2_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_4 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N3_2_4 href "https://www.w3.org/WAI/WCAG22/Understanding/consistent-identification.html" _blank
     click T_3_2_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
-    click TT_3_2_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_5 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N3_2_5 href "https://www.w3.org/WAI/WCAG22/Understanding/change-on-request.html" _blank
     click A_act_3_2_6 href "https://www.w3.org/WAI/standards-guidelines/act/rules/30b328/" _blank
-    click TT_3_2_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_2_6 href "https://section508coordinators.github.io/TrustedTester/repetitive.html" _blank
     click N3_2_6 href "https://www.w3.org/WAI/WCAG22/Understanding/consistent-help.html" _blank
     click T_3_3_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_1 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_1 href "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" _blank
     click T_3_3_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_2 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_2 href "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" _blank
     click T_3_3_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_3 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_3 href "https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" _blank
     click T_3_3_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_4 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_4 href "https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-legal-financial-data.html" _blank
     click T_3_3_5 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_5 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_5 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_5 href "https://www.w3.org/WAI/WCAG22/Understanding/help.html" _blank
     click T_3_3_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
-    click TT_3_3_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_6 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_6 href "https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-all.html" _blank
     click A_axe_3_3_7 href "https://dequeuniversity.com/rules/axe/4.11/no-redundant-entry" _blank
-    click TT_3_3_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_7 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_7 href "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html" _blank
-    click TT_3_3_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_8 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_8 href "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" _blank
-    click TT_3_3_9 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
+    click TT_3_3_9 href "https://section508coordinators.github.io/TrustedTester/forms.html" _blank
     click N3_3_9 href "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-enhanced.html" _blank
 ```
