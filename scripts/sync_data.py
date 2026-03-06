@@ -27,6 +27,10 @@ ARRM_WCAG_SC_URL = (
 ACT_RULES_URL = (
     "https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json"
 )
+TT_IMPLEMENTATIONS_URL = (
+    "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/"
+)
+# Section 508 Coordinator resources: https://github.com/Section508Coordinators
 
 # ---------------------------------------------------------------------------
 # ARRM URL mappings
@@ -335,7 +339,7 @@ def generate_mermaid_md(spine: dict) -> None:
         "SC nodes form a **vertical spine** running top to bottom in the centre.\n"
         "Automated testing tools (ACT, AXE, Alfa) branch off to the **left** of each SC.\n"
         "Responsible roles branch off to the **right** of each SC.\n"
-        "ARRM task IDs branch off from each SC node.\n"
+        "ARRM task IDs and Trusted Tester steps branch off from each SC node.\n"
         "(`graph LR` is used so that root SC nodes stack vertically, not horizontally.)\n"
         "\n"
         "**Legend**\n"
@@ -348,6 +352,7 @@ def generate_mermaid_md(spine: dict) -> None:
         "| 🟡 Yellow | AXE Automated Rules |\n"
         "| 🩷 Pink | Alfa Automated Rules |\n"
         "| 🟦 Indigo | ARRM Task IDs |\n"
+        "| 🟩 Teal | Trusted Tester v5 |\n"
         "\n"
     )
 
@@ -362,6 +367,7 @@ def generate_mermaid_md(spine: dict) -> None:
     node_lines.append("    classDef axe  fill:#fffde7,stroke:#f57f17,color:#000")
     node_lines.append("    classDef alfa fill:#fce4ec,stroke:#880e4f,color:#000")
     node_lines.append("    classDef arrm fill:#e8eaf6,stroke:#3949ab,color:#000")
+    node_lines.append("    classDef tt   fill:#e0f2f1,stroke:#00695c,color:#000")
     node_lines.append("")
 
     for sc_num, entry in sc_dict.items():
@@ -374,6 +380,7 @@ def generate_mermaid_md(spine: dict) -> None:
         axe_ids    = a.get("axe", [])
         alfa_ids   = a.get("alfa", [])
         roles      = m.get("roles", [])
+        tt_steps   = m.get("tt_steps", [])
         arrm_tasks = m.get("arrm_tasks", [])
 
         node_lines.append(f"    {sc_node}(({sc_num})):::sc")
@@ -422,7 +429,7 @@ def generate_mermaid_md(spine: dict) -> None:
             safe_role_label = role.replace('"', "'")
             node_lines.append(f'    {sc_node} --> {role_node}["{safe_role_label}"]:::role')
 
-        # --- ARRM task-IDs node (new) ---
+        # --- ARRM task-IDs node ---
         if arrm_tasks:
             task_ids = [t["id"] for t in arrm_tasks]
             if len(task_ids) <= _ARRM_IDS_IN_NODE:
@@ -439,6 +446,24 @@ def generate_mermaid_md(spine: dict) -> None:
             )
             click_lines.append(
                 f'    click {arrm_node} href "{category_url}" _blank'
+            )
+
+        # --- Trusted Tester node ---
+        if tt_steps:
+            step_ids = [s.split(" - ")[0] for s in tt_steps]
+            _TT_IDS_IN_NODE = 4
+            if len(step_ids) <= _TT_IDS_IN_NODE:
+                tt_label = "TT: " + ", ".join(step_ids)
+            else:
+                tt_label = (
+                    "TT: " + ", ".join(step_ids[:_TT_IDS_IN_NODE])
+                    + f" +{len(step_ids) - _TT_IDS_IN_NODE} more"
+                )
+            tt_node = f"TT_{safe}"
+            node_lines.append(f'    {sc_node} --> {tt_node}["{tt_label}"]:::tt')
+            click_lines.append(
+                f'    click {tt_node} href '
+                '"https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank'
             )
 
         # SC click
@@ -482,6 +507,8 @@ def main() -> None:
     merge_into_spine(spine, act_map, roles_map, tasks_map)
 
     spine["meta"]["generated"] = date.today().isoformat()
+    spine["meta"].setdefault("sources", {})["trusted_tester"] = TT_IMPLEMENTATIONS_URL
+    spine["meta"]["sources"]["section508_coordinators"] = "https://github.com/Section508Coordinators"
 
     print(f"Writing {OUTPUT_FILE} …")
     with OUTPUT_FILE.open("w", encoding="utf-8") as fh:
