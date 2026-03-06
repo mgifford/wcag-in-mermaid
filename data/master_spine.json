@@ -7,7 +7,7 @@
       "arrm": "https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-all-tasks.csv",
       "axe_core": "https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md",
       "alfa": "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md",
-      "trusted_tester": "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/",
+      "trusted_tester": "https://section508coordinators.github.io/TrustedTester/index.html",
       "section508_coordinators": "https://github.com/Section508Coordinators"
     },
     "axe_version": "4.11",

@@ -319,12 +319,12 @@ function buildCard(num, entry) {
         ${steps.length > 0
           ? `<div class="tt-section">
               <div class="tt-sub-header">
-                🔬 <a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" target="_blank" rel="noopener noreferrer" title="W3C WAI: Trusted Tester implementation overview">Trusted Tester v5</a>
+                🔬 <a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer" title="Section 508 Trusted Tester v5 resource">Trusted Tester v5</a>
               </div>
               <ul class="step-list" aria-label="Trusted Tester test steps">
                 ${steps.map(s => {
                   const stepId = s.split(" - ")[0];
-                  return `<li><a class="tt-step-link" href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer" title="Trusted Tester step ${escapeAttr(stepId)}">${escapeHTML(s)}</a></li>`;
+                  return `<li><a class="tt-step-link" href="https://section508coordinators.github.io/TrustedTester/appendixa.html" target="_blank" rel="noopener noreferrer" title="Trusted Tester step ${escapeAttr(stepId)}">${escapeHTML(s)}</a></li>`;
                 }).join("")}
               </ul>
             </div>`
@@ -390,7 +390,7 @@ function renderTable() {
     const ttSteps = e.manual?.tt_steps ?? [];
     const ttStepLinks = ttSteps.map(s => {
       const stepId = s.split(" - ")[0];
-      return `<a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
+      return `<a href="https://section508coordinators.github.io/TrustedTester/appendixa.html" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
     });
 
     return `
@@ -417,7 +417,7 @@ function renderTable() {
           <th scope="col">Principle</th>
           <th scope="col">Automated Rules</th>
           <th scope="col">Roles</th>
-          <th scope="col"><a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" target="_blank" rel="noopener noreferrer" style="color:#fff">Trusted Tester</a></th>
+          <th scope="col"><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer" style="color:#fff">Trusted Tester</a></th>
           <th scope="col">ARRM Tasks</th>
           <th scope="col">Coverage</th>
         </tr>
@@ -744,7 +744,7 @@ function renderDiagram() {
 
     // TT click → W3C WAI Trusted Tester implementations page
     if (ttLabel) {
-      lines.push(`  click ${ttId} href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank`);
+      lines.push(`  click ${ttId} href "https://section508coordinators.github.io/TrustedTester/index.html" _blank`);
       lines.push("");
     }
 

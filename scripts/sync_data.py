@@ -28,7 +28,7 @@ ACT_RULES_URL = (
     "https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json"
 )
 TT_IMPLEMENTATIONS_URL = (
-    "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/"
+    "https://section508coordinators.github.io/TrustedTester/index.html"
 )
 # Section 508 Coordinator resources: https://github.com/Section508Coordinators
 
@@ -619,7 +619,7 @@ def _build_principle_diagram(sc_dict: dict, axe_version: str = AXE_VERSION_FALLB
             node_lines.append(f'    {sc_node} --> {tt_node}["{tt_label}"]:::tt')
             click_lines.append(
                 f'    click {tt_node} href '
-                '"https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank'
+                '"https://section508coordinators.github.io/TrustedTester/index.html" _blank'
             )
 
         # SC click
