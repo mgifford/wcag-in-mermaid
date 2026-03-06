@@ -800,6 +800,269 @@ main {
   .tag-qw { background: #001a00; color: #66bb6a; border-color: #1b5e20; }
 }
 
+/* ----- Coverage view --------------------------------------- */
+
+#coverage-view {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cov-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+}
+
+.cov-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--color-text);
+}
+
+.cov-sub-heading {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.cov-intro-text {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  margin-bottom: 16px;
+  max-width: 75ch;
+}
+
+/* Summary stat cards */
+
+.cov-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.cov-stat {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cov-stat-full    { border-left: 4px solid var(--color-auto); }
+.cov-stat-partial { border-left: 4px solid #f57c00; }
+.cov-stat-none    { border-left: 4px solid var(--color-muted); }
+
+.cov-stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.cov-stat-full    .cov-stat-value { color: var(--color-auto); }
+.cov-stat-partial .cov-stat-value { color: #f57c00; }
+.cov-stat-none    .cov-stat-value { color: var(--color-muted); }
+
+.cov-stat-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.cov-stat-pct {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.cov-stat-desc {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin-top: 6px;
+}
+
+/* Method cards */
+
+.cov-method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.cov-method-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.cov-method-auto  { border-top: 3px solid var(--color-auto); }
+.cov-method-manual { border-top: 3px solid var(--color-manual); }
+
+.cov-method-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.cov-method-card ul {
+  padding-left: 20px;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.cov-method-card li {
+  margin-bottom: 2px;
+}
+
+.cov-method-card code {
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-size: 0.85em;
+  background: var(--color-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.cov-method-note {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  background: var(--color-bg);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+}
+
+.cov-engine-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+.cov-engine-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 10px;
+  font-size: 0.82rem;
+}
+
+.cov-engine-list dt {
+  font-weight: 700;
+}
+
+.cov-engine-list dd {
+  color: var(--color-muted);
+}
+
+/* Coverage tables */
+
+.cov-table-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.cov-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.cov-table th {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.cov-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.cov-table tbody tr:hover { background: var(--color-bg); }
+
+.cov-num { text-align: right; }
+.cov-full    { color: var(--color-auto); }
+.cov-partial { color: #f57c00; }
+.cov-none    { color: var(--color-muted); }
+.cov-pct     { font-size: 0.75em; opacity: 0.75; }
+
+.cov-partial-table td:last-child {
+  white-space: nowrap;
+}
+
+.cov-engine-yes {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--color-auto-bg);
+  color: var(--color-auto);
+  margin-right: 3px;
+}
+
+.cov-engine-gap {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  margin-right: 3px;
+}
+
+/* Resource cards */
+
+.cov-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.cov-resource-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.cov-resource-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+
+.cov-resource-list {
+  padding-left: 18px;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  list-style: disc;
+}
+
+/* Dark mode */
+
+@media (prefers-color-scheme: dark) {
+  .cov-stat { background: #1e293b; }
+  .cov-method-card { background: #1e293b; }
+  .cov-method-note { background: #0f172a; }
+  .cov-resource-card { background: #1e293b; }
+  .cov-engine-yes { background: #0d2a0d; color: #81c784; }
+  .cov-table tbody tr:hover { background: #0d2137; }
+  .cov-table th { background: #0d47a1; }
+}
+
 /* ----- Footer ---------------------------------------------- */
 
 footer {

@@ -79,6 +79,10 @@ const VIEW_DESCRIPTIONS = {
            "(axe-core, Alfa, Equal Access, QualWeb) implement it. " +
            "A second section lists engine-specific rules not yet mapped to a W3C ACT rule. " +
            "Use this view to evaluate automated testing tool coverage or compare engine implementations.",
+  coverage: "Understand the automation coverage landscape for WCAG 2.2 Success Criteria. " +
+            "See which SCs are fully covered by automated rules, which are only partially covered, " +
+            "and which require entirely manual testing. Automated tools can only test a portion of each SC — " +
+            "this view highlights the gaps and helps you plan a complete testing strategy.",
 };
 
 /* ------------------------------------------------------------------ */
@@ -225,6 +229,7 @@ function switchView(view, updateHash = true) {
   document.getElementById("cards-view").hidden   = view !== "cards";
   document.getElementById("table-view").hidden   = view !== "table";
   document.getElementById("act-view").hidden     = view !== "act";
+  document.getElementById("coverage-view").hidden = view !== "coverage";
   const descEl = document.getElementById("view-description");
   if (descEl) {
     descEl.textContent = VIEW_DESCRIPTIONS[view] ?? "";
@@ -237,6 +242,7 @@ function renderCurrentView() {
   if (currentView === "diagram") renderDiagram();
   else if (currentView === "cards") renderCards();
   else if (currentView === "act") renderActRules();
+  else if (currentView === "coverage") renderCoverage();
   else renderTable();
 }
 
@@ -671,6 +677,312 @@ function renderActRules() {
   container.appendChild(fragment);
 }
 
+/* ------------------------------------------------------------------ */
+/*  Coverage view                                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Coverage view — analyses automation coverage across all WCAG 2.2 SCs and
+ * explains manual vs automated testing.
+ *
+ * Sections:
+ *  1. Summary statistics (full / partial / none across all 86 SCs)
+ *  2. What automation can and cannot test — methodology explanation
+ *  3. Breakdown table: partially-covered SCs showing which engines are present
+ *  4. Resource links for further reading
+ */
+function renderCoverage() {
+  const container = document.getElementById("coverage-view");
+  const allSC = Object.entries(spineData.success_criteria);
+
+  /* ----- Compute statistics over ALL SCs (not just filtered) ---------- */
+  const stats = { full: [], partial: [], none: [] };
+  const byPrinciple = {};
+  const byLevel = { A: { full: 0, partial: 0, none: 0 }, AA: { full: 0, partial: 0, none: 0 }, AAA: { full: 0, partial: 0, none: 0 } };
+
+  for (const [num, entry] of allSC) {
+    const count = automationCount(entry);
+    const cat   = count === 3 ? "full" : count > 0 ? "partial" : "none";
+    stats[cat].push(num);
+
+    const principle = entry.principle ?? "Unknown";
+    if (!byPrinciple[principle]) byPrinciple[principle] = { full: 0, partial: 0, none: 0, total: 0 };
+    byPrinciple[principle][cat]++;
+    byPrinciple[principle].total++;
+
+    const level = entry.level ?? "?";
+    if (byLevel[level]) byLevel[level][cat]++;
+  }
+
+  const total = allSC.length;
+  const pct = n => Math.round(n / total * 100);
+
+  const fragment = document.createDocumentFragment();
+
+  /* ----- 1. Summary statistics --------------------------------------- */
+  const summarySection = document.createElement("section");
+  summarySection.className = "cov-section";
+  summarySection.setAttribute("aria-labelledby", "cov-summary-heading");
+  summarySection.innerHTML = `
+    <h2 id="cov-summary-heading" class="cov-heading">Automation Coverage Summary</h2>
+    <p class="cov-intro-text">
+      Of the ${total} WCAG 2.2 Success Criteria, only a fraction can be tested automatically.
+      "Full coverage" means all three major rule engines (ACT&nbsp;Rules, axe-core, and Alfa) have
+      at least one rule mapped to the SC. Even fully-covered SCs are only partially verifiable
+      by automation — automated tools find concrete technical violations but cannot assess
+      context, intent, or subjective quality.
+    </p>
+    <div class="cov-stat-grid" role="list" aria-label="Automation coverage statistics">
+      <div class="cov-stat cov-stat-full" role="listitem">
+        <span class="cov-stat-value">${stats.full.length}</span>
+        <span class="cov-stat-label">Fully covered</span>
+        <span class="cov-stat-pct">${pct(stats.full.length)}% of SCs</span>
+        <p class="cov-stat-desc">ACT Rules, axe-core, and Alfa all have at least one rule mapped.</p>
+      </div>
+      <div class="cov-stat cov-stat-partial" role="listitem">
+        <span class="cov-stat-value">${stats.partial.length}</span>
+        <span class="cov-stat-label">Partially covered</span>
+        <span class="cov-stat-pct">${pct(stats.partial.length)}% of SCs</span>
+        <p class="cov-stat-desc">At least one engine has rules, but not all three engines are represented.</p>
+      </div>
+      <div class="cov-stat cov-stat-none" role="listitem">
+        <span class="cov-stat-value">${stats.none.length}</span>
+        <span class="cov-stat-label">No automation</span>
+        <span class="cov-stat-pct">${pct(stats.none.length)}% of SCs</span>
+        <p class="cov-stat-desc">No automated rules are mapped. These SCs require entirely manual testing.</p>
+      </div>
+    </div>`;
+  fragment.appendChild(summarySection);
+
+  /* ----- 2. What automation can and cannot test ---------------------- */
+  const methodSection = document.createElement("section");
+  methodSection.className = "cov-section";
+  methodSection.setAttribute("aria-labelledby", "cov-method-heading");
+  methodSection.innerHTML = `
+    <h2 id="cov-method-heading" class="cov-heading">Manual vs Automated Testing</h2>
+    <div class="cov-method-grid">
+      <div class="cov-method-card cov-method-auto">
+        <h3 class="cov-method-title">🤖 Automated Testing</h3>
+        <p>Automated rules run programmatically against rendered HTML and can reliably detect:</p>
+        <ul>
+          <li>Missing or empty <code>alt</code> attributes on images</li>
+          <li>Insufficient colour contrast ratios</li>
+          <li>Form inputs without associated labels</li>
+          <li>Missing page <code>&lt;title&gt;</code> or landmark structure</li>
+          <li>Interactive elements not reachable by keyboard</li>
+          <li>ARIA attributes used incorrectly</li>
+        </ul>
+        <p class="cov-method-note">
+          <strong>Limitation:</strong> Automated tools cover an estimated
+          <a href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/" target="_blank" rel="noopener noreferrer">~57% of accessibility issues, according to Deque's study</a>.
+          They cannot judge context, meaning, or user experience.
+        </p>
+        <h4 class="cov-engine-heading">Rule engines tracked in this dashboard</h4>
+        <dl class="cov-engine-list">
+          <dt><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules</a></dt>
+          <dd>W3C standard test rules; vendor-neutral and interoperable. Implemented by multiple engines.</dd>
+          <dt><a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener noreferrer">axe-core</a> (Deque)</dt>
+          <dd>Open-source engine powering axe DevTools, browser extensions, and CI integrations.</dd>
+          <dt><a href="https://github.com/siteimprove/alfa" target="_blank" rel="noopener noreferrer">Alfa</a> (Siteimprove)</dt>
+          <dd>Open-source engine with a strong focus on ACT rule compliance and formal verification.</dd>
+        </dl>
+      </div>
+      <div class="cov-method-card cov-method-manual">
+        <h3 class="cov-method-title">👤 Manual Testing</h3>
+        <p>Manual testing is essential for SCs that require human judgement, including:</p>
+        <ul>
+          <li>Assessing whether alternative text is meaningful and accurate</li>
+          <li>Evaluating logical reading order and information structure</li>
+          <li>Verifying that instructions don't rely solely on colour or shape</li>
+          <li>Testing with real assistive technologies (screen readers, switch access)</li>
+          <li>Checking that time limits are appropriate for user tasks</li>
+          <li>Evaluating error messages for clarity and helpfulness</li>
+        </ul>
+        <p class="cov-method-note">
+          <strong>Key resources:</strong> The
+          <a href="https://www.w3.org/WAI/planning/arrm/" target="_blank" rel="noopener noreferrer">ARRM (Accessibility Roles and Responsibilities Mapping)</a>
+          defines which roles (UX Design, Front-End Development, Content Authoring, etc.) own each testing task.
+          The <a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer">DHS Trusted Tester v5</a>
+          provides step-by-step manual test procedures for Section 508 / WCAG conformance.
+        </p>
+        <h4 class="cov-engine-heading">Manual testing frameworks tracked</h4>
+        <dl class="cov-engine-list">
+          <dt><a href="https://www.w3.org/WAI/planning/arrm/" target="_blank" rel="noopener noreferrer">W3C ARRM</a></dt>
+          <dd>Maps every WCAG SC to the responsible roles and the tasks each role must perform.</dd>
+          <dt><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer">DHS Trusted Tester v5</a></dt>
+          <dd>Repeatable test procedures used by federal agencies; aligns with WCAG 2.x success criteria.</dd>
+        </dl>
+      </div>
+    </div>`;
+  fragment.appendChild(methodSection);
+
+  /* ----- 3. Breakdown by principle ----------------------------------- */
+  const principleSection = document.createElement("section");
+  principleSection.className = "cov-section";
+  principleSection.setAttribute("aria-labelledby", "cov-principle-heading");
+
+  const principleRows = Object.entries(byPrinciple)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([principle, counts]) => {
+      const fullPct    = Math.round(counts.full    / counts.total * 100);
+      const partialPct = Math.round(counts.partial / counts.total * 100);
+      const nonePct    = Math.round(counts.none    / counts.total * 100);
+      return `<tr>
+        <td>${escapeHTML(principle)}</td>
+        <td class="cov-num">${counts.total}</td>
+        <td class="cov-num cov-full">${counts.full} <span class="cov-pct">(${fullPct}%)</span></td>
+        <td class="cov-num cov-partial">${counts.partial} <span class="cov-pct">(${partialPct}%)</span></td>
+        <td class="cov-num cov-none">${counts.none} <span class="cov-pct">(${nonePct}%)</span></td>
+      </tr>`;
+    }).join("");
+
+  const levelRows = Object.entries(byLevel).map(([level, counts]) => {
+    const lvlTotal   = counts.full + counts.partial + counts.none;
+    const fullPct    = lvlTotal ? Math.round(counts.full    / lvlTotal * 100) : 0;
+    const partialPct = lvlTotal ? Math.round(counts.partial / lvlTotal * 100) : 0;
+    const nonePct    = lvlTotal ? Math.round(counts.none    / lvlTotal * 100) : 0;
+    return `<tr>
+      <td><span class="level-badge level-${escapeHTML(level)}">${escapeHTML(level)}</span></td>
+      <td class="cov-num">${lvlTotal}</td>
+      <td class="cov-num cov-full">${counts.full} <span class="cov-pct">(${fullPct}%)</span></td>
+      <td class="cov-num cov-partial">${counts.partial} <span class="cov-pct">(${partialPct}%)</span></td>
+      <td class="cov-num cov-none">${counts.none} <span class="cov-pct">(${nonePct}%)</span></td>
+    </tr>`;
+  }).join("");
+
+  principleSection.innerHTML = `
+    <h2 id="cov-principle-heading" class="cov-heading">Coverage by Principle &amp; Level</h2>
+    <div class="cov-table-pair">
+      <div>
+        <h3 class="cov-sub-heading">By WCAG Principle</h3>
+        <table class="cov-table" aria-label="Automation coverage by WCAG principle">
+          <thead>
+            <tr>
+              <th scope="col">Principle</th>
+              <th scope="col" class="cov-num">SCs</th>
+              <th scope="col" class="cov-num">Full</th>
+              <th scope="col" class="cov-num">Partial</th>
+              <th scope="col" class="cov-num">None</th>
+            </tr>
+          </thead>
+          <tbody>${principleRows}</tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="cov-sub-heading">By Conformance Level</h3>
+        <table class="cov-table" aria-label="Automation coverage by conformance level">
+          <thead>
+            <tr>
+              <th scope="col">Level</th>
+              <th scope="col" class="cov-num">SCs</th>
+              <th scope="col" class="cov-num">Full</th>
+              <th scope="col" class="cov-num">Partial</th>
+              <th scope="col" class="cov-num">None</th>
+            </tr>
+          </thead>
+          <tbody>${levelRows}</tbody>
+        </table>
+      </div>
+    </div>`;
+  fragment.appendChild(principleSection);
+
+  /* ----- 4. Partially-covered SCs ------------------------------------ */
+  const partialSection = document.createElement("section");
+  partialSection.className = "cov-section";
+  partialSection.setAttribute("aria-labelledby", "cov-partial-heading");
+
+  const partialRows = stats.partial
+    .sort()
+    .map(num => {
+      const entry = spineData.success_criteria[num];
+      const a = entry.automation ?? {};
+      const hasAct  = (a.act  ?? []).length > 0;
+      const hasAxe  = (a.axe  ?? []).length > 0;
+      const hasAlfa = (a.alfa ?? []).length > 0;
+
+      const actCell  = hasAct  ? `<span class="cov-engine-yes" aria-label="ACT Rules covered">✔ ACT</span>`  : `<span class="cov-engine-gap" aria-label="ACT Rules not covered">✖ ACT</span>`;
+      const axeCell  = hasAxe  ? `<span class="cov-engine-yes" aria-label="axe-core covered">✔ axe</span>`  : `<span class="cov-engine-gap" aria-label="axe-core not covered">✖ axe</span>`;
+      const alfaCell = hasAlfa ? `<span class="cov-engine-yes" aria-label="Alfa covered">✔ Alfa</span>` : `<span class="cov-engine-gap" aria-label="Alfa not covered">✖ Alfa</span>`;
+
+      return `<tr>
+        <td><a href="${escapeAttr(entry.url ?? "#")}" target="_blank" rel="noopener noreferrer">${escapeHTML(num)}</a></td>
+        <td>${escapeHTML(entry.title)}</td>
+        <td><span class="level-badge level-${escapeHTML(entry.level)}">${escapeHTML(entry.level)}</span></td>
+        <td>${actCell} ${axeCell} ${alfaCell}</td>
+      </tr>`;
+    }).join("");
+
+  partialSection.innerHTML = `
+    <h2 id="cov-partial-heading" class="cov-heading">Partially-Covered Success Criteria</h2>
+    <p class="cov-intro-text">
+      These ${stats.partial.length} SCs have at least one automated rule but are not covered by all three engines.
+      Engine gaps may reflect genuine tool limitations, rules in development, or proprietary-only implementations.
+      Treat these SCs as requiring both automated scanning and targeted manual review.
+    </p>
+    <table class="cov-table cov-partial-table" aria-label="Partially-covered WCAG 2.2 Success Criteria">
+      <thead>
+        <tr>
+          <th scope="col">SC</th>
+          <th scope="col">Title</th>
+          <th scope="col">Level</th>
+          <th scope="col">Engine coverage</th>
+        </tr>
+      </thead>
+      <tbody>${partialRows}</tbody>
+    </table>`;
+  fragment.appendChild(partialSection);
+
+  /* ----- 5. Resource links ------------------------------------------ */
+  const resourceSection = document.createElement("section");
+  resourceSection.className = "cov-section";
+  resourceSection.setAttribute("aria-labelledby", "cov-resources-heading");
+  resourceSection.innerHTML = `
+    <h2 id="cov-resources-heading" class="cov-heading">Resources &amp; Further Reading</h2>
+    <div class="cov-resource-grid">
+      <div class="cov-resource-card">
+        <h3 class="cov-resource-title">Specifications &amp; Standards</h3>
+        <ul class="cov-resource-list">
+          <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Specification</a> — W3C Recommendation</li>
+          <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Understanding Documents</a> — intent, techniques, and failure examples</li>
+          <li><a href="https://www.w3.org/WAI/standards-guidelines/act/" target="_blank" rel="noopener noreferrer">ACT Rules Framework</a> — W3C standard for writing automated test rules</li>
+          <li><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules Registry</a> — all published ACT rules with SC mappings</li>
+        </ul>
+      </div>
+      <div class="cov-resource-card">
+        <h3 class="cov-resource-title">Automated Testing Tools</h3>
+        <ul class="cov-resource-list">
+          <li><a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener noreferrer">axe-core</a> — Open-source accessibility engine by Deque Systems</li>
+          <li><a href="https://github.com/siteimprove/alfa" target="_blank" rel="noopener noreferrer">Alfa</a> — Open-source accessibility engine by Siteimprove</li>
+          <li><a href="https://www.ibm.com/able/toolkit/tools/" target="_blank" rel="noopener noreferrer">IBM Equal Access Checker</a> — free accessibility scanner</li>
+          <li><a href="https://qualweb.di.fc.ul.pt/" target="_blank" rel="noopener noreferrer">QualWeb</a> — open-source evaluator implementing ACT rules</li>
+          <li><a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/" target="_blank" rel="noopener noreferrer">ACT Implementations Registry</a> — which tools implement which ACT rules</li>
+        </ul>
+      </div>
+      <div class="cov-resource-card">
+        <h3 class="cov-resource-title">Manual Testing Frameworks</h3>
+        <ul class="cov-resource-list">
+          <li><a href="https://www.w3.org/WAI/planning/arrm/" target="_blank" rel="noopener noreferrer">W3C ARRM</a> — roles and tasks for each WCAG SC</li>
+          <li><a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer">DHS Trusted Tester v5</a> — step-by-step federal testing procedures</li>
+          <li><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer">Trusted Tester online reference</a> — full test procedure library</li>
+          <li><a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener noreferrer">Easy Checks — A First Review</a> — W3C quick manual checks</li>
+          <li><a href="https://www.w3.org/WAI/test-evaluate/conformance/wcag-em/" target="_blank" rel="noopener noreferrer">WCAG-EM</a> — Website Accessibility Conformance Evaluation Methodology</li>
+        </ul>
+      </div>
+      <div class="cov-resource-card">
+        <h3 class="cov-resource-title">Understanding Coverage Gaps</h3>
+        <ul class="cov-resource-list">
+          <li><a href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/" target="_blank" rel="noopener noreferrer">Deque: Automated testing covers ~57% of issues</a></li>
+          <li><a href="https://alphagov.github.io/wcag-primer/" target="_blank" rel="noopener noreferrer">GOV.UK WCAG 2.1 Primer</a> — plain-language SC explanations</li>
+          <li><a href="testing-methods.md" target="_blank" rel="noopener noreferrer">Testing Methods &amp; Resources</a> — this project's companion documentation</li>
+        </ul>
+      </div>
+    </div>`;
+  fragment.appendChild(resourceSection);
+
+  container.innerHTML = "";
+  container.appendChild(fragment);
+}
+
 
 
 function renderDiagram() {
@@ -826,7 +1138,7 @@ function handleHashNavigation() {
   if (!hash) return;
 
   // If the hash is a known tab name, switch to that tab
-  const TAB_VIEWS = ["cards", "diagram", "table", "act"];
+  const TAB_VIEWS = ["cards", "diagram", "table", "act", "coverage"];
   if (TAB_VIEWS.includes(hash)) {
     switchView(hash);
     return;
@@ -876,6 +1188,7 @@ function showLoading(show) {
   document.getElementById("cards-view").hidden   = show || currentView !== "cards";
   document.getElementById("table-view").hidden   = show || currentView !== "table";
   document.getElementById("act-view").hidden     = show || currentView !== "act";
+  document.getElementById("coverage-view").hidden = show || currentView !== "coverage";
 }
 
 function showError(msg) {
