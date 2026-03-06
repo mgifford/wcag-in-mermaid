@@ -280,13 +280,13 @@ graph LR
     click TT_2_3_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_3_3 href "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html" _blank
     click A_act_2_4_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/3e11da/" _blank
-    click A_axe_2_4_1 href "https://dequeuniversity.com/rules/axe/latest/bypass" _blank
+    click A_axe_2_4_1 href "https://dequeuniversity.com/rules/axe/4.11/bypass" _blank
     click A_alfa_2_4_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_2_4_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
     click TT_2_4_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_1 href "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html" _blank
     click A_act_2_4_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/2779a5/" _blank
-    click A_axe_2_4_2 href "https://dequeuniversity.com/rules/axe/latest/document-title" _blank
+    click A_axe_2_4_2 href "https://dequeuniversity.com/rules/axe/4.11/document-title" _blank
     click A_alfa_2_4_2 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_2_4_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#semantic-structure" _blank
     click TT_2_4_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
@@ -295,7 +295,7 @@ graph LR
     click TT_2_4_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_3 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" _blank
     click A_act_2_4_4 href "https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/" _blank
-    click A_axe_2_4_4 href "https://dequeuniversity.com/rules/axe/latest/link-name" _blank
+    click A_axe_2_4_4 href "https://dequeuniversity.com/rules/axe/4.11/link-name" _blank
     click A_alfa_2_4_4 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_2_4_4 href "https://www.w3.org/WAI/planning/arrm/tasks/#navigation" _blank
     click TT_2_4_4 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
@@ -319,14 +319,14 @@ graph LR
     click TT_2_4_10 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_10 href "https://www.w3.org/WAI/WCAG22/Understanding/section-headings.html" _blank
     click A_act_2_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/rules/04639e/" _blank
-    click A_axe_2_4_11 href "https://dequeuniversity.com/rules/axe/latest/focus-not-obscured" _blank
+    click A_axe_2_4_11 href "https://dequeuniversity.com/rules/axe/4.11/focus-not-obscured" _blank
     click A_alfa_2_4_11 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click TT_2_4_11 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_11 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html" _blank
     click TT_2_4_12 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_12 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-enhanced.html" _blank
     click A_act_2_4_13 href "https://www.w3.org/WAI/standards-guidelines/act/rules/674b10/" _blank
-    click A_axe_2_4_13 href "https://dequeuniversity.com/rules/axe/latest/focus-appearance" _blank
+    click A_axe_2_4_13 href "https://dequeuniversity.com/rules/axe/4.11/focus-appearance" _blank
     click A_alfa_2_4_13 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click TT_2_4_13 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_4_13 href "https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" _blank
@@ -337,7 +337,7 @@ graph LR
     click TT_2_5_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_5_2 href "https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html" _blank
     click A_act_2_5_3 href "https://www.w3.org/WAI/standards-guidelines/act/rules/2ee8b8/" _blank
-    click A_axe_2_5_3 href "https://dequeuniversity.com/rules/axe/latest/label-content-name-mismatch" _blank
+    click A_axe_2_5_3 href "https://dequeuniversity.com/rules/axe/4.11/label-content-name-mismatch" _blank
     click A_alfa_2_5_3 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_2_5_3 href "https://www.w3.org/WAI/planning/arrm/tasks/#input-modalities" _blank
     click TT_2_5_3 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
@@ -351,11 +351,11 @@ graph LR
     click T_2_5_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
     click TT_2_5_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_5_6 href "https://www.w3.org/WAI/WCAG22/Understanding/concurrent-input-mechanisms.html" _blank
-    click A_axe_2_5_7 href "https://dequeuniversity.com/rules/axe/latest/dragging-movements" _blank
+    click A_axe_2_5_7 href "https://dequeuniversity.com/rules/axe/4.11/dragging-movements" _blank
     click TT_2_5_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_5_7 href "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html" _blank
     click A_act_2_5_8 href "https://www.w3.org/WAI/standards-guidelines/act/rules/a25f45/" _blank
-    click A_axe_2_5_8 href "https://dequeuniversity.com/rules/axe/latest/target-size" _blank
+    click A_axe_2_5_8 href "https://dequeuniversity.com/rules/axe/4.11/target-size" _blank
     click A_alfa_2_5_8 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click TT_2_5_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N2_5_8 href "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" _blank

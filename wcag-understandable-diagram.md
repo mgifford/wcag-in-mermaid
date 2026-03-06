@@ -155,13 +155,13 @@ graph LR
     N3_3_9 --> TT_3_3_9["TT: 3.3.9.A"]:::tt
 
     click A_act_3_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/rules/bf051a/" _blank
-    click A_axe_3_1_1 href "https://dequeuniversity.com/rules/axe/latest/html-has-lang" _blank
+    click A_axe_3_1_1 href "https://dequeuniversity.com/rules/axe/4.11/html-has-lang" _blank
     click A_alfa_3_1_1 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_3_1_1 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
     click TT_3_1_1 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N3_1_1 href "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html" _blank
     click A_act_3_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/rules/de46e4/" _blank
-    click A_axe_3_1_2 href "https://dequeuniversity.com/rules/axe/latest/valid-lang" _blank
+    click A_axe_3_1_2 href "https://dequeuniversity.com/rules/axe/4.11/valid-lang" _blank
     click A_alfa_3_1_2 href "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" _blank
     click T_3_1_2 href "https://www.w3.org/WAI/planning/arrm/tasks/#static-content" _blank
     click TT_3_1_2 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
@@ -214,7 +214,7 @@ graph LR
     click T_3_3_6 href "https://www.w3.org/WAI/planning/arrm/tasks/#form-interactions" _blank
     click TT_3_3_6 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N3_3_6 href "https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-all.html" _blank
-    click A_axe_3_3_7 href "https://dequeuniversity.com/rules/axe/latest/no-redundant-entry" _blank
+    click A_axe_3_3_7 href "https://dequeuniversity.com/rules/axe/4.11/no-redundant-entry" _blank
     click TT_3_3_7 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
     click N3_3_7 href "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html" _blank
     click TT_3_3_8 href "https://www.w3.org/WAI/standards-guidelines/act/implementations/trusted-tester/" _blank
