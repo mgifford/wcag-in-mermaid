@@ -264,14 +264,23 @@ function renderTable() {
 
   const rows = entries.map(([num, e]) => {
     const a = e.automation ?? {};
-    const auto = [...(a.act ?? []).map(i => `ACT:${i}`), ...(a.axe ?? []).map(i => `axe:${i}`), ...(a.alfa ?? [])];
+    const actLinks  = (a.act  ?? []).map(i =>
+      `<a href="https://www.w3.org/WAI/standards-guidelines/act/rules/${encodeURIComponent(i)}/" target="_blank" rel="noopener noreferrer" title="ACT Rule ${escapeHTML(i)}">ACT:${escapeHTML(i)}</a>`
+    );
+    const axeLinks  = (a.axe  ?? []).map(i =>
+      `<a href="https://dequeuniversity.com/rules/axe/latest/${encodeURIComponent(i)}" target="_blank" rel="noopener noreferrer" title="Axe rule ${escapeHTML(i)}">axe:${escapeHTML(i)}</a>`
+    );
+    const alfaLinks = (a.alfa ?? []).map(i =>
+      `<a href="https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" target="_blank" rel="noopener noreferrer" title="Alfa rule ${escapeHTML(i)}">${escapeHTML(i)}</a>`
+    );
+    const allRuleLinks = [...actLinks, ...axeLinks, ...alfaLinks];
     return `
       <tr>
         <td>${escapeHTML(num)}</td>
         <td><a href="${escapeAttr(e.url ?? "#")}" target="_blank" rel="noopener noreferrer">${escapeHTML(e.title)}</a></td>
         <td><span class="level-badge level-${escapeHTML(e.level)}">${escapeHTML(e.level)}</span></td>
         <td>${escapeHTML(e.principle ?? "")}</td>
-        <td>${auto.length ? escapeHTML(auto.join(", ")) : '<span class="no-data">—</span>'}</td>
+        <td>${allRuleLinks.length ? allRuleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${escapeHTML((e.manual?.roles ?? []).join(", ") || "—")}</td>
         <td>${automationCount(e)}/3</td>
       </tr>`;
@@ -358,6 +367,16 @@ function renderDiagram() {
     lines.push(`    ${autoId} --- ${scId} --- ${manId}`);
     lines.push("  end");
     lines.push("");
+
+    // Add clickable links for SC and automation nodes
+    const wcagUrl = entry.url;
+    if (wcagUrl) {
+      lines.push(`  click ${scId} href "${wcagUrl}" _blank`);
+      if (autoItems.length > 0) {
+        lines.push(`  click ${autoId} href "${wcagUrl}" _blank`);
+      }
+      lines.push("");
+    }
 
     // Chain spine vertically
     if (idx > 0) {
