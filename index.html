@@ -125,6 +125,15 @@
       aria-controls="act-view"
       title="Browse by ACT rule ID to see which SCs each rule covers and which testing engines implement it"
     >ACT Rules</button>
+    <button
+      class="tab-btn"
+      role="tab"
+      aria-selected="false"
+      data-view="coverage"
+      id="tab-coverage"
+      aria-controls="coverage-view"
+      title="Understand automation coverage gaps — which Success Criteria have full, partial, or no automated test rules"
+    >Coverage</button>
   </div>
   <p id="view-description" class="view-description" role="status" aria-live="polite" hidden></p>
 
@@ -178,6 +187,16 @@
       <!-- ACT rule cards injected by app.js -->
     </section>
 
+    <!-- Coverage view -->
+    <section
+      id="coverage-view"
+      aria-labelledby="tab-coverage"
+      role="tabpanel"
+      hidden
+    >
+      <!-- Coverage analysis injected by app.js -->
+    </section>
+
   </main>
 
   <!-- ================================================================ -->
@@ -194,7 +213,8 @@
     </p>
     <p>
       <a href="https://github.com/mgifford/wcag-in-mermaid" target="_blank" rel="noopener noreferrer">GitHub</a> ·
-      <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Specification</a>
+      <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Specification</a> ·
+      <a href="https://github.com/mgifford/wcag-in-mermaid/blob/main/testing-methods.md" target="_blank" rel="noopener noreferrer">Testing Methods &amp; Resources</a>
     </p>
   </footer>
 

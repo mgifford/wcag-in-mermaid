@@ -29,13 +29,15 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 | **Left** 🤖 Automation | ACT Rule IDs · Axe-core rule IDs · Alfa rule IDs |
 | **Right** 👤 Human | ARRM responsibility roles · Trusted Tester procedure steps |
 
-### Three views
+### Five views
 
 | View | Description |
 |------|-------------|
 | **Cards** | Responsive card grid — the default view |
 | **Diagram** | Mermaid.js spine graph (first 20 filtered SCs) |
 | **Table** | Sortable/scannable data table |
+| **ACT Rules** | Browse by ACT rule ID, showing engine implementations |
+| **Coverage** | Automation coverage statistics and testing methodology |
 
 ### Filters
 
@@ -58,6 +60,7 @@ wcag-in-mermaid/
 │   └── master_spine.json               # Merged WCAG 2.2 data (auto-updated daily)
 ├── scripts/
 │   └── sync_data.py                    # Python data orchestrator
+├── testing-methods.md                  # Testing methodology & resource documentation
 ├── wcag-sc-roles-diagram.md            # Index linking to per-principle diagrams
 ├── wcag-perceivable-diagram.md         # Principle 1 – Perceivable (1.x.x)
 ├── wcag-operable-diagram.md            # Principle 2 – Operable (2.x.x)
@@ -150,6 +153,17 @@ Pull requests are welcome! To add or correct a rule mapping:
 
 1. Edit `data/master_spine.json` directly, **or**
 2. Update `scripts/sync_data.py` if the source data format changes.
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [`testing-methods.md`](testing-methods.md) | Testing methodology, resource links, and coverage gap analysis |
+| [`examples/MERMAID_ACCESSIBILITY_BEST_PRACTICES.md`](examples/MERMAID_ACCESSIBILITY_BEST_PRACTICES.md) | How to write accessible Mermaid diagrams |
+| [`ACCESSIBILITY.md`](ACCESSIBILITY.md) | Project accessibility commitments |
+| [`wcag-sc-roles-diagram.md`](wcag-sc-roles-diagram.md) | Per-principle static Mermaid diagrams |
 
 ---
 
