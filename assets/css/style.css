@@ -51,11 +51,25 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+/* ----- Visually hidden (for accessible link text) ---------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ----- Skip link ------------------------------------------- */
 
 .skip-link {
   position: absolute;
-  top: -999px;
+  top: -100%;
   left: 6px;
   z-index: 9999;
   padding: 8px 14px;
@@ -68,6 +82,12 @@ a:focus-visible {
 
 .skip-link:focus {
   top: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link {
+    transition: top 0.1s ease;
+  }
 }
 
 /* ----- Header ---------------------------------------------- */
@@ -256,6 +276,17 @@ main {
 .sc-card:target {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.sc-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove the default focus ring that some browsers add to tabindex="-1" elements
+   when focused via a script; the .highlighted animation provides visual feedback. */
+.sc-card:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .sc-card-header {

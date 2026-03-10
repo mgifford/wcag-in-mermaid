@@ -436,6 +436,7 @@ function buildCard(num, entry) {
   card.className = "sc-card";
   card.id = `sc-${num.replace(/\./g, "_")}`;
   card.dataset.sc = num;
+  card.setAttribute("tabindex", "-1"); // allows programmatic focus from hash navigation
 
   const a = entry.automation ?? {};
   const m = entry.manual ?? {};
@@ -1328,6 +1329,7 @@ function handleHashNavigation() {
     if (el) {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       el.scrollIntoView({ behavior: prefersReducedMotion ? "instant" : "smooth", block: "center" });
+      el.focus({ preventScroll: true });
       el.classList.remove("highlighted");
       void el.offsetWidth; // trigger reflow
       el.classList.add("highlighted");
