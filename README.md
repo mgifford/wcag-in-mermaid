@@ -99,13 +99,16 @@ wcag-in-mermaid/
 
 ## Data Sources
 
-| Source | URL |
-|--------|-----|
-| W3C ARRM (roles & tasks) | https://github.com/w3c/wai-arrm/tree/draft/_data/arrm |
-| ACT Rules Registry | https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json |
-| Axe-core Rules | https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md |
-| Alfa Rules (Siteimprove) | https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md |
-| DHS Trusted Tester | https://section508.gov/test/trusted-tester/ |
+| Source | URL | Machine-readable |
+|--------|-----|-----------------|
+| W3C ARRM (roles & tasks) | https://github.com/w3c/wai-arrm/tree/draft/_data/arrm | ✔ CSV |
+| ACT Rules Mapping (W3C GitHub) | https://github.com/w3c/wcag-act-rules/blob/main/wcag-mapping.json | ✔ JSON |
+| ACT Rules Registry (human-readable) | https://www.w3.org/WAI/standards-guidelines/act/rules/ | ✘ HTML only |
+| EARL ACT document | https://github.com/w3c/wcag-act/blob/main/earl-act.json | ✔ JSON-LD |
+| ACT Tools | https://github.com/act-rules/act-tools/ | ✔ (library) |
+| Axe-core Rules | https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md | ✘ Markdown |
+| Alfa Rules (Siteimprove) | https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md | ✘ Markdown |
+| DHS Trusted Tester | https://section508.gov/test/trusted-tester/ | ✘ HTML only |
 
 ---
 
@@ -117,7 +120,7 @@ python scripts/sync_data.py
 ```
 
 The script:
-1. Downloads the latest ARRM CSV and ACT Rules JSON from W3C.
+1. Downloads the latest ARRM CSV and ACT Rules mapping JSON from W3C / GitHub.
 2. Merges them by SC number into `data/master_spine.json`.
 3. Prints a summary of how many mappings were updated.
 

@@ -240,14 +240,16 @@ Use the **Automation** filter to focus on a specific tier:
 
 ### Data sources used by this project
 
-| Source | URL |
-|--------|-----|
-| W3C ARRM (roles & tasks) | https://github.com/w3c/wai-arrm/tree/draft/_data/arrm |
-| ACT Rules Registry | https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json |
-| axe-core rules | https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md |
-| Alfa rules | https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md |
-| DHS Trusted Tester | https://section508.gov/test/trusted-tester/ |
-| Section 508 Coordinators | https://github.com/Section508Coordinators |
+| Source | URL | Machine-readable |
+|--------|-----|-----------------|
+| W3C ARRM (roles & tasks) | https://github.com/w3c/wai-arrm/tree/draft/_data/arrm | ✔ CSV |
+| ACT Rules Mapping (primary source) | https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json | ✔ JSON |
+| ACT Rules Registry (human-readable) | https://www.w3.org/WAI/standards-guidelines/act/rules/ | ✘ HTML only |
+| EARL ACT document | https://github.com/w3c/wcag-act/blob/main/earl-act.json | ✔ JSON-LD |
+| axe-core rules | https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md | ✘ Markdown |
+| Alfa rules | https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md | ✘ Markdown |
+| DHS Trusted Tester | https://section508.gov/test/trusted-tester/ | ✘ HTML only |
+| Section 508 Coordinators | https://github.com/Section508Coordinators | ✘ HTML only |
 
 ---
 

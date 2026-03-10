@@ -33,12 +33,17 @@ ARRM_ALL_TASKS_URL = (
 ARRM_WCAG_SC_URL = (
     "https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-wcag-sc.csv"
 )
+# Machine-readable WCAG-to-ACT mapping published by W3C in the wcag-act-rules GitHub repo.
+# This replaced the former rules.json endpoint at
+#   https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json
+# which is no longer available.  Each entry includes an "accessibility_requirements" dict
+# with keys like "wcag20:1.3.1" / "wcag21:1.3.5" (primary and secondary SCs).
 ACT_RULES_URL = (
-    "https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json"
+    "https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json"
 )
-# W3C ACT testcases JSON — lists every test case with its ACT rule ID and WCAG SC(s).
-# This is richer than rules.json for secondary-SC coverage (e.g. a contrast rule mapping
-# to both 1.4.3 and 1.4.6 will appear here for both criteria).
+# W3C ACT testcases JSON — supplemental secondary-SC coverage.  The wcag-mapping.json
+# already includes secondary requirements via accessibility_requirements, so this source
+# is now a secondary enrichment only.  Fetch failures are handled gracefully.
 ACT_TESTCASES_URL = (
     "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases.json"
 )
@@ -444,10 +449,23 @@ def _extract_implementations(rule: dict) -> dict[str, list[str]]:
 
 def fetch_act_rules() -> tuple[dict[str, list[str]], dict[str, dict]]:
     """
-    Download ACT rules JSON and return:
+    Download the W3C ACT rules mapping JSON and return:
       1. SC-to-ACT mapping: ``{ "X.Y.Z": ["rule_id", ...], ... }``
       2. ACT-rule-to-implementations mapping:
          ``{ "rule_id": {"axe": [...], "alfa": [...], "equal_access": [...], "qualweb": [...]}, ... }``
+
+    Supports two JSON formats:
+
+    **wcag-mapping.json** (current, hosted on GitHub):
+    ``{"act-rules": [{"frontmatter": {"id": "...", "accessibility_requirements":
+    {"wcag20:1.3.1": {...}, ...}}, ...}]}``
+
+    SC numbers are extracted from ``accessibility_requirements`` keys with a
+    ``wcag20:``, ``wcag21:``, or ``wcag22:`` prefix; both primary (``forConformance``)
+    and secondary associations are included.
+
+    **Legacy rules.json** (no longer available at the original W3C URL):
+    list or ``{"rules": [...]}`` with ``id`` and ``successCriteria`` fields.
 
     The second dict is populated only when the source JSON includes
     ``implementations`` data for each rule; it will be empty otherwise.
@@ -463,23 +481,45 @@ def fetch_act_rules() -> tuple[dict[str, list[str]], dict[str, dict]]:
         print(f"  WARNING: ACT rules JSON decode error: {exc}", file=sys.stderr)
         return sc_to_act, act_implementations
 
-    # The rules.json structure may vary; support both list and dict forms.
-    rule_list = rules if isinstance(rules, list) else rules.get("rules", [])
-    for rule in rule_list:
-        rule_id = rule.get("id", "")
-        sc_nums = rule.get("successCriteria", []) or rule.get("sc", []) or []
-        for sc_raw in sc_nums:
-            sc = normalise_sc(str(sc_raw))
-            if sc:
-                sc_to_act.setdefault(sc, [])
-                if rule_id and rule_id not in sc_to_act[sc]:
-                    sc_to_act[sc].append(rule_id)
-
-        # Extract per-engine implementation data when present.
-        if rule_id:
-            impl = _extract_implementations(rule)
-            if any(impl.values()):
-                act_implementations[rule_id] = impl
+    if isinstance(rules, dict) and "act-rules" in rules:
+        # wcag-mapping.json format: {"act-rules": [{...}, ...]}
+        rule_list = rules["act-rules"]
+        for rule in rule_list:
+            # Skip deprecated rules — they are no longer active ACT rules.
+            if rule.get("deprecated", False):
+                continue
+            fm = rule.get("frontmatter", {})
+            rule_id = fm.get("id", "") or rule.get("id", "")
+            # SC numbers live in accessibility_requirements keys like "wcag20:1.3.1".
+            reqs = fm.get("accessibility_requirements") or {}
+            for req_key in reqs:
+                if req_key.startswith(("wcag20:", "wcag21:", "wcag22:")):
+                    sc_raw = req_key.split(":", 1)[1]
+                    sc = normalise_sc(sc_raw)
+                    if sc and rule_id:
+                        sc_to_act.setdefault(sc, [])
+                        if rule_id not in sc_to_act[sc]:
+                            sc_to_act[sc].append(rule_id)
+            if rule_id:
+                impl = _extract_implementations(rule)
+                if any(impl.values()):
+                    act_implementations[rule_id] = impl
+    else:
+        # Legacy rules.json format: list or {"rules": [...]}
+        rule_list = rules if isinstance(rules, list) else rules.get("rules", [])
+        for rule in rule_list:
+            rule_id = rule.get("id", "")
+            sc_nums = rule.get("successCriteria", []) or rule.get("sc", []) or []
+            for sc_raw in sc_nums:
+                sc = normalise_sc(str(sc_raw))
+                if sc:
+                    sc_to_act.setdefault(sc, [])
+                    if rule_id and rule_id not in sc_to_act[sc]:
+                        sc_to_act[sc].append(rule_id)
+            if rule_id:
+                impl = _extract_implementations(rule)
+                if any(impl.values()):
+                    act_implementations[rule_id] = impl
 
     return sc_to_act, act_implementations
 
@@ -1409,7 +1449,7 @@ def main() -> None:
     alfa_version = fetch_alfa_version()
     print(f"  → Alfa version: {alfa_version or '(unavailable)'}")
 
-    print("Fetching ACT rules (rules.json) …")
+    print("Fetching ACT rules (wcag-mapping.json) …")
     act_map, act_implementations = fetch_act_rules()
     print(f"  → {sum(len(v) for v in act_map.values())} ACT rule/SC mappings found")
     if act_implementations:
