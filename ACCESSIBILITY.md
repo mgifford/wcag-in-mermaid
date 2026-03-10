@@ -2,7 +2,7 @@
 
 ## 1. Our Commitment
 
-We believe accessibility is a subset of quality. The WCAG Mirror Spine project commits to **WCAG 2.2 AA** standards for all documentation, code examples, and the interactive dashboard itself. We track our progress publicly to remain accountable to our users.
+We believe accessibility is a subset of quality. The WCAG Spine project commits to **WCAG 2.2 AA** standards for all documentation, code examples, and the interactive dashboard itself. We track our progress publicly to remain accountable to our users.
 
 This project is specifically focused on making WCAG Success Criteria data more understandable and navigable — it should itself be a model of accessibility.
 
@@ -10,9 +10,9 @@ This project is specifically focused on making WCAG Success Criteria data more u
 
 | Metric | Status / Value |
 | :--- | :--- |
-| **Open A11y Issues** | [View open accessibility issues](https://github.com/mgifford/wcag-in-mermaid/labels/accessibility) |
+| **Open A11y Issues** | [View open accessibility issues](https://github.com/mgifford/wcag-spine/labels/accessibility) |
 | **Automated Test Pass Rate** | Monitored via GitHub Actions (see `.github/workflows/sync_accessibility.yml`) |
-| **A11y PRs Merged (MTD)** | Tracked in [project insights](https://github.com/mgifford/wcag-in-mermaid/pulse) |
+| **A11y PRs Merged (MTD)** | Tracked in [project insights](https://github.com/mgifford/wcag-spine/pulse) |
 | **Browser Support** | Last 2 major versions of Chrome, Firefox, Safari |
 | **Dashboard Conformance** | WCAG 2.2 AA — keyboard navigable, screen reader compatible |
 
@@ -46,7 +46,7 @@ To contribute to this repo, you must follow these guidelines:
 
 ## 5. Reporting & Severity Taxonomy
 
-Please use our [issue tracker](https://github.com/mgifford/wcag-in-mermaid/issues/new) when reporting issues. We prioritize based on:
+Please use our [issue tracker](https://github.com/mgifford/wcag-spine/issues/new) when reporting issues. We prioritize based on:
 
 - **Critical:** A dashboard feature prevents users from completing core tasks (e.g., cannot navigate to a WCAG SC, broken keyboard navigation)
 - **High:** A significant accessibility barrier or misleading WCAG guidance
@@ -55,7 +55,7 @@ Please use our [issue tracker](https://github.com/mgifford/wcag-in-mermaid/issue
 
 ## 6. Dashboard Accessibility Features
 
-The WCAG Mirror Spine dashboard (`index.html`) provides:
+The WCAG Spine dashboard (`index.html`) provides:
 
 - **Keyboard navigation** — All interactive elements (filters, cards, diagrams) are keyboard accessible
 - **Screen reader support** — Semantic HTML, appropriate ARIA roles, and live regions for dynamic content
@@ -97,8 +97,8 @@ Contributors are encouraged to test the dashboard with:
 
 ## 10. Getting Help
 
-- **Questions:** Open a [discussion](https://github.com/mgifford/wcag-in-mermaid/discussions)
-- **Bugs or gaps:** Open an [issue](https://github.com/mgifford/wcag-in-mermaid/issues)
+- **Questions:** Open a [discussion](https://github.com/mgifford/wcag-spine/discussions)
+- **Bugs or gaps:** Open an [issue](https://github.com/mgifford/wcag-spine/issues)
 - **Contributions:** See [README.md](./README.md)
 - **Accommodations:** Request via issue with `accessibility-accommodation` label
 

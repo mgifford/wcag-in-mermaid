@@ -1,5 +1,5 @@
 /**
- * WCAG Mirror Spine — Dashboard Application
+ * WCAG Spine — Dashboard Application
  *
  * Loads master_spine.json, renders the data in three views:
  *  1. Diagram  – Mermaid.js "vertebra" graph

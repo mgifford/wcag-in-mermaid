@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WCAG Mirror Spine - Data Orchestrator
+WCAG Spine - Data Orchestrator
 Synchronizes data from W3C ARRM, ACT Rules, Axe-core, and Alfa
 to produce a consolidated master_spine.json covering all WCAG 2.2 SCs.
 
@@ -289,7 +289,7 @@ def fetch_text(url: str, timeout: int = 30) -> str | None:
     try:
         req = urllib.request.Request(
             url,
-            headers={"User-Agent": "wcag-in-mermaid-sync/1.0 (https://github.com/mgifford/wcag-in-mermaid)"},
+            headers={"User-Agent": "wcag-spine-sync/1.0 (https://github.com/mgifford/wcag-spine)"},
         )
         with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
             return resp.read().decode("utf-8")

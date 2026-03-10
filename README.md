@@ -4,7 +4,7 @@
 > WCAG 2.2 — bridging Responsibility (ARRM) and Technical Testing
 > (ACT, Axe-core, Alfa, Trusted Tester) for every Success Criterion.
 
-[![Sync Accessibility Data](https://github.com/mgifford/wcag-in-mermaid/actions/workflows/sync_accessibility.yml/badge.svg)](https://github.com/mgifford/wcag-in-mermaid/actions/workflows/sync_accessibility.yml)
+[![Sync Accessibility Data](https://github.com/mgifford/wcag-spine/actions/workflows/sync_accessibility.yml/badge.svg)](https://github.com/mgifford/wcag-spine/actions/workflows/sync_accessibility.yml)
 
 ---
 
@@ -18,7 +18,7 @@
 > - People with experience conducting studies on accessibility impact and the cost of
 >   AI cycles should be involved in any evaluation or adoption decisions.
 > - **Please provide feedback in the
->   [issue queue](https://github.com/mgifford/wcag-in-mermaid/issues)** if you have
+>   [issue queue](https://github.com/mgifford/wcag-spine/issues)** if you have
 >   positive or negative results from using this tool. Include links and references so
 >   that claims can be discussed and verified.
 
@@ -26,12 +26,12 @@
 
 ## Live Demo
 
-**[mgifford.github.io/wcag-in-mermaid](https://mgifford.github.io/wcag-in-mermaid)**
+**[mgifford.github.io/wcag-spine](https://mgifford.github.io/wcag-spine)**
 
 Deep-link directly to any SC:
 
 ```
-https://mgifford.github.io/wcag-in-mermaid/#2.4.11
+https://mgifford.github.io/wcag-spine/#2.4.11
 ```
 
 ---
@@ -69,7 +69,7 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 ## Repository Structure
 
 ```
-wcag-in-mermaid/
+wcag-spine/
 ├── index.html                          # GitHub Pages entry point
 ├── assets/
 │   ├── css/style.css                   # Dashboard styles

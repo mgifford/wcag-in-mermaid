@@ -1,6 +1,6 @@
 # Testing Methods & Resources
 
-> A companion guide to the [WCAG Mirror Spine dashboard](https://mgifford.github.io/wcag-in-mermaid)
+> A companion guide to the [WCAG Spine dashboard](https://mgifford.github.io/wcag-spine)
 > explaining how WCAG 2.2 Success Criteria are tested — both automatically and manually —
 > and where the gaps lie.
 
@@ -180,7 +180,7 @@ For these SCs, expert manual testing is the **only** way to evaluate conformance
 
 ## Reading the Dashboard
 
-The [WCAG Mirror Spine dashboard](https://mgifford.github.io/wcag-in-mermaid) provides five views:
+The [WCAG Spine dashboard](https://mgifford.github.io/wcag-spine) provides five views:
 
 | View | Best for |
 |------|---------|
@@ -253,5 +253,5 @@ Use the **Automation** filter to focus on a specific tier:
 
 ---
 
-*This document is part of the [WCAG Mirror Spine](https://github.com/mgifford/wcag-in-mermaid) project.
+*This document is part of the [WCAG Spine](https://github.com/mgifford/wcag-spine) project.
 Data is updated daily via the `sync_accessibility.yml` workflow.*

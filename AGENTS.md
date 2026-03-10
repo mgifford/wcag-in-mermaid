@@ -5,7 +5,7 @@
 > This file follows the [agents.md](https://agents.md) convention — a machine-readable manifest
 > that tells AI agents how to work within this repository's standards and constraints.
 
-This file provides guidance for AI agents (GitHub Copilot, Cursor, Claude, GPT-4, etc.) working on the **WCAG Mirror Spine** project — an interactive dashboard visualising WCAG 2.2 Success Criteria with Mermaid.js diagrams.
+This file provides guidance for AI agents (GitHub Copilot, Cursor, Claude, GPT-4, etc.) working on the **WCAG Spine** project — an interactive dashboard visualising WCAG 2.2 Success Criteria with Mermaid.js diagrams.
 
 ## Primary References
 
