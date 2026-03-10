@@ -12,7 +12,8 @@
       "act_testcases": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases.json",
       "alfa_rules_index": "https://raw.githubusercontent.com/Siteimprove/alfa/main/packages/alfa-rules/src/index.ts",
       "axe_rules_api": "https://api.github.com/repos/dequelabs/axe-core/contents/lib/rules",
-      "alfa_earl": "https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json"
+      "alfa_earl": "https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json",
+      "fpc_mapping": "https://raw.githubusercontent.com/CivicActions/accessibility-data-reference/main/mapping-wcag-to-fpc.csv"
     },
     "axe_version": "4.11",
     "act_implementations": {
@@ -372,7 +373,14 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.2.1": {
       "title": "Audio-only and Video-only (Prerecorded)",
@@ -443,7 +451,14 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.2.2": {
       "title": "Captions (Prerecorded)",
@@ -493,7 +508,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.2.3": {
       "title": "Audio Description or Media Alternative (Prerecorded)",
@@ -530,7 +550,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "1.2.4": {
       "title": "Captions (Live)",
@@ -567,7 +592,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.2.5": {
       "title": "Audio Description (Prerecorded)",
@@ -612,7 +642,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "1.2.6": {
       "title": "Sign Language (Prerecorded)",
@@ -641,7 +676,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.2.7": {
       "title": "Extended Audio Description (Prerecorded)",
@@ -670,7 +706,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.2.8": {
       "title": "Media Alternative (Prerecorded)",
@@ -707,7 +744,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.2.9": {
       "title": "Audio-only (Live)",
@@ -736,7 +774,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.3.1": {
       "title": "Info and Relationships",
@@ -1182,7 +1221,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "1.3.2": {
       "title": "Meaningful Sequence",
@@ -1244,7 +1288,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "1.3.3": {
       "title": "Sensory Characteristics",
@@ -1346,7 +1395,14 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.3.4": {
       "title": "Orientation",
@@ -1382,7 +1438,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.3.5": {
       "title": "Identify Input Purpose",
@@ -1425,7 +1482,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.3.6": {
       "title": "Identify Purpose",
@@ -1455,7 +1513,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.1": {
       "title": "Use of Color",
@@ -1501,7 +1560,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WPC",
+        "LLCLA"
+      ]
     },
     "1.4.2": {
       "title": "Audio Control",
@@ -1563,7 +1628,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LH",
+        "LLCLA"
+      ]
     },
     "1.4.3": {
       "title": "Contrast (Minimum)",
@@ -1609,7 +1679,11 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LV",
+        "WPC"
+      ]
     },
     "1.4.4": {
       "title": "Resize Text",
@@ -1649,7 +1723,10 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LV"
+      ]
     },
     "1.4.5": {
       "title": "Images of Text",
@@ -1711,7 +1788,11 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LV",
+        "LLCLA"
+      ]
     },
     "1.4.6": {
       "title": "Contrast (Enhanced)",
@@ -1757,7 +1838,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.7": {
       "title": "Low or No Background Audio",
@@ -1794,7 +1876,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.8": {
       "title": "Visual Presentation",
@@ -1832,7 +1915,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.9": {
       "title": "Images of Text (No Exception)",
@@ -1861,7 +1945,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.10": {
       "title": "Reflow",
@@ -1899,7 +1984,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.11": {
       "title": "Non-text Contrast",
@@ -1935,7 +2021,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.12": {
       "title": "Text Spacing",
@@ -1969,7 +2056,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "1.4.13": {
       "title": "Content on Hover or Focus",
@@ -2016,7 +2104,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.1.1": {
       "title": "Keyboard",
@@ -2111,7 +2200,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.1.2": {
       "title": "No Keyboard Trap",
@@ -2140,7 +2235,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM"
+      ]
     },
     "2.1.3": {
       "title": "Keyboard (No Exception)",
@@ -2169,7 +2269,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.1.4": {
       "title": "Character Key Shortcuts",
@@ -2199,7 +2300,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.2.1": {
       "title": "Timing Adjustable",
@@ -2238,7 +2340,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.2.2": {
       "title": "Pause, Stop, Hide",
@@ -2277,7 +2385,10 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LLCLA"
+      ]
     },
     "2.2.3": {
       "title": "No Timing",
@@ -2307,7 +2418,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.2.4": {
       "title": "Interruptions",
@@ -2336,7 +2448,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.2.5": {
       "title": "Re-authenticating",
@@ -2366,7 +2479,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.2.6": {
       "title": "Timeouts",
@@ -2396,7 +2510,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.3.1": {
       "title": "Three Flashes or Below Threshold",
@@ -2426,7 +2541,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.3.2": {
       "title": "Three Flashes",
@@ -2455,7 +2571,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.3.3": {
       "title": "Animation from Interactions",
@@ -2493,7 +2610,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.1": {
       "title": "Bypass Blocks",
@@ -2560,7 +2678,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.2": {
       "title": "Page Titled",
@@ -2604,7 +2728,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.3": {
       "title": "Focus Order",
@@ -2699,7 +2829,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.4": {
       "title": "Link Purpose (In Context)",
@@ -2744,7 +2880,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.5": {
       "title": "Multiple Ways",
@@ -2774,7 +2916,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.6": {
       "title": "Headings and Labels",
@@ -2829,7 +2977,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.7": {
       "title": "Focus Visible",
@@ -2875,7 +3029,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "2.4.8": {
       "title": "Location",
@@ -2905,7 +3064,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.9": {
       "title": "Link Purpose (Link Only)",
@@ -2934,7 +3094,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.10": {
       "title": "Section Headings",
@@ -2963,7 +3124,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.11": {
       "title": "Focus Not Obscured (Minimum)",
@@ -2990,7 +3152,8 @@
           "2.4.11.A - Focus Visibility with Sticky Headers",
           "2.4.11.B - Focus with Overlays"
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.12": {
       "title": "Focus Not Obscured (Enhanced)",
@@ -3010,7 +3173,8 @@
         "tt_steps": [
           "2.4.12.A - Total Focus Ring Visibility"
         ]
-      }
+      },
+      "fpc": []
     },
     "2.4.13": {
       "title": "Focus Appearance",
@@ -3036,7 +3200,8 @@
           "2.4.13.A - Contrast of Focus Indicator",
           "2.4.13.B - Focus Indicator Area"
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.1": {
       "title": "Pointer Gestures",
@@ -3066,7 +3231,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.2": {
       "title": "Pointer Cancellation",
@@ -3095,7 +3261,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.3": {
       "title": "Label in Name",
@@ -3131,7 +3298,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.4": {
       "title": "Motion Actuation",
@@ -3169,7 +3337,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.5": {
       "title": "Target Size (Enhanced)",
@@ -3199,7 +3368,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.6": {
       "title": "Concurrent Input Mechanisms",
@@ -3228,7 +3398,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.7": {
       "title": "Dragging Movements",
@@ -3250,7 +3421,8 @@
         "tt_steps": [
           "2.5.7.A - Single Pointer Alternative for Dragging"
         ]
-      }
+      },
+      "fpc": []
     },
     "2.5.8": {
       "title": "Target Size (Minimum)",
@@ -3275,7 +3447,8 @@
         "tt_steps": [
           "2.5.8.A - 24x24 CSS Pixel Verification"
         ]
-      }
+      },
+      "fpc": []
     },
     "3.1.1": {
       "title": "Language of Page",
@@ -3322,7 +3495,14 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "3.1.2": {
       "title": "Language of Parts",
@@ -3358,7 +3538,14 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/content-author/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WH",
+        "LH",
+        "LLCLA"
+      ]
     },
     "3.1.3": {
       "title": "Unusual Words",
@@ -3395,7 +3582,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.1.4": {
       "title": "Abbreviations",
@@ -3424,7 +3612,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.1.5": {
       "title": "Reading Level",
@@ -3469,7 +3658,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.1.6": {
       "title": "Pronunciation",
@@ -3498,7 +3688,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.2.1": {
       "title": "On Focus",
@@ -3535,7 +3726,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "3.2.2": {
       "title": "On Input",
@@ -3589,7 +3786,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "3.2.3": {
       "title": "Consistent Navigation",
@@ -3619,7 +3821,12 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LLCLA"
+      ]
     },
     "3.2.4": {
       "title": "Consistent Identification",
@@ -3681,7 +3888,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/visual-designer/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "3.2.5": {
       "title": "Change on Request",
@@ -3719,7 +3932,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.2.6": {
       "title": "Consistent Help",
@@ -3741,7 +3955,8 @@
         "tt_steps": [
           "3.2.6.A - Relative Location of Help Mechanisms"
         ]
-      }
+      },
+      "fpc": []
     },
     "3.3.1": {
       "title": "Error Identification",
@@ -3780,7 +3995,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WPC",
+        "LLCLA"
+      ]
     },
     "3.3.2": {
       "title": "Labels or Instructions",
@@ -3867,7 +4088,11 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "LV",
+        "LLCLA"
+      ]
     },
     "3.3.3": {
       "title": "Error Suggestion",
@@ -3913,7 +4138,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "3.3.4": {
       "title": "Error Prevention (Legal, Financial, Data)",
@@ -3951,7 +4182,16 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "WPC",
+        "WH",
+        "LH",
+        "LM",
+        "LLCLA"
+      ]
     },
     "3.3.5": {
       "title": "Help",
@@ -3981,7 +4221,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.3.6": {
       "title": "Error Prevention (All)",
@@ -4011,7 +4252,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/user-experience/"
           }
         ]
-      }
+      },
+      "fpc": []
     },
     "3.3.7": {
       "title": "Redundant Entry",
@@ -4033,7 +4275,8 @@
         "tt_steps": [
           "3.3.7.A - Form Data Persistence Check"
         ]
-      }
+      },
+      "fpc": []
     },
     "3.3.8": {
       "title": "Accessible Authentication (Minimum)",
@@ -4053,7 +4296,8 @@
         "tt_steps": [
           "3.3.8.A - Cognitive Function Test Audit"
         ]
-      }
+      },
+      "fpc": []
     },
     "3.3.9": {
       "title": "Accessible Authentication (Enhanced)",
@@ -4072,7 +4316,8 @@
         "tt_steps": [
           "3.3.9.A - No-test Authentication Verification"
         ]
-      }
+      },
+      "fpc": []
     },
     "4.1.2": {
       "title": "Name, Role, Value",
@@ -4167,7 +4412,13 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": [
+        "WV",
+        "LV",
+        "LM",
+        "LLCLA"
+      ]
     },
     "4.1.3": {
       "title": "Status Messages",
@@ -4220,7 +4471,8 @@
             "role_url": "https://www.w3.org/WAI/planning/arrm/front-end/"
           }
         ]
-      }
+      },
+      "fpc": []
     }
   }
 }

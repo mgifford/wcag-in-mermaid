@@ -407,6 +407,64 @@ main {
 .tag-axe  { background: var(--color-AA-bg); color: var(--color-AA); border: 1px solid #90caf9; }
 .tag-alfa { background: var(--color-A-bg); color: var(--color-A); border: 1px solid #a5d6a7; }
 
+/* ----- FPC (Functional Performance Criteria) badges --------- */
+
+.fpc-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #f8f9fa;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fpc-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-muted);
+  margin-right: 4px;
+}
+
+.fpc-section-label a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fpc-section-label a:hover,
+.fpc-section-label a:focus-visible {
+  text-decoration: underline;
+}
+
+.fpc-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* Vision */
+.fpc-badge-WV  { background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9; }
+.fpc-badge-LV  { background: #e8f4fd; color: #1565c0; border: 1px solid #64b5f6; }
+.fpc-badge-WPC { background: #e8eaf6; color: #283593; border: 1px solid #9fa8da; }
+/* Hearing */
+.fpc-badge-WH  { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ce93d8; }
+.fpc-badge-LH  { background: #fce4ec; color: #880e4f; border: 1px solid #f48fb1; }
+/* Speech */
+.fpc-badge-WS  { background: #e0f2f1; color: #004d40; border: 1px solid #80cbc4; }
+/* Motor */
+.fpc-badge-LM  { background: #fff3e0; color: #bf360c; border: 1px solid #ffcc80; }
+.fpc-badge-LRS { background: #fbe9e7; color: #bf360c; border: 1px solid #ffab91; }
+/* Cognitive */
+.fpc-badge-LLCLA { background: #f1f8e9; color: #33691e; border: 1px solid #c5e1a5; }
+
 .role-list,
 .step-list {
   list-style: none;
@@ -1251,6 +1309,17 @@ footer {
   .tag-act  { background: #2d1b3d; color: #d8a8f0; }
   .tag-axe  { background: #0d2137; color: #90caf9; }
   .tag-alfa { background: #0d2a0d; color: #81c784; }
+
+  .fpc-section { background: #1a1a2e; border-color: #333; }
+  .fpc-badge-WV  { background: #0d2137; color: #90caf9; border-color: #1565c0; }
+  .fpc-badge-LV  { background: #0d2137; color: #64b5f6; border-color: #1976d2; }
+  .fpc-badge-WPC { background: #1a1b2e; color: #9fa8da; border-color: #3949ab; }
+  .fpc-badge-WH  { background: #2d1b3d; color: #d8a8f0; border-color: #7b1fa2; }
+  .fpc-badge-LH  { background: #3d0a1f; color: #f48fb1; border-color: #c2185b; }
+  .fpc-badge-WS  { background: #0d2420; color: #80cbc4; border-color: #00796b; }
+  .fpc-badge-LM  { background: #2d1800; color: #ffcc80; border-color: #e65100; }
+  .fpc-badge-LRS { background: #2d1200; color: #ffab91; border-color: #bf360c; }
+  .fpc-badge-LLCLA { background: #0d200a; color: #c5e1a5; border-color: #558b2f; }
 
   .arrm-task-item { background: #0f1b2d; }
 

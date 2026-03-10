@@ -10,6 +10,7 @@
  *  • Filter by Level (A / AA / AAA)
  *  • Filter by Role  (ARRM roles)
  *  • Filter by Automation coverage (any / full / partial / none)
+ *  • Filter by Disability Impact (Section 508 FPC codes)
  *  • Live search
  *  • URL hash routing  (#2.4.11 scrolls to / highlights that SC)
  */
@@ -31,6 +32,23 @@ const ARRM_IDS_IN_NODE = 5;
  * diagram node.  Must match _TT_IDS_IN_NODE in sync_data.py.
  */
 const TT_IDS_IN_NODE = 4;
+
+/**
+ * Section 508 Functional Performance Criteria (FPC) — maps each FPC code to
+ * its full name and a visual label used in badges.
+ * Source: https://www.section508.gov/develop/mapping-wcag-to-fpc/
+ */
+const FPC_LABELS = {
+  WV:    { label: "WV",    title: "Without Vision" },
+  LV:    { label: "LV",    title: "Limited Vision" },
+  WPC:   { label: "WPC",   title: "Without Perception of Color" },
+  WH:    { label: "WH",    title: "Without Hearing" },
+  LH:    { label: "LH",    title: "Limited Hearing" },
+  WS:    { label: "WS",    title: "Without Speech" },
+  LM:    { label: "LM",    title: "Limited Manipulation" },
+  LRS:   { label: "LRS",   title: "Limited Reach & Strength" },
+  LLCLA: { label: "LLCLA", title: "Limited Language, Cognitive & Learning Abilities" },
+};
 
 /**
  * Maps ARRM role / ownership names to their W3C WAI role pages.
@@ -308,6 +326,7 @@ function bindControls() {
   document.getElementById("filter-level").addEventListener("change", applyFilters);
   document.getElementById("filter-role").addEventListener("change", applyFilters);
   document.getElementById("filter-automation").addEventListener("change", applyFilters);
+  document.getElementById("filter-disability").addEventListener("change", applyFilters);
   document.getElementById("search-input").addEventListener("input", applyFilters);
 
   document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -333,6 +352,7 @@ function applyFilters() {
   const level = document.getElementById("filter-level").value;
   const role = document.getElementById("filter-role").value;
   const automation = document.getElementById("filter-automation").value;
+  const disability = document.getElementById("filter-disability").value;
   const query = document.getElementById("search-input").value.trim().toLowerCase();
 
   filteredSC = {};
@@ -347,6 +367,7 @@ function applyFilters() {
       if (automation === "partial" && count === 0) continue;
       if (automation === "full"    && count < 3)   continue;
     }
+    if (disability && !(entry.fpc ?? []).includes(disability)) continue;
     if (query) {
       const arrmTaskText = (entry.manual?.arrm_tasks ?? [])
         .map(t => `${t.id} ${t.task}`).join(" ");
@@ -446,6 +467,7 @@ function buildCard(num, entry) {
   const roles     = m.roles      ?? [];
   const steps     = m.tt_steps   ?? [];
   const arrmTasks = m.arrm_tasks ?? [];
+  const fpcCodes  = entry.fpc    ?? [];
 
   const wcagUrl = entry.url ?? `https://www.w3.org/WAI/WCAG22/Understanding/`;
 
@@ -471,6 +493,13 @@ function buildCard(num, entry) {
     </li>`;
   }).join("");
 
+  // Build FPC badges for disability impact
+  const fpcBadges = fpcCodes.map(code => {
+    const info = FPC_LABELS[code];
+    if (!info) return "";
+    return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
+  }).join("");
+
   card.innerHTML = `
     <header class="sc-card-header">
       <span class="sc-number" aria-label="Success Criterion ${num}">${num}</span>
@@ -484,6 +513,15 @@ function buildCard(num, entry) {
         ${escapeHTML(entry.level)}
       </span>
     </header>
+    ${fpcCodes.length > 0
+      ? `<div class="fpc-section" aria-label="Disability groups affected by this criterion">
+          <span class="fpc-section-label">
+            <a href="https://www.section508.gov/develop/mapping-wcag-to-fpc/" target="_blank" rel="noopener noreferrer" title="Section 508 Functional Performance Criteria mapping">Disability Impact:</a>
+          </span>
+          ${fpcBadges}
+        </div>`
+      : ""
+    }
     <div class="sc-card-body">
       <div class="sc-col col-auto">
         <div class="col-header">🤖 Automated Rules</div>
@@ -595,6 +633,16 @@ function renderTable() {
       return `<a href="${escapeAttr(ttStepUrl(stepId))}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(s)}">${escapeHTML(stepId)}</a>`;
     });
 
+    // FPC badges for table view
+    const fpcCodes = e.fpc ?? [];
+    const fpcHtml = fpcCodes.length
+      ? fpcCodes.map(code => {
+          const info = FPC_LABELS[code];
+          if (!info) return escapeHTML(code);
+          return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
+        }).join(" ")
+      : '<span class="no-data">—</span>';
+
     return `
       <tr>
         <td>${escapeHTML(num)}</td>
@@ -605,6 +653,7 @@ function renderTable() {
         <td>${roleLinks.length ? roleLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${ttStepLinks.length ? ttStepLinks.join(", ") : '<span class="no-data">—</span>'}</td>
         <td>${arrmTaskLinks.length ? arrmTaskLinks.join(", ") : '<span class="no-data">—</span>'}</td>
+        <td>${fpcHtml}</td>
         <td>${automationCount(e)}/3</td>
       </tr>`;
   }).join("");
@@ -621,6 +670,7 @@ function renderTable() {
           <th scope="col">Roles</th>
           <th scope="col"><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer" style="color:#fff">Trusted Tester</a></th>
           <th scope="col">ARRM Tasks</th>
+          <th scope="col"><a href="https://www.section508.gov/develop/mapping-wcag-to-fpc/" target="_blank" rel="noopener noreferrer" style="color:#fff" title="Section 508 Functional Performance Criteria">Disability Impact</a></th>
           <th scope="col">Coverage</th>
         </tr>
       </thead>
@@ -1338,10 +1388,11 @@ function handleHashNavigation() {
 }
 
 function resetFilters() {
-  document.getElementById("filter-level").value     = "";
-  document.getElementById("filter-role").value      = "";
-  document.getElementById("filter-automation").value = "";
-  document.getElementById("search-input").value     = "";
+  document.getElementById("filter-level").value      = "";
+  document.getElementById("filter-role").value       = "";
+  document.getElementById("filter-automation").value  = "";
+  document.getElementById("filter-disability").value  = "";
+  document.getElementById("search-input").value      = "";
 }
 
 /* ------------------------------------------------------------------ */
