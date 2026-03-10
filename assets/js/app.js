@@ -639,7 +639,7 @@ function renderTable() {
       ? fpcCodes.map(code => {
           const info = FPC_LABELS[code];
           if (!info) return escapeHTML(code);
-          return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
+          return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
         }).join(" ")
       : '<span class="no-data">—</span>';
 

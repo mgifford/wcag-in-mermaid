@@ -395,6 +395,7 @@ def fetch_fpc_map() -> dict[str, list[str]]:
     """
     raw = fetch_text(FPC_MAPPING_URL)
     if raw is None:
+        print("  WARNING: FPC mapping unavailable; using seed fpc data", file=sys.stderr)
         return {}
     fpc_map: dict[str, list[str]] = {}
     try:
@@ -404,10 +405,13 @@ def fetch_fpc_map() -> dict[str, list[str]]:
             sc_num = normalise_sc(sc_raw)
             if not sc_num:
                 continue
+            # Values in the CSV are the FPC code itself (e.g. "WV") when the SC
+            # is affected, or an empty string when it is not.  We validate that
+            # the cell value matches the expected code to avoid false positives.
             fpc_codes = [
                 code
                 for col, code in FPC_COLUMN_NAMES.items()
-                if row.get(col, "").strip()
+                if row.get(col, "").strip() == code
             ]
             fpc_map[sc_num] = fpc_codes
     except (csv.Error, KeyError) as exc:
