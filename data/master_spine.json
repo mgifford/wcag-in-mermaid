@@ -11,7 +11,8 @@
       "section508_coordinators": "https://github.com/Section508Coordinators",
       "act_testcases": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases.json",
       "alfa_rules_index": "https://raw.githubusercontent.com/Siteimprove/alfa/main/packages/alfa-rules/src/index.ts",
-      "axe_rules_api": "https://api.github.com/repos/dequelabs/axe-core/contents/lib/rules"
+      "axe_rules_api": "https://api.github.com/repos/dequelabs/axe-core/contents/lib/rules",
+      "alfa_earl": "https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json"
     },
     "axe_version": "4.11",
     "act_implementations": {

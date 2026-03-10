@@ -47,6 +47,11 @@ ACT_TESTCASES_URL = (
 ALFA_RULES_INDEX_URL = (
     "https://raw.githubusercontent.com/Siteimprove/alfa/main/packages/alfa-rules/src/index.ts"
 )
+# Alfa EARL implementation report — maps Alfa rules to ACT rules (all consistency
+# levels, including partial/semi-automated implementations).
+ALFA_ACT_EARL_URL = (
+    "https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json"
+)
 # axe-core GitHub raw rules directory listing (GitHub API JSON).
 # Each entry names a JSON rule file; fetching select files gives us WCAG tags.
 AXE_RULES_API_URL = (
@@ -260,6 +265,15 @@ PRINCIPLE_NAMES: dict[str, str] = {
     "4": "Robust",
 }
 
+# Ordered list of the tool engines tracked in ``act_implementations``.  Used
+# as the canonical key order for all per-engine dicts in this module.
+IMPL_ENGINES: tuple[str, ...] = ("axe", "alfa", "equal_access", "qualweb")
+
+
+def _empty_impl() -> dict[str, list[str]]:
+    """Return a fresh empty implementation dict for one ACT rule."""
+    return {engine: [] for engine in IMPL_ENGINES}
+
 
 # ---------------------------------------------------------------------------
 # Utilities
@@ -468,6 +482,179 @@ def fetch_act_rules() -> tuple[dict[str, list[str]], dict[str, dict]]:
                 act_implementations[rule_id] = impl
 
     return sc_to_act, act_implementations
+
+
+# ---------------------------------------------------------------------------
+# EARL Implementation Report (Alfa)
+# ---------------------------------------------------------------------------
+
+def _extract_act_id_from_url(url_or_id: str) -> str | None:
+    """Extract a 6-character ACT rule ID from a URL or plain ID string.
+
+    Handles URLs like:
+      https://act-rules.github.io/rules/09o5cg
+      https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/
+    as well as plain 6-character IDs (e.g. ``"09o5cg"``).
+    """
+    match = re.search(r"/rules/([a-z0-9]{6})(?:/|$)", url_or_id)
+    if match:
+        return match.group(1)
+    if re.fullmatch(r"[a-z0-9]{6}", url_or_id):
+        return url_or_id
+    return None
+
+
+def _extract_alfa_id_from_url(url_or_id: str) -> str | None:
+    """Extract an Alfa rule ID (``SIA-RXX``) from a URL or plain ID string.
+
+    Handles URLs like:
+      https://alfa.siteimprove.com/rules/sia-r66
+    as well as plain IDs in ``SIA-RXX`` form (case-insensitive on input,
+    upper-case on output).
+    """
+    match = re.search(r"/rules/(sia-r\d+)", url_or_id, re.IGNORECASE)
+    if match:
+        return match.group(1).upper()
+    if re.match(r"^SIA-R\d+$", url_or_id, re.IGNORECASE):
+        return url_or_id.upper()
+    return None
+
+
+def _parse_earl_assertions(data: object) -> list[dict]:
+    """Return a flat list of assertion dicts from various EARL JSON structures.
+
+    Handles:
+      * A JSON-LD ``@graph`` array at the top level (or nested under a key).
+      * A plain list of assertion dicts.
+      * A dict with an ``"assertions"`` key.
+
+    An empty list under any key is treated the same as a missing key (falsy
+    ``or`` chain).  For EARL implementation reports an empty ``@graph`` means
+    no assertions, so this fall-through behaviour is intentional.
+    """
+    if isinstance(data, list):
+        return data
+    if not isinstance(data, dict):
+        return []
+    # Use or-chaining: empty lists (no assertions) are equivalent to missing keys.
+    return (
+        data.get("@graph")
+        or data.get("assertions")
+        or data.get("results")
+        or []
+    )
+
+
+def fetch_earl_alfa_mappings(
+    sc_to_act: dict[str, list[str]],
+) -> tuple[dict[str, list[str]], dict[str, dict]]:
+    """Fetch the Alfa ACT-R EARL implementation report and extract mappings.
+
+    Uses ``sc_to_act`` (from :func:`fetch_act_rules`) to resolve the WCAG SCs
+    for each ACT rule found in the report, then returns:
+
+    1. ``sc_to_alfa`` — ``{"X.Y.Z": ["SIA-R66", ...]}``
+       Alfa rules keyed by WCAG SC number, derived from the EARL assertions.
+    2. ``act_impl_updates`` — ``{"09o5cg": {"alfa": ["SIA-R66"]}}``
+       Updates to merge into ``meta.act_implementations`` so the ACT Rules
+       view can show which Alfa rule backs each ACT rule.
+
+    The function processes *all* consistency levels (consistent, partial, etc.)
+    so that semi-automated implementations are included alongside full ones.
+    Network or parse failures are handled gracefully: both dicts are empty.
+    """
+    sc_to_alfa: dict[str, list[str]] = {}
+    act_impl_updates: dict[str, dict] = {}
+
+    # Build a reverse map: ACT rule ID → list of SC numbers.
+    act_to_scs: dict[str, list[str]] = {}
+    for sc, rule_ids in sc_to_act.items():
+        for rid in rule_ids:
+            act_to_scs.setdefault(rid, []).append(sc)
+
+    raw = fetch_text(ALFA_ACT_EARL_URL)
+    if raw is None:
+        return sc_to_alfa, act_impl_updates
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        print(f"  WARNING: Alfa EARL report JSON decode error: {exc}", file=sys.stderr)
+        return sc_to_alfa, act_impl_updates
+
+    assertions = _parse_earl_assertions(data)
+    processed = 0
+    for assertion in assertions:
+        if not isinstance(assertion, dict):
+            continue
+
+        # --- Extract the ACT rule ID from the "test" field ---
+        test_val = (
+            assertion.get("earl:test")
+            or assertion.get("test")
+            or {}
+        )
+        if isinstance(test_val, str):
+            act_id = _extract_act_id_from_url(test_val)
+        elif isinstance(test_val, dict):
+            raw_id = (
+                test_val.get("@id")
+                or test_val.get("id")
+                or test_val.get("url")
+                or ""
+            )
+            act_id = _extract_act_id_from_url(str(raw_id))
+        else:
+            continue
+
+        if not act_id:
+            continue
+
+        # --- Extract the Alfa rule ID from the "subject" field ---
+        subj_val = (
+            assertion.get("earl:subject")
+            or assertion.get("subject")
+            or {}
+        )
+        if isinstance(subj_val, str):
+            alfa_id = _extract_alfa_id_from_url(subj_val)
+        elif isinstance(subj_val, dict):
+            raw_id = (
+                subj_val.get("@id")
+                or subj_val.get("id")
+                or subj_val.get("url")
+                or ""
+            )
+            alfa_id = _extract_alfa_id_from_url(str(raw_id))
+            if not alfa_id:
+                title = (
+                    subj_val.get("dct:title")
+                    or subj_val.get("title")
+                    or ""
+                )
+                alfa_id = _extract_alfa_id_from_url(str(title))
+        else:
+            continue
+
+        if not alfa_id:
+            continue
+
+        # --- Map Alfa rule to each WCAG SC covered by this ACT rule ---
+        scs_for_act = act_to_scs.get(act_id, [])
+        for sc in scs_for_act:
+            lst = sc_to_alfa.setdefault(sc, [])
+            if alfa_id not in lst:
+                lst.append(alfa_id)
+
+        # --- Record the Alfa rule in act_impl_updates ---
+        entry = act_impl_updates.setdefault(act_id, _empty_impl())
+        if alfa_id not in entry["alfa"]:
+            entry["alfa"].append(alfa_id)
+
+        processed += 1
+
+    print(f"  → Processed {processed} EARL assertions from Alfa report")
+    return sc_to_alfa, act_impl_updates
 
 
 def fetch_act_testcases_sc_map() -> dict[str, list[str]]:
@@ -1263,6 +1450,32 @@ def main() -> None:
     tasks_map = fetch_arrm_tasks()
     print(f"  → {sum(len(v) for v in tasks_map.values())} task/SC mappings found")
 
+    print("Fetching Alfa EARL implementation report …")
+    earl_alfa_map, earl_act_impl = fetch_earl_alfa_mappings(act_map)
+    if earl_alfa_map:
+        print(
+            f"  → Alfa EARL: {sum(len(v) for v in earl_alfa_map.values())} "
+            f"Alfa rule/SC mappings across {len(earl_alfa_map)} SCs"
+        )
+        # Merge EARL-derived Alfa rules into alfa_map so merge_into_spine picks them up.
+        for sc, rule_ids in earl_alfa_map.items():
+            existing = alfa_map.setdefault(sc, [])
+            for rid in rule_ids:
+                if rid not in existing:
+                    existing.append(rid)
+    # Merge EARL-derived ACT implementation updates so the propagation logic in
+    # merge_into_spine can derive axe/alfa engine rules from combined_impl.
+    for act_id, impl in earl_act_impl.items():
+        if act_id not in act_implementations:
+            act_implementations[act_id] = impl
+        else:
+            for engine in IMPL_ENGINES:
+                merged = list(dict.fromkeys(
+                    act_implementations[act_id].get(engine, [])
+                    + impl.get(engine, [])
+                ))
+                act_implementations[act_id][engine] = merged
+
     print("Merging data …")
     merge_into_spine(
         spine,
@@ -1283,6 +1496,7 @@ def main() -> None:
     spine["meta"]["sources"]["act_rules"] = ACT_RULES_URL
     spine["meta"]["sources"]["act_testcases"] = ACT_TESTCASES_URL
     spine["meta"]["sources"]["alfa_rules_index"] = ALFA_RULES_INDEX_URL
+    spine["meta"]["sources"]["alfa_earl"] = ALFA_ACT_EARL_URL
     spine["meta"]["sources"]["axe_rules_api"] = AXE_RULES_API_URL
 
     print(f"Writing {OUTPUT_FILE} …")
