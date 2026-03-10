@@ -74,6 +74,26 @@ TT_IMPLEMENTATIONS_URL = (
 
 TT_BASE_URL = "https://section508coordinators.github.io/TrustedTester/"
 
+# Section 508 Functional Performance Criteria (FPC) mapping from CivicActions.
+# Maps each WCAG 2.0 SC to the disability groups it affects.
+FPC_MAPPING_URL = (
+    "https://raw.githubusercontent.com/CivicActions/accessibility-data-reference/main/mapping-wcag-to-fpc.csv"
+)
+
+# Maps CSV column headers to short FPC codes.
+# Source: https://www.section508.gov/develop/mapping-wcag-to-fpc/
+FPC_COLUMN_NAMES: dict[str, str] = {
+    "Without Vision (WV)": "WV",
+    "Limited Vision (LV)": "LV",
+    "Without Perception of Color (WPC)": "WPC",
+    "Without Hearing (WH)": "WH",
+    "Limited Hearing (LH)": "LH",
+    "Without Speech (WS)": "WS",
+    "Limited Manipulation (LM)": "LM",
+    "Limited Reach and Strength (LRS)": "LRS",
+    "Limited Language, Cognitive, and Learning Abilities (LLCLA)": "LLCLA",
+}
+
 # Maps each WCAG SC number to the most relevant TrustedTester section page.
 # SCs not covered by TT v5 (WCAG 2.1/2.2 or AAA) are mapped to the closest
 # equivalent section.  Source: appendixa.html cross-reference table.
@@ -357,6 +377,47 @@ def load_seed() -> dict:
     """Load the pre-seeded master_spine.json from disk."""
     with SEED_FILE.open(encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def fetch_fpc_map() -> dict[str, list[str]]:
+    """Fetch the Section 508 Functional Performance Criteria (FPC) CSV and parse it.
+
+    Returns a dict mapping each WCAG 2.0 SC number to the list of FPC codes that
+    apply to it, e.g. ``{"1.1.1": ["WV", "LV", "WH", "LH", "LLCLA"], ...}``.
+
+    The source CSV (CivicActions accessibility-data-reference) covers WCAG 2.0 SCs
+    only; WCAG 2.1 / 2.2 additions are not present and will receive an empty list.
+    SCs that appear in the CSV but have no FPC codes checked (e.g. 2.3.1) are also
+    stored with an empty list so the field is consistently present for every SC.
+
+    Returns an empty dict on fetch/parse failure so the caller can fall back to
+    the existing seed data gracefully.
+    """
+    raw = fetch_text(FPC_MAPPING_URL)
+    if raw is None:
+        print("  WARNING: FPC mapping unavailable; using seed fpc data", file=sys.stderr)
+        return {}
+    fpc_map: dict[str, list[str]] = {}
+    try:
+        reader = csv.DictReader(StringIO(raw))
+        for row in reader:
+            sc_raw = row.get("WCAG 2.0 SC", "").strip()
+            sc_num = normalise_sc(sc_raw)
+            if not sc_num:
+                continue
+            # Values in the CSV are the FPC code itself (e.g. "WV") when the SC
+            # is affected, or an empty string when it is not.  We validate that
+            # the cell value matches the expected code to avoid false positives.
+            fpc_codes = [
+                code
+                for col, code in FPC_COLUMN_NAMES.items()
+                if row.get(col, "").strip() == code
+            ]
+            fpc_map[sc_num] = fpc_codes
+    except (csv.Error, KeyError) as exc:
+        print(f"  WARNING: Could not parse FPC CSV: {exc}", file=sys.stderr)
+        return {}
+    return fpc_map
 
 
 # ---------------------------------------------------------------------------
@@ -1068,6 +1129,7 @@ def merge_into_spine(
     act_implementations: dict | None = None,
     axe_map: dict | None = None,
     alfa_map: dict | None = None,
+    fpc_map: dict | None = None,
 ) -> None:
     """Merge fetched data into the in-memory spine (mutates in place).
 
@@ -1080,6 +1142,7 @@ def merge_into_spine(
     act_implementations: ACT rule ID → engine implementation dict (freshly fetched).
     axe_map:             SC → list of axe-core rule IDs (directly fetched).
     alfa_map:            SC → list of Alfa rule IDs (directly fetched).
+    fpc_map:             SC → list of Section 508 FPC codes (e.g. ["WV", "LV"]).
 
     Automation propagation
     ----------------------
@@ -1167,6 +1230,13 @@ def merge_into_spine(
                 if t["id"] not in existing_ids:
                     existing.append(t)
                     existing_ids.add(t["id"])
+
+        # --- Section 508 Functional Performance Criteria (FPC) ---
+        # Only overwrite when fresh FPC data was fetched; fall back to seed.
+        if fpc_map and sc_num in fpc_map:
+            entry["fpc"] = fpc_map[sc_num]
+        elif "fpc" not in entry:
+            entry["fpc"] = []
 
     # --- Store updated ACT implementation data in meta ---
     # Write back the combined (seed + fresh) implementation map so future syncs
@@ -1490,6 +1560,13 @@ def main() -> None:
     tasks_map = fetch_arrm_tasks()
     print(f"  → {sum(len(v) for v in tasks_map.values())} task/SC mappings found")
 
+    print("Fetching Section 508 Functional Performance Criteria (FPC) mapping …")
+    fpc_map = fetch_fpc_map()
+    if fpc_map:
+        print(f"  → {len(fpc_map)} SC/FPC mappings found")
+    else:
+        print("  → FPC mapping unavailable; using seed data")
+
     print("Fetching Alfa EARL implementation report …")
     earl_alfa_map, earl_act_impl = fetch_earl_alfa_mappings(act_map)
     if earl_alfa_map:
@@ -1525,6 +1602,7 @@ def main() -> None:
         act_implementations=act_implementations,
         axe_map=axe_map or {},
         alfa_map=alfa_map or {},
+        fpc_map=fpc_map or {},
     )
 
     spine["meta"]["generated"] = date.today().isoformat()
@@ -1533,6 +1611,7 @@ def main() -> None:
         spine["meta"]["alfa_version"] = alfa_version
     spine["meta"].setdefault("sources", {})["trusted_tester"] = TT_IMPLEMENTATIONS_URL
     spine["meta"]["sources"]["section508_coordinators"] = "https://github.com/Section508Coordinators"
+    spine["meta"]["sources"]["fpc_mapping"] = FPC_MAPPING_URL
     spine["meta"]["sources"]["act_rules"] = ACT_RULES_URL
     spine["meta"]["sources"]["act_testcases"] = ACT_TESTCASES_URL
     spine["meta"]["sources"]["alfa_rules_index"] = ALFA_RULES_INDEX_URL
