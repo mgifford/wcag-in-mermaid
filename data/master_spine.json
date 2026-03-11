@@ -1,9 +1,9 @@
 {
   "meta": {
-    "generated": "2026-03-10",
+    "generated": "2026-03-11",
     "wcag_version": "2.2",
     "sources": {
-      "act_rules": "https://www.w3.org/WAI/standards-guidelines/act/rules/data/rules.json",
+      "act_rules": "https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json",
       "arrm": "https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-all-tasks.csv",
       "axe_core": "https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md",
       "alfa": "https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md",
@@ -151,14 +151,22 @@
         "act": [
           "23a2a8",
           "3ea0c8",
+          "46ca7f",
           "59796f",
+          "7d6734",
+          "8fc3b6",
           "9eb3f6",
           "a25f45",
           "c3232f",
-          "de46e4"
+          "c487ae",
+          "de46e4",
+          "e88epe",
+          "qt1vmo"
         ],
         "axe": [
           "area-alt",
+          "aria-meter-name",
+          "aria-progressbar-name",
           "image-alt",
           "input-button-name",
           "input-image-alt",
@@ -388,8 +396,16 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-only-and-video-only-prerecorded.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "1a02b0",
+          "c3232f",
+          "e7aa44",
+          "ee13b5",
+          "f51b46"
+        ],
+        "axe": [
+          "audio-caption"
+        ],
         "alfa": []
       },
       "manual": {
@@ -521,7 +537,9 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded.html",
       "automation": {
-        "act": [],
+        "act": [
+          "c5a4ea"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -605,7 +623,10 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
       "automation": {
-        "act": [],
+        "act": [
+          "1ec09b",
+          "c5a4ea"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -715,7 +736,10 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/media-alternative-prerecorded.html",
       "automation": {
-        "act": [],
+        "act": [
+          "1a02b0",
+          "c5a4ea"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -784,24 +808,42 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
       "automation": {
         "act": [
+          "1a02b0",
           "307n5z",
           "3e12e1",
+          "4e8ab6",
+          "5c01ea",
+          "5f99a7",
           "674b10",
+          "6a7281",
           "78fd32",
           "7d6734",
+          "a25f45",
           "b49b2e",
+          "bc4a75",
           "d0f69e",
           "d9e9d9",
+          "e086e5",
           "eba20a",
-          "f51b46"
+          "ee13b5",
+          "f51b46",
+          "ff89c9",
+          "kb1m8s"
         ],
         "axe": [
+          "aria-hidden-body",
+          "aria-required-children",
+          "aria-required-parent",
           "definition-list",
           "dlitem",
+          "label",
           "landmark-one-main",
           "list",
           "listitem",
+          "p-as-heading",
           "table-duplicate-name",
+          "table-fake-caption",
+          "td-has-header",
           "td-headers-attr",
           "th-has-data-cells"
         ],
@@ -812,7 +854,8 @@
           "SIA-R39",
           "SIA-R4",
           "SIA-R53",
-          "SIA-R7"
+          "SIA-R7",
+          "SIA-R8"
         ]
       },
       "manual": {
@@ -1301,7 +1344,9 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/sensory-characteristics.html",
       "automation": {
-        "act": [],
+        "act": [
+          "9bd38c"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -1448,7 +1493,8 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html",
       "automation": {
         "act": [
-          "135hje"
+          "135hje",
+          "73f2c2"
         ],
         "axe": [
           "autocomplete-valid"
@@ -1523,7 +1569,9 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
       "automation": {
         "act": [],
-        "axe": [],
+        "axe": [
+          "link-in-text-block"
+        ],
         "alfa": []
       },
       "manual": {
@@ -1574,8 +1622,12 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "80f0bf"
+        ],
+        "axe": [
+          "no-autoplay-audio"
+        ],
         "alfa": []
       },
       "manual": {
@@ -1691,7 +1743,10 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html",
       "automation": {
-        "act": [],
+        "act": [
+          "59br37",
+          "b4f0c3"
+        ],
         "axe": [
           "meta-viewport"
         ],
@@ -1734,7 +1789,9 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/images-of-text.html",
       "automation": {
-        "act": [],
+        "act": [
+          "0va7u6"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -1801,7 +1858,8 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html",
       "automation": {
         "act": [
-          "09o5cg"
+          "09o5cg",
+          "afw4f7"
         ],
         "axe": [
           "color-contrast",
@@ -1924,7 +1982,9 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/images-of-text-no-exception.html",
       "automation": {
-        "act": [],
+        "act": [
+          "0va7u6"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -1954,7 +2014,9 @@
       "principle": "Perceivable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
       "automation": {
-        "act": [],
+        "act": [
+          "b4f0c3"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -2031,9 +2093,13 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html",
       "automation": {
         "act": [
+          "24afc2",
+          "78fd32",
           "9e45ec"
         ],
-        "axe": [],
+        "axe": [
+          "avoid-inline-spacing"
+        ],
         "alfa": [
           "SIA-R86"
         ]
@@ -2113,8 +2179,15 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "0ssw9k",
+          "akn7bn"
+        ],
+        "axe": [
+          "frame-focusable-content",
+          "scrollable-region-focusable",
+          "server-side-image-map"
+        ],
         "alfa": []
       },
       "manual": {
@@ -2214,7 +2287,9 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html",
       "automation": {
-        "act": [],
+        "act": [
+          "80af7b"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -2248,8 +2323,13 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard-no-exception.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "0ssw9k",
+          "akn7bn"
+        ],
+        "axe": [
+          "scrollable-region-focusable"
+        ],
         "alfa": []
       },
       "manual": {
@@ -2278,7 +2358,9 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/character-key-shortcuts.html",
       "automation": {
-        "act": [],
+        "act": [
+          "ffbc54"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -2309,8 +2391,13 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "bc659a",
+          "bisz58"
+        ],
+        "axe": [
+          "meta-refresh"
+        ],
         "alfa": []
       },
       "manual": {
@@ -2354,8 +2441,13 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "efbfc7"
+        ],
+        "axe": [
+          "blink",
+          "marquee"
+        ],
         "alfa": []
       },
       "manual": {
@@ -2427,8 +2519,13 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/interruptions.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "bc659a",
+          "bisz58"
+        ],
+        "axe": [
+          "meta-refresh-no-exceptions"
+        ],
         "alfa": []
       },
       "manual": {
@@ -2620,7 +2717,8 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html",
       "automation": {
         "act": [
-          "3e11da"
+          "3e11da",
+          "cf77f2"
         ],
         "axe": [
           "bypass"
@@ -2693,7 +2791,8 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html",
       "automation": {
         "act": [
-          "2779a5"
+          "2779a5",
+          "c4a8a4"
         ],
         "axe": [
           "document-title"
@@ -2844,9 +2943,12 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html",
       "automation": {
         "act": [
-          "c487ae"
+          "5effbb",
+          "c487ae",
+          "fd3a94"
         ],
         "axe": [
+          "area-alt",
           "link-name"
         ],
         "alfa": [
@@ -2930,7 +3032,10 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html",
       "automation": {
-        "act": [],
+        "act": [
+          "b49b2e",
+          "cc0f0a"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -2991,7 +3096,9 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
       "automation": {
-        "act": [],
+        "act": [
+          "oj04fd"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -3073,8 +3180,16 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "5effbb",
+          "aizyf1",
+          "b20e66",
+          "c487ae",
+          "fd3a94"
+        ],
+        "axe": [
+          "identical-links-same-purpose"
+        ],
         "alfa": []
       },
       "manual": {
@@ -3271,13 +3386,16 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html",
       "automation": {
         "act": [
-          "2ee8b8"
+          "2ee8b8",
+          "e086e5"
         ],
         "axe": [
+          "label",
           "label-content-name-mismatch"
         ],
         "alfa": [
-          "SIA-R14"
+          "SIA-R14",
+          "SIA-R8"
         ]
       },
       "manual": {
@@ -3307,7 +3425,10 @@
       "principle": "Operable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html",
       "automation": {
-        "act": [],
+        "act": [
+          "7677a9",
+          "c249d5"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -3457,12 +3578,15 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html",
       "automation": {
         "act": [
-          "bf051a"
+          "b5c3f8",
+          "bf051a",
+          "ucwvc8"
         ],
         "axe": [
           "document-title",
           "html-has-lang",
-          "html-lang-valid"
+          "html-lang-valid",
+          "html-xml-lang-mismatch"
         ],
         "alfa": [
           "SIA-R1",
@@ -3511,7 +3635,8 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html",
       "automation": {
         "act": [
-          "de46e4"
+          "de46e4",
+          "off6ek"
         ],
         "axe": [
           "valid-lang"
@@ -3902,8 +4027,13 @@
       "principle": "Understandable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/change-on-request.html",
       "automation": {
-        "act": [],
-        "axe": [],
+        "act": [
+          "bc659a",
+          "bisz58"
+        ],
+        "axe": [
+          "meta-refresh-no-exceptions"
+        ],
         "alfa": []
       },
       "manual": {
@@ -3964,7 +4094,9 @@
       "principle": "Understandable",
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html",
       "automation": {
-        "act": [],
+        "act": [
+          "36b590"
+        ],
         "axe": [],
         "alfa": []
       },
@@ -4010,7 +4142,9 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html",
       "automation": {
         "act": [],
-        "axe": [],
+        "axe": [
+          "form-field-multiple-labels"
+        ],
         "alfa": []
       },
       "manual": {
@@ -4326,38 +4460,64 @@
       "url": "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html",
       "automation": {
         "act": [
-          "4e8ab6",
-          "6cfa84",
-          "97a4e1",
-          "eac66b",
-          "m6b1q3",
-          "rs8a50",
-          "sm249k",
-          "cae760",
           "07b338",
           "1a02b0",
           "2e1954",
+          "2t702h",
+          "307n5z",
           "3e12e1",
+          "4b1c6c",
           "4e8ab6",
-          "59796f"
+          "59796f",
+          "5c01ea",
+          "5f99a7",
+          "674b10",
+          "6a7281",
+          "6cfa84",
+          "97a4e1",
+          "c487ae",
+          "cae760",
+          "e086e5",
+          "eac66b",
+          "m6b1q3",
+          "rs8a50",
+          "sm249k"
         ],
         "axe": [
+          "area-alt",
           "aria-allowed-attr",
+          "aria-braille-equivalent",
           "aria-command-name",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
           "aria-input-field-name",
           "aria-meter-name",
           "aria-progressbar-name",
+          "aria-prohibited-attr",
           "aria-required-attr",
           "aria-required-children",
           "aria-required-parent",
+          "aria-roledescription",
           "aria-roles",
+          "aria-tab-name",
           "aria-toggle-field-name",
           "aria-tooltip-name",
           "aria-valid-attr",
           "aria-valid-attr-value",
           "button-name",
+          "duplicate-id-aria",
+          "frame-title",
+          "frame-title-unique",
           "image-alt",
-          "select-name"
+          "input-button-name",
+          "input-image-alt",
+          "label",
+          "link-name",
+          "nested-interactive",
+          "select-name",
+          "summary-name"
         ],
         "alfa": [
           "SIA-R11",
@@ -4373,7 +4533,8 @@
           "SIA-R28",
           "SIA-R29",
           "SIA-R30",
-          "SIA-R31"
+          "SIA-R31",
+          "SIA-R8"
         ]
       },
       "manual": {
