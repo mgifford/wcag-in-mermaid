@@ -764,6 +764,16 @@ main {
   color: var(--color-text);
 }
 
+.act-intro .act-section-heading {
+  margin-bottom: 8px;
+}
+
+.act-rules-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .act-rules-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

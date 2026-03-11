@@ -749,11 +749,13 @@ function renderActRules() {
   const fragment = document.createDocumentFragment();
 
   // --- Intro bar ---
-  const intro = document.createElement("div");
+  const intro = document.createElement("section");
   intro.className = "act-intro";
+  intro.setAttribute("aria-labelledby", "act-overview-heading");
   const actCount = Object.keys(actRuleToScs).length;
   intro.innerHTML = hasActRules
-    ? `<p>
+    ? `<h2 id="act-overview-heading" class="act-section-heading">ACT Rules Overview</h2>
+       <p>
         <strong>${actCount} ACT rule${actCount !== 1 ? "s" : ""}</strong> found across the
         ${entries.length} filtered Success Criteria.
         ${hasImplData
@@ -764,11 +766,22 @@ function renderActRules() {
         <a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules overview</a> ·
         <a href="https://www.w3.org/WAI/standards-guidelines/act/implementations/" target="_blank" rel="noopener noreferrer">Implementations</a>
        </p>`
-    : `<p>No ACT rules are mapped to the currently filtered Success Criteria.</p>`;
+    : `<h2 id="act-overview-heading" class="act-section-heading">ACT Rules Overview</h2>
+       <p>No ACT rules are mapped to the currently filtered Success Criteria.</p>`;
   fragment.appendChild(intro);
 
   // --- ACT rule cards ---
   if (hasActRules) {
+    const rulesSection = document.createElement("section");
+    rulesSection.className = "act-rules-section";
+    rulesSection.setAttribute("aria-labelledby", "act-rules-heading");
+
+    const rulesHeading = document.createElement("h2");
+    rulesHeading.id = "act-rules-heading";
+    rulesHeading.className = "act-section-heading";
+    rulesHeading.textContent = "ACT Rules by WCAG Success Criteria";
+    rulesSection.appendChild(rulesHeading);
+
     const grid = document.createElement("div");
     grid.className = "act-rules-grid";
     grid.setAttribute("role", "list");
@@ -842,7 +855,8 @@ function renderActRules() {
 
       grid.appendChild(card);
     }
-    fragment.appendChild(grid);
+    rulesSection.appendChild(grid);
+    fragment.appendChild(rulesSection);
   }
 
   // --- Engine-specific rules section ---
