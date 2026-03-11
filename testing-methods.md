@@ -6,7 +6,7 @@
 
 ---
 
-## Contents
+## Contents <a href="#contents" aria-label="Link to Contents section">#</a>
 
 1. [Overview](#overview)
 2. [Automated Testing](#automated-testing)
@@ -25,7 +25,7 @@
 
 ---
 
-## Overview
+## Overview <a href="#overview" aria-label="Link to Overview section">#</a>
 
 Accessibility testing combines two complementary approaches:
 
@@ -41,9 +41,9 @@ testing frameworks (W3C ARRM, DHS Trusted Tester v5) for all 86 WCAG 2.2 Success
 
 ---
 
-## Automated Testing
+## Automated Testing <a href="#automated-testing" aria-label="Link to Automated Testing section">#</a>
 
-### What automation can detect
+### What automation can detect <a href="#what-automation-can-detect" aria-label="Link to What automation can detect section">#</a>
 
 Automated tools run programmatically against rendered HTML and reliably detect
 concrete, deterministic violations such as:
@@ -62,7 +62,7 @@ concrete, deterministic violations such as:
   focus order without justification
 - **Language attribute** — `<html lang>` missing or set to an invalid BCP 47 language tag
 
-### What automation cannot detect
+### What automation cannot detect <a href="#what-automation-cannot-detect" aria-label="Link to What automation cannot detect section">#</a>
 
 Automation **cannot** reliably determine whether:
 
@@ -77,7 +77,7 @@ Automation **cannot** reliably determine whether:
 
 These are the gaps that manual testing must fill.
 
-### Rule engines tracked in this project
+### Rule engines tracked in this project <a href="#rule-engines-tracked-in-this-project" aria-label="Link to Rule engines tracked in this project section">#</a>
 
 | Engine | Maintained by | Open source | ACT-aligned |
 |--------|--------------|-------------|-------------|
@@ -95,9 +95,9 @@ These are the gaps that manual testing must fill.
 
 ---
 
-## Manual Testing
+## Manual Testing <a href="#manual-testing" aria-label="Link to Manual Testing section">#</a>
 
-### ARRM — roles and responsibilities
+### ARRM — roles and responsibilities <a href="#arrm--roles-and-responsibilities" aria-label="Link to ARRM — roles and responsibilities section">#</a>
 
 The [W3C Accessibility Roles and Responsibilities Mapping (ARRM)](https://www.w3.org/WAI/planning/arrm/)
 maps each WCAG Success Criterion to the roles responsible for testing and implementing it:
@@ -112,7 +112,7 @@ maps each WCAG Success Criterion to the roles responsible for testing and implem
 For each SC, ARRM defines specific **tasks** with **primary** and **secondary** ownership.
 This project surfaces the ARRM task IDs on every SC card and in the Table view.
 
-### DHS Trusted Tester v5
+### DHS Trusted Tester v5 <a href="#dhs-trusted-tester-v5" aria-label="Link to DHS Trusted Tester v5 section">#</a>
 
 The [Department of Homeland Security Trusted Tester v5](https://section508.gov/test/trusted-tester/)
 is a repeatable, prescriptive test process used by US federal agencies to evaluate Section 508
@@ -126,9 +126,9 @@ Trusted Tester step IDs are linked on every SC card and in the dashboard's Table
 
 ---
 
-## Coverage Landscape
+## Coverage Landscape <a href="#coverage-landscape" aria-label="Link to Coverage Landscape section">#</a>
 
-### Overall statistics
+### Overall statistics <a href="#overall-statistics" aria-label="Link to Overall statistics section">#</a>
 
 Based on the current `master_spine.json` data (86 WCAG 2.2 SCs):
 
@@ -144,7 +144,7 @@ Based on the current `master_spine.json` data (86 WCAG 2.2 SCs):
 > *types* of non-text content. Human judgement is still needed to evaluate whether alternative
 > text is *meaningful*.
 
-### Partially-covered Success Criteria
+### Partially-covered Success Criteria <a href="#partially-covered-success-criteria" aria-label="Link to Partially-covered Success Criteria section">#</a>
 
 These SCs have rules in at least one engine but gaps in others:
 
@@ -163,7 +163,7 @@ These gaps often reflect:
 - Rules being in development or not yet ACT-standardised
 - Differences in which WCAG version the engine targets
 
-### Success Criteria with no automated rules
+### Success Criteria with no automated rules <a href="#success-criteria-with-no-automated-rules" aria-label="Link to Success Criteria with no automated rules section">#</a>
 
 The majority of WCAG 2.2 SCs (62 of 86, ~72%) have zero automated rules across all three
 engines. This is especially common for:
@@ -178,7 +178,7 @@ For these SCs, expert manual testing is the **only** way to evaluate conformance
 
 ---
 
-## Reading the Dashboard
+## Reading the Dashboard <a href="#reading-the-dashboard" aria-label="Link to Reading the Dashboard section">#</a>
 
 The [WCAG Spine dashboard](https://mgifford.github.io/wcag-spine) provides five views:
 
@@ -190,7 +190,7 @@ The [WCAG Spine dashboard](https://mgifford.github.io/wcag-spine) provides five 
 | **ACT Rules** | Evaluating tool coverage by ACT rule ID |
 | **Coverage** | Understanding automation gaps and planning a test strategy |
 
-### Coverage bar interpretation
+### Coverage bar interpretation <a href="#coverage-bar-interpretation" aria-label="Link to Coverage bar interpretation section">#</a>
 
 Each SC card shows a coverage bar labelled `N/3`. This counts how many of the three
 tracked engines (ACT Rules, axe-core, Alfa) have at least one rule for that SC:
@@ -199,7 +199,7 @@ tracked engines (ACT Rules, axe-core, Alfa) have at least one rule for that SC:
 - `1/3` or `2/3` — Partial automation; targeted manual review recommended
 - `0/3` — No automation; entirely manual
 
-### Filtering by automation
+### Filtering by automation <a href="#filtering-by-automation" aria-label="Link to Filtering by automation section">#</a>
 
 Use the **Automation** filter to focus on a specific tier:
 
@@ -210,9 +210,9 @@ Use the **Automation** filter to focus on a specific tier:
 
 ---
 
-## All Resources
+## All Resources <a href="#all-resources" aria-label="Link to All Resources section">#</a>
 
-### Specifications and standards
+### Specifications and standards <a href="#specifications-and-standards" aria-label="Link to Specifications and standards section">#</a>
 
 - [WCAG 2.2 Specification](https://www.w3.org/TR/WCAG22/) — W3C Recommendation
 - [WCAG 2.2 Understanding Documents](https://www.w3.org/WAI/WCAG22/Understanding/) — intent, techniques, failure examples
@@ -220,7 +220,7 @@ Use the **Automation** filter to focus on a specific tier:
 - [ACT Rules Framework](https://www.w3.org/WAI/standards-guidelines/act/) — how to write interoperable test rules
 - [ACT Rules Registry](https://www.w3.org/WAI/standards-guidelines/act/rules/) — all published ACT rules
 
-### Automated testing tools
+### Automated testing tools <a href="#automated-testing-tools" aria-label="Link to Automated testing tools section">#</a>
 
 - [axe-core](https://github.com/dequelabs/axe-core) — Deque's open-source engine; integrates with browsers, CI/CD, and dev tools
 - [Alfa](https://github.com/siteimprove/alfa) — Siteimprove's open-source engine with strong ACT alignment
@@ -229,7 +229,7 @@ Use the **Automation** filter to focus on a specific tier:
 - [ACT Implementations Registry](https://www.w3.org/WAI/standards-guidelines/act/implementations/) — which tools implement which ACT rules
 - [Deque's study: Automated testing covers ~57% of issues](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/)
 
-### Manual testing frameworks
+### Manual testing frameworks <a href="#manual-testing-frameworks" aria-label="Link to Manual testing frameworks section">#</a>
 
 - [W3C ARRM](https://www.w3.org/WAI/planning/arrm/) — roles and tasks for each WCAG SC
 - [DHS Trusted Tester v5](https://section508.gov/test/trusted-tester/) — federal step-by-step test procedures
@@ -238,7 +238,7 @@ Use the **Automation** filter to focus on a specific tier:
 - [WCAG-EM](https://www.w3.org/WAI/test-evaluate/conformance/wcag-em/) — Website Accessibility Conformance Evaluation Methodology
 - [Section 508 ICT Testing Baseline](https://ictbaseline.access-board.gov/) — US federal testing baseline
 
-### Data sources used by this project
+### Data sources used by this project <a href="#data-sources-used-by-this-project" aria-label="Link to Data sources used by this project section">#</a>
 
 | Source | URL | Machine-readable |
 |--------|-----|-----------------|

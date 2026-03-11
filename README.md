@@ -24,7 +24,7 @@
 
 ---
 
-## Live Demo
+## Live Demo <a href="#live-demo" aria-label="Link to Live Demo section">#</a>
 
 **[mgifford.github.io/wcag-spine](https://mgifford.github.io/wcag-spine)**
 
@@ -36,7 +36,7 @@ https://mgifford.github.io/wcag-spine/#2.4.11
 
 ---
 
-## What It Shows
+## What It Shows <a href="#what-it-shows" aria-label="Link to What It Shows section">#</a>
 
 For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 "vertebra" — a three-part view of:
@@ -47,7 +47,7 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 | **Left** 🤖 Automation | ACT Rule IDs · Axe-core rule IDs · Alfa rule IDs |
 | **Right** 👤 Human | ARRM responsibility roles · Trusted Tester procedure steps |
 
-### Five views
+### Five views <a href="#five-views" aria-label="Link to Five views section">#</a>
 
 | View | Description |
 |------|-------------|
@@ -57,7 +57,7 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 | **ACT Rules** | Browse by ACT rule ID, showing engine implementations |
 | **Coverage** | Automation coverage statistics and testing methodology |
 
-### Filters
+### Filters <a href="#filters" aria-label="Link to Filters section">#</a>
 
 - **Level** — A / AA / AAA
 - **Role** — filter by ARRM responsibility (e.g. *Visual Design*)
@@ -66,7 +66,7 @@ For every WCAG 2.2 Success Criterion (1.1.1 → 4.1.3) the dashboard renders a
 
 ---
 
-## Repository Structure
+## Repository Structure <a href="#repository-structure" aria-label="Link to Repository Structure section">#</a>
 
 ```
 wcag-spine/
@@ -97,7 +97,7 @@ wcag-spine/
 
 ---
 
-## Data Sources
+## Data Sources <a href="#data-sources" aria-label="Link to Data Sources section">#</a>
 
 | Source | URL | Machine-readable |
 |--------|-----|-----------------|
@@ -112,7 +112,7 @@ wcag-spine/
 
 ---
 
-## Running the Sync Script Locally
+## Running the Sync Script Locally <a href="#running-the-sync-script-locally" aria-label="Link to Running the Sync Script Locally section">#</a>
 
 ```bash
 # No third-party dependencies — uses only the Python standard library
@@ -126,7 +126,7 @@ The script:
 
 ---
 
-## master_spine.json Schema
+## master_spine.json Schema <a href="#master_spinejson-schema" aria-label="Link to master_spine.json Schema section">#</a>
 
 ```json
 {
@@ -157,7 +157,7 @@ The script:
 
 ---
 
-## GitHub Pages Setup
+## GitHub Pages Setup <a href="#github-pages-setup" aria-label="Link to GitHub Pages Setup section">#</a>
 
 1. Go to **Settings → Pages**.
 2. Set **Source** to *GitHub Actions*.
@@ -168,7 +168,7 @@ The daily `sync_accessibility.yml` workflow also re-deploys after updating
 
 ---
 
-## Contributing
+## Contributing <a href="#contributing" aria-label="Link to Contributing section">#</a>
 
 Pull requests are welcome! To add or correct a rule mapping:
 
@@ -177,7 +177,7 @@ Pull requests are welcome! To add or correct a rule mapping:
 
 ---
 
-## Documentation
+## Documentation <a href="#documentation" aria-label="Link to Documentation section">#</a>
 
 | Document | Description |
 |----------|-------------|
@@ -188,6 +188,6 @@ Pull requests are welcome! To add or correct a rule mapping:
 
 ---
 
-## License
+## License <a href="#license" aria-label="Link to License section">#</a>
 
 [MIT](LICENSE) · Data sourced from W3C (CC BY 4.0) and open-source projects.

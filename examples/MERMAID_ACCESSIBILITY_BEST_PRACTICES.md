@@ -19,7 +19,7 @@ Based on:
 
 ---
 
-## 1. Required Metadata
+## 1. Required Metadata <a href="#1-required-metadata" aria-label="Link to 1. Required Metadata section">#</a>
 
 Every Mermaid diagram **must** include:
 
@@ -28,19 +28,19 @@ Every Mermaid diagram **must** include:
 %%accDescr Detailed description explaining what the diagram shows and why
 ```
 
-### Title Requirements
+### Title Requirements <a href="#title-requirements" aria-label="Link to Title Requirements section">#</a>
 - **Concise and descriptive** — Should identify the diagram type and subject
 - **No more than 100 characters** — Accessible for all screen readers
 - **Unique within page** — Each diagram needs its own title
 - **Meaningful** — "Diagram" or "Flowchart" alone is insufficient
 
-### Description Requirements
+### Description Requirements <a href="#description-requirements" aria-label="Link to Description Requirements section">#</a>
 - **Complete explanation** — Describe the diagram's purpose, key elements, and relationships
 - **Conversational tone** — Write as if explaining to someone who cannot see the visual
 - **Include key decisions/branches** — For flowcharts: mention critical decision points
 - **No more than 500 characters recommended** — Longer descriptions should consider alternative presentation
 
-### Example: Decision Tree
+### Example: Decision Tree <a href="#example-decision-tree" aria-label="Link to Example: Decision Tree section">#</a>
 ```mermaid
 %%accTitle User Authentication Flowchart
 %%accDescr Describes a login process where credentials are validated. If valid, the user is granted access and the dashboard loads. If invalid, an error message is shown and the user can retry.
@@ -54,9 +54,9 @@ graph TD
 
 ---
 
-## 2. SVG Accessibility Requirements
+## 2. SVG Accessibility Requirements <a href="#2-svg-accessibility-requirements" aria-label="Link to 2. SVG Accessibility Requirements section">#</a>
 
-### Pattern 11 Implementation (Carie Fisher)
+### Pattern 11 Implementation (Carie Fisher) <a href="#pattern-11-implementation-carie-fisher" aria-label="Link to Pattern 11 Implementation (Carie Fisher) section">#</a>
 
 All output SVGs must implement **Pattern 11:**
 
@@ -70,12 +70,12 @@ All output SVGs must implement **Pattern 11:**
 
 **Rationale:** Pattern 11 is the most reliable pattern across different screen reader/browser combinations. While it may repeat content in some configurations, it never ignores accessibility elements.
 
-### Required Attributes
+### Required Attributes <a href="#required-attributes" aria-label="Link to Required Attributes section">#</a>
 - `role="img"` — Required for consistent screen reader support
 - `xmlns="http://www.w3.org/2000/svg"` — Required for standalone SVG usage
 - `aria-labelledby="title-id desc-id"` — Both IDs must be referenced (aria-labelledby is more reliable than aria-describedby)
 
-### ID Generation Rules
+### ID Generation Rules <a href="#id-generation-rules" aria-label="Link to ID Generation Rules section">#</a>
 - All IDs must be **unique** within the SVG
 - Use collision-resistant format: `{prefix}-{timestamp}-{randomString}`
 - Preserve IDs across transformations when possible
@@ -83,11 +83,11 @@ All output SVGs must implement **Pattern 11:**
 
 ---
 
-## 3. Semantic Structure for Flowcharts
+## 3. Semantic Structure for Flowcharts <a href="#3-semantic-structure-for-flowcharts" aria-label="Link to 3. Semantic Structure for Flowcharts section">#</a>
 
 Following Léonie Watson's patterns:
 
-### Root-Level Structure
+### Root-Level Structure <a href="#root-level-structure" aria-label="Link to Root-Level Structure section">#</a>
 ```html
 <svg role="img" aria-labelledby="...">
   <title>...</title>
@@ -102,19 +102,19 @@ Following Léonie Watson's patterns:
 </svg>
 ```
 
-### Node Requirements
+### Node Requirements <a href="#node-requirements" aria-label="Link to Node Requirements section">#</a>
 - Each node must have a **single accessible name** via `<title>`
 - Node text must be **meaningful and non-repetitive**
 - Decorative shapes must be **hidden from accessibility tree** (aria-hidden="true" or role="presentation")
 
-### Edge/Link Handling
+### Edge/Link Handling <a href="#edgelink-handling" aria-label="Link to Edge/Link Handling section">#</a>
 - Arrows/connectors are **hidden by default** (aria-hidden="true")
 - Named links (e.g., "Yes"/"No" in decisions) must be **contextual**
 - Example: `"Yes, proceed to processing"` instead of just `"Yes"`
 
 ---
 
-## 4. Node Type Annotation (Future)
+## 4. Node Type Annotation (Future) <a href="#4-node-type-annotation-future" aria-label="Link to 4. Node Type Annotation (Future) section">#</a>
 
 The tool should support optional annotations for node type inference:
 
@@ -133,9 +133,9 @@ The tool should support optional annotations for node type inference:
 
 ---
 
-## 5. Validation Rules
+## 5. Validation Rules <a href="#5-validation-rules" aria-label="Link to 5. Validation Rules section">#</a>
 
-### Pre-Export Validation
+### Pre-Export Validation <a href="#pre-export-validation" aria-label="Link to Pre-Export Validation section">#</a>
 Before exporting, the tool must verify:
 
 1. **Metadata present** — Both `%%accTitle` and `%%accDescr` exist
@@ -147,12 +147,12 @@ Before exporting, the tool must verify:
 7. **ARIA labelledby** — Both title and desc IDs referenced
 8. **Contrast** — WCAG 4.5:1 (text), 3:1 (non-text) in light AND dark modes
 
-### Warnings (Non-blocking)
+### Warnings (Non-blocking) <a href="#warnings-non-blocking" aria-label="Link to Warnings (Non-blocking) section">#</a>
 - Description > 500 characters (consider alternative presentation)
 - Node with no accessible label (suggest adding title)
 - Monochromatic diagram (no color validation possible)
 
-### Errors (Blocking Export)
+### Errors (Blocking Export) <a href="#errors-blocking-export" aria-label="Link to Errors (Blocking Export) section">#</a>
 - Missing `%%accTitle`
 - Missing `%%accDescr`
 - Invalid Mermaid syntax
@@ -160,15 +160,15 @@ Before exporting, the tool must verify:
 
 ---
 
-## 6. Dark Mode Handling
+## 6. Dark Mode Handling <a href="#6-dark-mode-handling" aria-label="Link to 6. Dark Mode Handling section">#</a>
 
-### Theming Requirements
+### Theming Requirements <a href="#theming-requirements" aria-label="Link to Theming Requirements section">#</a>
 - **Light mode default** — WCAG 4.5:1 text, 3:1 non-text
 - **Dark mode support** — Same contrast ratios must apply
 - **Color strategy** — Use CSS custom properties or `currentColor` where possible
 - **Validation** — Both themes must pass contrast checks
 
-### Example SVG with Dark Mode Support
+### Example SVG with Dark Mode Support <a href="#example-svg-with-dark-mode-support" aria-label="Link to Example SVG with Dark Mode Support section">#</a>
 ```html
 <svg role="img" xmlns="http://www.w3.org/2000/svg">
   <title>Data Flow</title>
@@ -185,7 +185,7 @@ Before exporting, the tool must verify:
 
 ---
 
-## 7. Linting Checklist
+## 7. Linting Checklist <a href="#7-linting-checklist" aria-label="Link to 7. Linting Checklist section">#</a>
 
 Apply this checklist before accepting any diagram for export:
 
@@ -205,24 +205,24 @@ Apply this checklist before accepting any diagram for export:
 
 ---
 
-## 8. User Prompts for Improvement
+## 8. User Prompts for Improvement <a href="#8-user-prompts-for-improvement" aria-label="Link to 8. User Prompts for Improvement section">#</a>
 
 When the tool detects ambiguity, it must prompt the user:
 
-### Decision Node Prompt
+### Decision Node Prompt <a href="#decision-node-prompt" aria-label="Link to Decision Node Prompt section">#</a>
 ```
 Is this a decision point (question)?
 ⚫ Yes, this is a decision (e.g., "Check if valid?")
 ⚫ No, this is an action/process (e.g., "Check password")
 ```
 
-### Edge Label Prompt
+### Edge Label Prompt <a href="#edge-label-prompt" aria-label="Link to Edge Label Prompt section">#</a>
 ```
 Add contextual label for "Yes" branch:
 [Example: "Yes, create account"]
 ```
 
-### Description Clarification
+### Description Clarification <a href="#description-clarification" aria-label="Link to Description Clarification section">#</a>
 ```
 Your description is very brief. Consider explaining:
 - What triggers this diagram?
@@ -232,9 +232,9 @@ Your description is very brief. Consider explaining:
 
 ---
 
-## 9. Contrast Checking (WCAG 2.x and APCA)
+## 9. Contrast Checking (WCAG 2.x and APCA) <a href="#9-contrast-checking-wcag-2x-and-apca" aria-label="Link to 9. Contrast Checking (WCAG 2.x and APCA) section">#</a>
 
-### WCAG Contrast Ratio
+### WCAG Contrast Ratio <a href="#wcag-contrast-ratio" aria-label="Link to WCAG Contrast Ratio section">#</a>
 Calculate per WCAG formula:
 ```
 (Lmax + 0.05) / (Lmin + 0.05)
@@ -246,13 +246,13 @@ L = 0.2126 * R + 0.7152 * G + 0.0722 * B
 (with component gamma adjustments)
 ```
 
-### APCA (Advanced Perceptual Contrast Algorithm)
+### APCA (Advanced Perceptual Contrast Algorithm) <a href="#apca-advanced-perceptual-contrast-algorithm" aria-label="Link to APCA (Advanced Perceptual Contrast Algorithm) section">#</a>
 **Note:** APCA applies **only to text**, not decorative fills.
 
 - Text against background: Use APCA values for reference
 - Non-text (shapes, borders): Use WCAG only
 
-### Validation Thresholds
+### Validation Thresholds <a href="#validation-thresholds" aria-label="Link to Validation Thresholds section">#</a>
 - **Light mode** — WCAG 7:1 preferred, 4.5:1 minimum for text
 - **Dark mode** — Same ratios
 - **Non-text** — 3:1 minimum in both modes
@@ -260,7 +260,7 @@ L = 0.2126 * R + 0.7152 * G + 0.0722 * B
 
 ---
 
-## 10. Known Limitations
+## 10. Known Limitations <a href="#10-known-limitations" aria-label="Link to 10. Known Limitations section">#</a>
 
 Document these limitations in diagram metadata or UI:
 
@@ -272,14 +272,14 @@ Document these limitations in diagram metadata or UI:
 
 ---
 
-## References
+## References <a href="#references" aria-label="Link to References section">#</a>
 
-### W3C Specifications
+### W3C Specifications <a href="#w3c-specifications" aria-label="Link to W3C Specifications section">#</a>
 
 - **W3C ARIA**: https://www.w3.org/WAI/ARIA/apg/
 - **WCAG 2.2**: https://www.w3.org/WAI/WCAG22/quickref/
 
-### Machine-Readable Standards
+### Machine-Readable Standards <a href="#machine-readable-standards" aria-label="Link to Machine-Readable Standards section">#</a>
 
 For AI systems and automated tooling, see [wai-yaml-ld](https://github.com/mgifford/wai-yaml-ld) for structured accessibility standards:
 
@@ -287,7 +287,7 @@ For AI systems and automated tooling, see [wai-yaml-ld](https://github.com/mgiff
 - [ARIA Informative (YAML)](https://github.com/mgifford/wai-yaml-ld/blob/main/kitty-specs/001-wai-standards-yaml-ld-ingestion/research/wai-aria-informative.yaml) - ARIA-focused informative catalog
 - [Standards Link Graph (YAML)](https://github.com/mgifford/wai-yaml-ld/blob/main/kitty-specs/001-wai-standards-yaml-ld-ingestion/research/standards-link-graph.yaml) - Relationships across WCAG/ARIA/SVG standards
 
-### Additional Reading
+### Additional Reading <a href="#additional-reading" aria-label="Link to Additional Reading section">#</a>
 
 - **Léonie Watson's Accessible SVG Flowcharts**: https://tink.uk/accessible-svg-flowcharts/
 - **Carie Fisher's Pattern Testing**: https://cariefisher.com/a11y-svg-updated/
