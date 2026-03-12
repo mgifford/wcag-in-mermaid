@@ -571,6 +571,7 @@ function buildCard(num, entry) {
           ? `<div class="tt-section">
               <div class="tt-sub-header">
                 🔬 <a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer" title="Section 508 Trusted Tester v5 resource">Trusted Tester v5</a>
+                <span class="badge badge-ai" title="Step-to-SC mappings were AI-assisted and require human validation">AI-assisted</span>
               </div>
               <ul class="step-list" aria-label="Trusted Tester test steps">
                 ${steps.map(s => {
@@ -1215,6 +1216,7 @@ function renderCoverage() {
           <li><a href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/" target="_blank" rel="noopener noreferrer">Deque: Automated testing covers ~57% of issues</a></li>
           <li><a href="https://alphagov.github.io/wcag-primer/" target="_blank" rel="noopener noreferrer">GOV.UK WCAG 2.1 Primer</a> — plain-language SC explanations</li>
           <li><a href="testing-methods.md" target="_blank" rel="noopener noreferrer">Testing Methods &amp; Resources</a> — this project's companion documentation</li>
+          <li><a href="sources.html" rel="noopener noreferrer">Data Sources &amp; Provenance</a> — upstream sources, AI-generated fields, and data corrections</li>
         </ul>
       </div>
     </div>`;
@@ -1727,6 +1729,7 @@ function renderChecklist(scKey, entry) {
         <h3 id="checklist-tt-heading" class="checklist-section-heading">
           🔬 Trusted Tester v5 Steps
           <span class="checklist-count" aria-label="${steps.length} steps">${steps.length}</span>
+          <span class="badge badge-ai" title="Step-to-SC mappings were AI-assisted and require human validation">AI-assisted</span>
         </h3>
         <ul class="checklist-list" aria-label="Trusted Tester steps for SC ${escapeHTML(scKey)}">
           ${ttItems}

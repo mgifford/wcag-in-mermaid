@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Sources &amp; Provenance — WCAG Spine</title>
+  <meta name="description" content="Data sources, provenance, and interconnections for the WCAG Spine dashboard. Shows which fields are upstream-sourced, which are AI-generated, and how the data flows from original sources." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Data Sources &amp; Provenance — WCAG Spine" />
+  <meta property="og:description" content="Transparency page: upstream sources, AI-generated fields, data corrections, and source interconnections for WCAG Spine." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Skip navigation link (accessibility) -->
+  <a href="#sources-main" class="skip-link">Skip to main content</a>
+
+  <!-- ================================================================ -->
+  <!-- Header                                                            -->
+  <!-- ================================================================ -->
+  <header role="banner">
+    <h1>🔍 Data Sources &amp; Provenance</h1>
+    <p>
+      Transparency report: where WCAG Spine data comes from, what was generated
+      with AI assistance, and how sources interconnect.
+      <a href="index.html" class="header-back-link">← Back to Dashboard</a>
+    </p>
+  </header>
+
+  <!-- ================================================================ -->
+  <!-- Main content                                                      -->
+  <!-- ================================================================ -->
+  <main id="sources-main" tabindex="-1">
+
+    <!-- Loading state (replaced by JS) -->
+    <div id="sources-loading" role="status" aria-live="polite">
+      Loading data source information…
+    </div>
+
+    <!-- Content injected by sources.js -->
+    <div id="sources-content" hidden>
+
+      <!-- ============================================================ -->
+      <!-- AI-generated data warning                                    -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="ai-notice-heading">
+        <h2 id="ai-notice-heading">⚠️ AI-Generated Content Notice</h2>
+        <div class="experimental-notice" role="note" aria-label="AI-generated content warning">
+          <strong>Fields generated with AI assistance</strong> are clearly identified
+          throughout this page. They require human validation before use in production.
+          <ul>
+            <li><strong>Upstream-sourced fields</strong> (automation rules: ACT, Axe, Alfa) are
+              fetched directly from official upstream repositories and reflect the state of those
+              sources at the last sync date.</li>
+            <li><strong>AI-assisted fields</strong> (manual testing procedures: Trusted Tester
+              steps, ARRM tasks, and role assignments) were initially populated with AI assistance
+              and may contain errors.</li>
+            <li>If you spot an error, please
+              <a href="https://github.com/mgifford/wcag-spine/issues" rel="noopener noreferrer">open an issue</a>
+              with the SC number, field, and the correction. Include links to the upstream source
+              so the correction can be verified.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Data generation info                                         -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="data-info-heading">
+        <h2 id="data-info-heading">📅 Data Generation Info</h2>
+        <dl class="sources-dl">
+          <dt>Last generated</dt>
+          <dd id="meta-generated">—</dd>
+          <dt>WCAG version</dt>
+          <dd id="meta-wcag">—</dd>
+          <dt>Axe-core version</dt>
+          <dd id="meta-axe">—</dd>
+          <dt>Alfa version</dt>
+          <dd id="meta-alfa">—</dd>
+          <dt>Sync workflow</dt>
+          <dd>
+            <a href="https://github.com/mgifford/wcag-spine/blob/main/.github/workflows/sync_accessibility.yml"
+               target="_blank" rel="noopener noreferrer">
+              .github/workflows/sync_accessibility.yml
+            </a>
+            — runs daily via GitHub Actions
+          </dd>
+        </dl>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Data field provenance table                                  -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="provenance-heading">
+        <h2 id="provenance-heading">🗂️ Data Field Provenance</h2>
+        <p>Each field in <code>master_spine.json</code> has a different origin. The table below shows which fields come from upstream sources and which required AI assistance.</p>
+        <div class="table-wrapper" role="region" aria-label="Data field provenance" tabindex="0">
+          <table class="sources-table">
+            <caption>Provenance of each data field in master_spine.json</caption>
+            <thead>
+              <tr>
+                <th scope="col">Field path</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Source</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>automation.act</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json" target="_blank" rel="noopener noreferrer">W3C ACT Rules (wcag-mapping.json)</a></td>
+                <td>Authoritative W3C mapping of ACT rule IDs to WCAG SCs</td>
+              </tr>
+              <tr>
+                <td><code>automation.axe</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://github.com/dequelabs/axe-core/tree/develop/lib/rules" target="_blank" rel="noopener noreferrer">Deque axe-core rules (GitHub)</a></td>
+                <td>Rule JSON files parsed for WCAG tags; falls back to compiled axe.js</td>
+              </tr>
+              <tr>
+                <td><code>automation.alfa</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/Siteimprove/alfa/main/packages/alfa-rules/src/index.ts" target="_blank" rel="noopener noreferrer">Siteimprove Alfa rules index (TypeScript)</a></td>
+                <td>Parsed <code>Criterion.of("X.Y.Z")</code> calls; enriched by Alfa EARL report</td>
+              </tr>
+              <tr>
+                <td><code>automation.alfa</code> (enriched)</td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json" target="_blank" rel="noopener noreferrer">Alfa EARL implementation report</a></td>
+                <td>Maps Alfa rules to ACT rules; used to derive additional SC coverage</td>
+              </tr>
+              <tr>
+                <td><code>manual.roles</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-wcag-sc.csv" target="_blank" rel="noopener noreferrer">W3C ARRM (arrm-wcag-sc.csv)</a></td>
+                <td>Responsibility roles per SC from W3C WAI Accessibility Roles and Responsibilities Mapping</td>
+              </tr>
+              <tr>
+                <td><code>manual.arrm_tasks</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-all-tasks.csv" target="_blank" rel="noopener noreferrer">W3C ARRM (arrm-all-tasks.csv)</a></td>
+                <td>Structured task objects with ownership, category and role URLs</td>
+              </tr>
+              <tr>
+                <td><code>manual.tt_steps</code></td>
+                <td><span class="badge badge-ai">AI-assisted</span></td>
+                <td><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer">DHS Trusted Tester v5</a></td>
+                <td>Step IDs were mapped to SCs with AI assistance; requires human validation</td>
+              </tr>
+              <tr>
+                <td><code>fpc</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td><a href="https://raw.githubusercontent.com/CivicActions/accessibility-data-reference/main/mapping-wcag-to-fpc.csv" target="_blank" rel="noopener noreferrer">CivicActions Section 508 FPC mapping</a></td>
+                <td>Section 508 Functional Performance Criteria disability groups per SC</td>
+              </tr>
+              <tr>
+                <td><code>meta.act_implementations</code></td>
+                <td><span class="badge badge-upstream">Upstream</span></td>
+                <td>ACT Rules + Alfa EARL report (combined)</td>
+                <td>Maps ACT rule IDs to testing engine implementations (axe, Alfa, Equal Access, QualWeb)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Upstream sources detail                                       -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="upstream-heading">
+        <h2 id="upstream-heading">🌐 Upstream Sources</h2>
+
+        <div class="sources-grid">
+
+          <article class="source-card" aria-labelledby="source-w3c-act">
+            <h3 id="source-w3c-act">W3C ACT Rules</h3>
+            <p>The authoritative Accessibility Conformance Testing (ACT) rules published by the W3C. These rules define how to test WCAG Success Criteria in a consistent, automated way.</p>
+            <dl class="source-links">
+              <dt>Primary mapping</dt>
+              <dd><a href="https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json" target="_blank" rel="noopener noreferrer">wcag-mapping.json (GitHub Raw)</a></dd>
+              <dt>Browse rules</dt>
+              <dd><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">W3C WAI ACT Rules</a></dd>
+              <dt>Supplemental</dt>
+              <dd><a href="https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases.json" target="_blank" rel="noopener noreferrer">testcases.json (secondary SC coverage)</a></dd>
+              <dt>Repository</dt>
+              <dd><a href="https://github.com/w3c/wcag-act-rules" target="_blank" rel="noopener noreferrer">github.com/w3c/wcag-act-rules</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>automation.act</code> field in each SC; also populates <code>meta.act_implementations</code></p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-axe">
+            <h3 id="source-axe">Deque axe-core</h3>
+            <p>Open-source accessibility testing engine by Deque Systems. Each rule file maps to one or more WCAG tags, which are parsed to derive the SC coverage.</p>
+            <dl class="source-links">
+              <dt>Rules directory</dt>
+              <dd><a href="https://github.com/dequelabs/axe-core/tree/develop/lib/rules" target="_blank" rel="noopener noreferrer">lib/rules/ (GitHub)</a></dd>
+              <dt>GitHub API</dt>
+              <dd><a href="https://api.github.com/repos/dequelabs/axe-core/contents/lib/rules" target="_blank" rel="noopener noreferrer">GitHub Contents API</a></dd>
+              <dt>Fallback</dt>
+              <dd><a href="https://raw.githubusercontent.com/dequelabs/axe-core/develop/axe.js" target="_blank" rel="noopener noreferrer">Compiled axe.js (regex fallback)</a></dd>
+              <dt>Version registry</dt>
+              <dd><a href="https://registry.npmjs.org/-/package/axe-core/dist-tags" target="_blank" rel="noopener noreferrer">npm dist-tags</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>automation.axe</code> field in each SC</p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-alfa">
+            <h3 id="source-alfa">Siteimprove Alfa</h3>
+            <p>Open-source accessibility auditing framework by Siteimprove. Rules are defined in TypeScript with explicit WCAG criterion references. An EARL implementation report cross-references Alfa rules with ACT rules.</p>
+            <dl class="source-links">
+              <dt>Rules index</dt>
+              <dd><a href="https://raw.githubusercontent.com/Siteimprove/alfa/main/packages/alfa-rules/src/index.ts" target="_blank" rel="noopener noreferrer">alfa-rules/src/index.ts (GitHub Raw)</a></dd>
+              <dt>EARL report</dt>
+              <dd><a href="https://raw.githubusercontent.com/Siteimprove/alfa-act-r/main/reports/alfa-automated-report.json" target="_blank" rel="noopener noreferrer">alfa-automated-report.json (alfa-act-r repo)</a></dd>
+              <dt>README</dt>
+              <dd><a href="https://github.com/siteimprove/alfa/blob/main/packages/alfa-rules/README.md" target="_blank" rel="noopener noreferrer">alfa-rules README</a></dd>
+              <dt>Version registry</dt>
+              <dd><a href="https://registry.npmjs.org/-/package/@siteimprove/alfa-rules/dist-tags" target="_blank" rel="noopener noreferrer">npm dist-tags (@siteimprove/alfa-rules)</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>automation.alfa</code> field in each SC; also populates <code>meta.act_implementations.alfa</code></p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-arrm">
+            <h3 id="source-arrm">W3C ARRM</h3>
+            <p>Accessibility Roles and Responsibilities Mapping — a W3C resource that maps each WCAG SC to the team roles responsible for meeting it (UX, content, development, etc.).</p>
+            <dl class="source-links">
+              <dt>All tasks CSV</dt>
+              <dd><a href="https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-all-tasks.csv" target="_blank" rel="noopener noreferrer">arrm-all-tasks.csv (GitHub Raw)</a></dd>
+              <dt>SC mapping CSV</dt>
+              <dd><a href="https://raw.githubusercontent.com/w3c/wai-arrm/draft/_data/arrm/arrm-wcag-sc.csv" target="_blank" rel="noopener noreferrer">arrm-wcag-sc.csv (GitHub Raw)</a></dd>
+              <dt>Repository</dt>
+              <dd><a href="https://github.com/w3c/wai-arrm/tree/draft" target="_blank" rel="noopener noreferrer">github.com/w3c/wai-arrm (draft branch)</a></dd>
+              <dt>Web</dt>
+              <dd><a href="https://www.w3.org/WAI/planning/arrm/" target="_blank" rel="noopener noreferrer">W3C WAI ARRM</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>manual.roles</code> and <code>manual.arrm_tasks</code> fields in each SC</p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-tt">
+            <h3 id="source-tt">DHS Trusted Tester v5 <span class="badge badge-ai">AI-assisted mapping</span></h3>
+            <p>The Department of Homeland Security Trusted Tester Conformance Test Process v5. Step IDs were mapped to WCAG SCs using AI assistance and require human validation.</p>
+            <dl class="source-links">
+              <dt>Main page</dt>
+              <dd><a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer">section508.gov/test/trusted-tester/</a></dd>
+              <dt>Test procedures</dt>
+              <dd><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer">section508coordinators.github.io/TrustedTester/</a></dd>
+              <dt>Section 508 Coordinators</dt>
+              <dd><a href="https://github.com/Section508Coordinators" target="_blank" rel="noopener noreferrer">github.com/Section508Coordinators</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>manual.tt_steps</code> field in each SC</p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-fpc">
+            <h3 id="source-fpc">Section 508 FPC Mapping (CivicActions)</h3>
+            <p>Maps each WCAG SC to the Section 508 Functional Performance Criteria (FPC) disability groups it affects — used to filter the dashboard by disability impact.</p>
+            <dl class="source-links">
+              <dt>CSV mapping</dt>
+              <dd><a href="https://raw.githubusercontent.com/CivicActions/accessibility-data-reference/main/mapping-wcag-to-fpc.csv" target="_blank" rel="noopener noreferrer">mapping-wcag-to-fpc.csv (GitHub Raw)</a></dd>
+              <dt>Repository</dt>
+              <dd><a href="https://github.com/CivicActions/accessibility-data-reference" target="_blank" rel="noopener noreferrer">github.com/CivicActions/accessibility-data-reference</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>fpc</code> field in each SC</p>
+          </article>
+
+          <article class="source-card" aria-labelledby="source-wcag">
+            <h3 id="source-wcag">WCAG 2.2 Specification (W3C)</h3>
+            <p>The normative Web Content Accessibility Guidelines 2.2 specification. SC titles, levels, principles, and URLs are seeded from the specification.</p>
+            <dl class="source-links">
+              <dt>Specification</dt>
+              <dd><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">W3C TR WCAG22</a></dd>
+              <dt>Machine-readable (YAML)</dt>
+              <dd><a href="https://github.com/mgifford/wai-yaml-ld/blob/main/kitty-specs/001-wai-standards-yaml-ld-ingestion/research/wcag-2.2-normative.yaml" target="_blank" rel="noopener noreferrer">wcag-2.2-normative.yaml</a></dd>
+            </dl>
+            <p class="source-used-for"><strong>Used for:</strong> <code>title</code>, <code>level</code>, <code>principle</code>, and <code>url</code> fields in each SC</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Source interconnection diagram                               -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="interconnection-heading">
+        <h2 id="interconnection-heading">🔗 Source Interconnection</h2>
+        <p>The diagram below shows how upstream sources flow through the sync pipeline into <code>master_spine.json</code> and the WCAG Spine dashboard.</p>
+
+        <figure role="img" aria-labelledby="interconnect-diagram-title interconnect-diagram-desc">
+          <figcaption>
+            <span id="interconnect-diagram-title" class="visually-hidden">Data flow diagram</span>
+            <span id="interconnect-diagram-desc" class="visually-hidden">
+              Upstream sources (W3C ACT Rules, Deque axe-core, Siteimprove Alfa, W3C ARRM,
+              DHS Trusted Tester, CivicActions FPC, W3C WCAG 2.2) feed into sync_data.py.
+              sync_data.py writes master_spine.json. master_spine.json feeds app.js,
+              which powers the WCAG Spine dashboard views (Cards, Table, Diagram, ACT Rules,
+              Coverage, Checklist).
+            </span>
+          </figcaption>
+          <div id="sources-diagram" aria-hidden="true"></div>
+        </figure>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Known corrections log                                        -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="corrections-heading">
+        <h2 id="corrections-heading">🔧 Known Data Corrections</h2>
+        <p>Corrections applied to the data based on reports from upstream maintainers. Each correction records the SC, field, what changed, who reported it, and when.</p>
+        <div id="corrections-content">
+          <!-- Populated by sources.js from meta.data_quality.known_corrections -->
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Sync workflow detail                                         -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="workflow-heading">
+        <h2 id="workflow-heading">⚙️ Sync Workflow</h2>
+        <p>Data is refreshed automatically every day via a GitHub Actions workflow. The sync script (<code>scripts/sync_data.py</code>) fetches from each upstream source, merges the results, and writes <code>data/master_spine.json</code>.</p>
+        <ol>
+          <li>Fetch latest axe-core and Alfa version numbers from npm registry</li>
+          <li>Fetch ACT rules from <code>wcag-mapping.json</code> (W3C GitHub)</li>
+          <li>Supplement with secondary-SC coverage from <code>testcases.json</code></li>
+          <li>Fetch Alfa SC mappings from <code>alfa-rules/src/index.ts</code></li>
+          <li>Enrich Alfa mappings from the Alfa EARL implementation report</li>
+          <li>Fetch axe-core rule–SC mappings (GitHub API → rule JSON files; fallback to axe.js regex)</li>
+          <li>Fetch ARRM role data (<code>arrm-wcag-sc.csv</code>) and structured tasks (<code>arrm-all-tasks.csv</code>)</li>
+          <li>Fetch Section 508 FPC mapping (<code>mapping-wcag-to-fpc.csv</code>)</li>
+          <li>Merge all sources into the spine; propagate ACT implementation data</li>
+          <li>Write <code>data/master_spine.json</code> with updated <code>meta.generated</code> date</li>
+          <li>Regenerate Mermaid diagram files per WCAG principle</li>
+          <li>Deploy to GitHub Pages</li>
+        </ol>
+        <p>
+          <a href="https://github.com/mgifford/wcag-spine/blob/main/scripts/sync_data.py" target="_blank" rel="noopener noreferrer">
+            View sync_data.py on GitHub
+          </a> ·
+          <a href="https://github.com/mgifford/wcag-spine/blob/main/.github/workflows/sync_accessibility.yml" target="_blank" rel="noopener noreferrer">
+            View workflow YAML on GitHub
+          </a>
+        </p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- Live sources status                                          -->
+      <!-- ============================================================ -->
+      <section aria-labelledby="live-sources-heading">
+        <h2 id="live-sources-heading">📡 Upstream Source URLs</h2>
+        <p>All upstream URLs recorded in the last sync of <code>meta.sources</code>:</p>
+        <div id="live-sources-content">
+          <!-- Populated by sources.js -->
+        </div>
+      </section>
+
+    </div><!-- /#sources-content -->
+  </main>
+
+  <!-- ================================================================ -->
+  <!-- Footer                                                            -->
+  <!-- ================================================================ -->
+  <footer>
+    <div class="experimental-notice" role="note" aria-label="Experimental content warning">
+      <strong>🚧 Experimental — AI-generated content, not yet validated</strong>
+      Most of this site was generated with AI assistance. All content needs to be
+      validated in real-world conditions before it is relied upon.
+      <ul>
+        <li>Impacts may vary significantly depending on where and how the tool is implemented.</li>
+        <li>People with experience conducting studies on accessibility impact and the cost of
+            AI cycles should be involved in any evaluation or adoption decisions.</li>
+        <li>Please <a href="https://github.com/mgifford/wcag-spine/issues" rel="noopener noreferrer">provide feedback in the issue queue</a>
+            if you have positive or negative results from using this tool.
+            Include links and references so that claims can be discussed and verified.</li>
+      </ul>
+    </div>
+    <p>
+      Data sources:
+      <a href="https://github.com/w3c/wai-arrm/tree/draft" target="_blank" rel="noopener noreferrer">W3C ARRM</a> ·
+      <a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules</a> ·
+      <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener noreferrer">Axe-core</a> ·
+      <a href="https://github.com/siteimprove/alfa" target="_blank" rel="noopener noreferrer">Alfa</a> ·
+      <a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer">Trusted Tester</a>
+    </p>
+    <p>
+      <a href="https://github.com/mgifford/wcag-spine" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+      <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Specification</a> ·
+      <a href="testing-methods.md" target="_blank" rel="noopener noreferrer">Testing Methods &amp; Resources</a> ·
+      <a href="qa.html" rel="noopener noreferrer">🗒️ QA Checklist</a> ·
+      <a href="sources.html" aria-current="page">🔍 Data Sources</a>
+    </p>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!-- Scripts                                                           -->
+  <!-- ================================================================ -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    // Initialise Mermaid before sources.js runs (for the interconnection diagram)
+    if (window.mermaid) {
+      window.mermaid.initialize({
+        startOnLoad: false,
+        theme: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default",
+        securityLevel: "loose",
+        flowchart: { useMaxWidth: true, htmlLabels: false, curve: "basis" },
+      });
+    }
+  </script>
+  <script src="assets/js/sources.js"></script>
+</body>
+</html>
