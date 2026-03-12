@@ -1674,11 +1674,17 @@ function renderChecklist(scKey, entry) {
           aria-label="Level ${escapeHTML(entry.level)}">${escapeHTML(entry.level)}</span>
         <span class="checklist-principle">${escapeHTML(entry.principle)}</span>
       </div>
-      <h2 class="checklist-sc-title">
-        <a href="${escapeAttr(wcagUrl)}" target="_blank" rel="noopener noreferrer">
-          ${escapeHTML(entry.title)}
+      <h2 class="checklist-sc-title">${escapeHTML(entry.title)}</h2>
+      <div class="checklist-header-links">
+        <a class="checklist-wcag-link" href="${escapeAttr(wcagUrl)}" target="_blank" rel="noopener noreferrer"
+          aria-label="View SC ${escapeHTML(scKey)} Understanding document on W3C (opens in new tab)">
+          📖 W3C Understanding
         </a>
-      </h2>
+        <a class="checklist-permalink" href="#checklist/${escapeAttr(scKey.replace(/\./g, ""))}"
+          aria-label="Permalink to checklist for SC ${escapeHTML(scKey)}">
+          🔗 Permalink
+        </a>
+      </div>
       ${totalTasks > 0 ? `
       <div class="checklist-progress-group">
         <span class="checklist-progress-text" aria-live="polite"
