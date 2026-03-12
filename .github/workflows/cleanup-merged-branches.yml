@@ -1,0 +1,82 @@
+name: Cleanup Merged Branches
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (list branches to delete without deleting them)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  # Auto-delete the branch when a PR is merged
+  delete-merged-branch:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "PR merged. Deleting branch: $BRANCH"
+          gh api --method DELETE "repos/$REPO/git/refs/heads/$BRANCH" || echo "Branch already deleted or not found."
+
+  # Manually delete all stale merged branches on workflow_dispatch
+  delete-stale-branches:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delete merged branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "Fetching all remote branches..."
+          git fetch --all --prune
+
+          DEFAULT_BRANCH=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
+          echo "Default branch: $DEFAULT_BRANCH"
+
+          MERGED_BRANCHES=$(git branch -r --merged "origin/$DEFAULT_BRANCH" \
+            | grep -v "origin/$DEFAULT_BRANCH" \
+            | grep -v "origin/HEAD" \
+            | sed 's|origin/||' \
+            | sed 's/^[[:space:]]*//')
+
+          if [ -z "$MERGED_BRANCHES" ]; then
+            echo "No merged branches found. Nothing to do."
+            exit 0
+          fi
+
+          echo "Branches merged into $DEFAULT_BRANCH:"
+          echo "$MERGED_BRANCHES"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: skipping deletions."
+          else
+            while IFS= read -r branch; do
+              echo "Deleting branch: $branch"
+              gh api --method DELETE "repos/$REPO/git/refs/heads/$branch" \
+                && echo "  Deleted: $branch" \
+                || echo "  Could not delete: $branch (may already be gone)"
+            done <<< "$MERGED_BRANCHES"
+            echo "Done."
+          fi
