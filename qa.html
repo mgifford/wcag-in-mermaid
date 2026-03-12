@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Checklist — WCAG Spine</title>
+  <meta name="description" content="Interactive QA checklist for testing WCAG 2.2 Success Criteria. Marks automated vs manual tests, saves results to local storage, and exports to JSON or CSV." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WCAG QA Checklist — WCAG Spine" />
+  <meta property="og:description" content="Interactive quality assurance testing for WCAG 2.2 Success Criteria." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Skip navigation link (accessibility) -->
+  <a href="#qa-main" class="skip-link">Skip to main content</a>
+
+  <!-- ================================================================ -->
+  <!-- Header                                                            -->
+  <!-- ================================================================ -->
+  <header role="banner">
+    <h1>🗒️ WCAG QA Checklist</h1>
+    <p>
+      Interactive quality assurance checklist for WCAG 2.2 Success Criteria —
+      automated tests, manual Trusted Tester steps, and ARRM role tasks.
+      <a href="index.html" class="header-back-link">← Back to Dashboard</a>
+    </p>
+  </header>
+
+  <!-- ================================================================ -->
+  <!-- Controls bar (sticky)                                             -->
+  <!-- ================================================================ -->
+  <div id="qa-controls" hidden aria-label="QA checklist controls">
+
+    <div id="qa-sc-nav" role="navigation" aria-label="Navigate between Success Criteria">
+      <button
+        id="qa-prev-btn"
+        class="qa-nav-btn"
+        aria-label="Previous Success Criterion"
+        disabled
+      >← Prev SC</button>
+
+      <label for="qa-sc-select" class="visually-hidden">Select Success Criterion</label>
+      <select
+        id="qa-sc-select"
+        aria-label="Select Success Criterion"
+        title="Choose which Success Criterion to test"
+      >
+        <!-- Populated dynamically by qa.js -->
+      </select>
+
+      <button
+        id="qa-next-btn"
+        class="qa-nav-btn"
+        aria-label="Next Success Criterion"
+      >Next SC →</button>
+
+      <span
+        id="qa-sc-position"
+        class="qa-sc-position"
+        aria-live="polite"
+        aria-atomic="true"
+      ></span>
+    </div>
+
+    <div id="qa-actions" role="group" aria-label="Export and reset actions">
+      <button class="qa-action-btn" id="qa-export-json-btn" title="Download results for this SC as JSON">
+        📥 JSON (this SC)
+      </button>
+      <button class="qa-action-btn" id="qa-export-csv-btn" title="Download results for this SC as CSV">
+        📊 CSV (this SC)
+      </button>
+      <button class="qa-action-btn" id="qa-export-all-json-btn" title="Download results for all tested SCs as JSON">
+        📦 JSON (all SCs)
+      </button>
+      <button class="qa-action-btn" id="qa-export-all-csv-btn" title="Download results for all tested SCs as CSV">
+        📊 CSV (all SCs)
+      </button>
+      <button class="qa-action-btn qa-btn-danger" id="qa-reset-btn" title="Clear all results for this SC">
+        🗑️ Reset this SC
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- Loading indicator                                                 -->
+  <!-- ================================================================ -->
+  <div id="qa-loading" role="status" aria-live="polite">
+    Loading accessibility data…
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- Live region for status announcements                              -->
+  <!-- ================================================================ -->
+  <div
+    id="qa-status-announcer"
+    class="visually-hidden"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <!-- ================================================================ -->
+  <!-- Main content                                                      -->
+  <!-- ================================================================ -->
+  <main id="qa-main" aria-label="QA checklist" tabindex="-1">
+    <!-- Populated dynamically by qa.js -->
+  </main>
+
+  <!-- ================================================================ -->
+  <!-- Footer                                                            -->
+  <!-- ================================================================ -->
+  <footer>
+    <div class="experimental-notice" role="note" aria-label="Experimental content warning">
+      <strong>🚧 Experimental — AI-generated content, not yet validated</strong>
+      Test items are derived from the ACT rules, Trusted Tester v5 steps, and ARRM tasks
+      mapped to each Success Criterion. Results are stored in your browser's local storage
+      and are not sent anywhere. Always validate findings in real-world conditions.
+    </div>
+    <p>
+      Data sources:
+      <a href="https://github.com/w3c/wai-arrm/tree/draft" target="_blank" rel="noopener noreferrer">W3C ARRM</a> ·
+      <a href="https://www.w3.org/WAI/standards-guidelines/act/rules/" target="_blank" rel="noopener noreferrer">ACT Rules</a> ·
+      <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener noreferrer">Axe-core</a> ·
+      <a href="https://github.com/siteimprove/alfa" target="_blank" rel="noopener noreferrer">Alfa</a> ·
+      <a href="https://section508.gov/test/trusted-tester/" target="_blank" rel="noopener noreferrer">Trusted Tester</a>
+    </p>
+    <p>
+      <a href="index.html">Dashboard</a> ·
+      <a href="https://github.com/mgifford/wcag-spine" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+      <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Specification</a>
+    </p>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!-- Scripts                                                           -->
+  <!-- ================================================================ -->
+  <script src="assets/js/qa.js"></script>
+</body>
+</html>
