@@ -139,7 +139,58 @@
         "qualweb": []
       }
     },
-    "alfa_version": "0.112.0"
+    "alfa_version": "0.112.0",
+    "data_quality": {
+      "ai_generated_fields": [
+        "manual.tt_steps",
+        "manual.arrm_tasks",
+        "manual.roles"
+      ],
+      "ai_generated_note": "Manual testing procedures (Trusted Tester steps, ARRM tasks, and role assignments) were initially generated with AI assistance and require human validation before use in production.",
+      "upstream_sourced_fields": [
+        "automation.act",
+        "automation.axe",
+        "automation.alfa"
+      ],
+      "upstream_sourced_note": "Automation rule mappings (ACT, Axe-core, Alfa) are sourced directly from upstream repositories and are updated by the daily sync workflow.",
+      "known_corrections": [
+        {
+          "sc": "1.3.5",
+          "field": "automation.alfa",
+          "correction": "Removed SIA-R8 (belongs in 4.1.2), added SIA-R10",
+          "reported_by": "ACT/Alfa maintainers",
+          "date": "2026-03-12"
+        },
+        {
+          "sc": "2.4.7",
+          "field": "automation.alfa",
+          "correction": "Added SIA-R65 (semi-automated, was missing)",
+          "reported_by": "ACT/Alfa maintainers",
+          "date": "2026-03-12"
+        },
+        {
+          "sc": "3.1.1",
+          "field": "automation.alfa",
+          "correction": "Added SIA-R5 (was incorrectly placed in 3.1.2)",
+          "reported_by": "ACT/Alfa maintainers",
+          "date": "2026-03-12"
+        },
+        {
+          "sc": "3.1.2",
+          "field": "automation.alfa",
+          "correction": "Removed SIA-R5 (belongs in 3.1.1), added SIA-R7",
+          "reported_by": "ACT/Alfa maintainers",
+          "date": "2026-03-12"
+        },
+        {
+          "sc": "4.1.2",
+          "field": "automation.alfa",
+          "correction": "Added SIA-R17 (imperfect implementation of act:6cfa84) and SIA-R90",
+          "reported_by": "ACT/Alfa maintainers",
+          "date": "2026-03-12"
+        }
+      ]
+    }
   },
   "success_criteria": {
     "1.1.1": {
@@ -1500,7 +1551,7 @@
           "autocomplete-valid"
         ],
         "alfa": [
-          "SIA-R8"
+          "SIA-R10"
         ]
       },
       "manual": {
@@ -3100,7 +3151,9 @@
           "oj04fd"
         ],
         "axe": [],
-        "alfa": []
+        "alfa": [
+          "SIA-R65"
+        ]
       },
       "manual": {
         "roles": [
@@ -3590,7 +3643,8 @@
         ],
         "alfa": [
           "SIA-R1",
-          "SIA-R4"
+          "SIA-R4",
+          "SIA-R5"
         ]
       },
       "manual": {
@@ -3642,7 +3696,7 @@
           "valid-lang"
         ],
         "alfa": [
-          "SIA-R5"
+          "SIA-R7"
         ]
       },
       "manual": {
@@ -4524,6 +4578,7 @@
           "SIA-R12",
           "SIA-R13",
           "SIA-R15",
+          "SIA-R17",
           "SIA-R2",
           "SIA-R20",
           "SIA-R21",
@@ -4534,7 +4589,8 @@
           "SIA-R29",
           "SIA-R30",
           "SIA-R31",
-          "SIA-R8"
+          "SIA-R8",
+          "SIA-R90"
         ]
       },
       "manual": {

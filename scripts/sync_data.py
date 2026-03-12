@@ -1618,6 +1618,32 @@ def main() -> None:
     spine["meta"]["sources"]["alfa_earl"] = ALFA_ACT_EARL_URL
     spine["meta"]["sources"]["axe_rules_api"] = AXE_RULES_API_URL
 
+    # Preserve data_quality metadata (AI-generated field declarations and the
+    # manually-curated corrections log).  The sync never overwrites this block
+    # — corrections added by humans remain intact across automated runs.
+    spine["meta"].setdefault("data_quality", {
+        "ai_generated_fields": [
+            "manual.tt_steps",
+            "manual.arrm_tasks",
+            "manual.roles",
+        ],
+        "ai_generated_note": (
+            "Manual testing procedures (Trusted Tester steps, ARRM tasks, and role "
+            "assignments) were initially generated with AI assistance and require human "
+            "validation before use in production."
+        ),
+        "upstream_sourced_fields": [
+            "automation.act",
+            "automation.axe",
+            "automation.alfa",
+        ],
+        "upstream_sourced_note": (
+            "Automation rule mappings (ACT, Axe-core, Alfa) are sourced directly from "
+            "upstream repositories and are updated by the daily sync workflow."
+        ),
+        "known_corrections": [],
+    })
+
     print(f"Writing {OUTPUT_FILE} …")
     with OUTPUT_FILE.open("w", encoding="utf-8") as fh:
         json.dump(spine, fh, indent=2, ensure_ascii=False)
