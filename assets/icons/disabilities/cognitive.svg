@@ -1,0 +1,13 @@
+<!-- Cognitive Disability — Limited Language, Cognitive & Learning Abilities -->
+<!-- WCAG Spine disability icon: head outline with a simplified gear/brain motif inside -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+     role="img" aria-labelledby="cognitive-title cognitive-desc">
+  <title id="cognitive-title">Cognitive Disability</title>
+  <desc id="cognitive-desc">A head outline containing a small brain/gear symbol, indicating cognitive or learning differences</desc>
+  <circle fill="none" stroke="currentColor" stroke-width="1.5" cx="10" cy="8" r="5"/>
+  <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        d="M8 13v1.5M12 13v1.5M7.5 15h5"/>
+  <path fill="none" stroke="currentColor" stroke-width="1"
+        d="M8.5 8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5S10.8 9.5 10 9.5 8.5 8.8 8.5 8z"/>
+  <path stroke="currentColor" stroke-width="1" stroke-linecap="round" d="M10 9.5V11"/>
+</svg>

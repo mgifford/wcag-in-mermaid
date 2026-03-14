@@ -34,20 +34,73 @@ const ARRM_IDS_IN_NODE = 5;
 const TT_IDS_IN_NODE = 4;
 
 /**
- * Section 508 Functional Performance Criteria (FPC) — maps each FPC code to
- * its full name and a visual label used in badges.
- * Source: https://www.section508.gov/develop/mapping-wcag-to-fpc/
+ * Disability impact categories — maps each FPC code to a human-readable label,
+ * descriptive title, and an accessible inline SVG icon representing the
+ * affected disability group.
+ *
+ * Regulatory note: these codes originate from the Section 508 Functional
+ * Performance Criteria (US) and the EN 301 549 Functional Performance
+ * Statements (EU), but the icons and labels here intentionally focus on the
+ * disability itself rather than any regulatory framework.
+ *
+ * Each SVG uses aria-hidden="true" focusable="false" because the parent
+ * badge element already carries the accessible name via aria-label.
  */
 const FPC_LABELS = {
-  WV:    { label: "WV",    title: "Without Vision" },
-  LV:    { label: "LV",    title: "Limited Vision" },
-  WPC:   { label: "WPC",   title: "Without Perception of Color" },
-  WH:    { label: "WH",    title: "Without Hearing" },
-  LH:    { label: "LH",    title: "Limited Hearing" },
-  WS:    { label: "WS",    title: "Without Speech" },
-  LM:    { label: "LM",    title: "Limited Manipulation" },
-  LRS:   { label: "LRS",   title: "Limited Reach & Strength" },
-  LLCLA: { label: "LLCLA", title: "Limited Language, Cognitive & Learning Abilities" },
+  WV: {
+    label: "Blind",
+    title: "Blind — Without Vision",
+    /* Eye outline with a solid diagonal slash */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Blind</title><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M1.5 10C4 5.5 7 3.5 10 3.5S16 5.5 18.5 10C16 14.5 13 16.5 10 16.5S4 14.5 1.5 10Z"/><circle cx="10" cy="10" r="2.5" fill="currentColor"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3.5 3.5L16.5 16.5"/></svg>`,
+  },
+  LV: {
+    label: "Low Vision",
+    title: "Low Vision — Limited Vision",
+    /* Eye outline (top arc only) plus a magnifying glass in the lower-right */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Low Vision</title><path fill="none" stroke="currentColor" stroke-width="1.5" d="M1.5 8.5C3.5 5 6.5 3 10 3S16.5 5 18.5 8.5"/><circle cx="10" cy="8.5" r="2" fill="currentColor" opacity="0.55"/><circle cx="14" cy="14.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M16.5 17L19 19.5"/></svg>`,
+  },
+  WPC: {
+    label: "Color Blind",
+    title: "Color Blind — Without Perception of Color",
+    /* Eye outline with a dashed diagonal slash (dashes distinguish it from solid-slash WV) */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Color Blind</title><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M1.5 10C4 5.5 7 3.5 10 3.5S16 5.5 18.5 10C16 14.5 13 16.5 10 16.5S4 14.5 1.5 10Z"/><circle cx="10" cy="10" r="2.5" fill="currentColor" opacity="0.45"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2.5" d="M3.5 3.5L16.5 16.5"/></svg>`,
+  },
+  WH: {
+    label: "Deaf",
+    title: "Deaf — Without Hearing",
+    /* Ear outline plus a large outer sound arc, crossed by a solid diagonal slash */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Deaf</title><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M13 9.5c0-1.7-1.3-3-3-3S7 7.8 7 9.5c0 1.4.8 2.6 2 3.2-.1.6-.3 1.1-.7 1.4-.4.4-.8 1.1-.8 1.9"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M12.5 7A4.5 4.5 0 0 1 16.5 11"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3.5 3.5L16.5 16.5"/></svg>`,
+  },
+  LH: {
+    label: "Hard of Hearing",
+    title: "Hard of Hearing — Limited Hearing",
+    /* Ear outline with a single, faded short sound arc — indicates partial hearing */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Hard of Hearing</title><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M11.5 10c0-0.8-.7-1.5-1.5-1.5S8.5 9.2 8.5 10c0 .7.4 1.3 1 1.6-.1.5-.2.9-.5 1.2-.4.4-.5.9-.5 1.7"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5" d="M13 7.5A3.5 3.5 0 0 1 16 11"/></svg>`,
+  },
+  WS: {
+    label: "Non-speaking",
+    title: "Non-speaking — Without Speech",
+    /* Microphone outline crossed by a solid diagonal slash */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Non-speaking</title><rect fill="none" stroke="currentColor" stroke-width="1.5" x="7" y="2.5" width="6" height="9" rx="3"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M5.5 11a5 5 0 0 0 9 0"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M10 16v2M8 18h4"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3.5 3.5L16.5 16.5"/></svg>`,
+  },
+  LM: {
+    label: "Motor",
+    title: "Motor Disability — Limited Manipulation",
+    /* Simplified hand outline crossed by a dashed diagonal slash */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Motor Disability</title><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 16V8a1.5 1.5 0 0 1 3 0m0 0V7a1.5 1.5 0 0 1 3 0v6c0 2-1.6 3.5-3.5 3.5H8c-1.4 0-2.5-1.2-2.5-2.5V9a1.5 1.5 0 0 1 3 0v3"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2" d="M3.5 3.5L16.5 16.5"/></svg>`,
+  },
+  LRS: {
+    label: "Mobility",
+    title: "Mobility Impairment — Limited Reach & Strength",
+    /* Arrow (reach attempt) stopped by a vertical barrier at the circle's edge */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Mobility Impairment</title><circle cx="9" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M6 10h5M9.5 7.5L12 10l-2.5 2.5"/><path stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="M14 6v8"/></svg>`,
+  },
+  LLCLA: {
+    label: "Cognitive",
+    title: "Cognitive Disability — Limited Language, Cognitive & Learning Abilities",
+    /* Head outline with a simplified gear/brain motif inside */
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="dis-icon" aria-hidden="true" focusable="false"><title>Cognitive Disability</title><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="10" cy="8" r="5"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M8 13v1.5M12 13v1.5M7.5 15h5"/><path fill="none" stroke="currentColor" stroke-width="1" d="M8.5 8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5S10.8 9.5 10 9.5 8.5 8.8 8.5 8z"/><path stroke="currentColor" stroke-width="1" stroke-linecap="round" d="M10 9.5V11"/></svg>`,
+  },
 };
 
 /**
@@ -503,11 +556,11 @@ function buildCard(num, entry) {
     </li>`;
   }).join("");
 
-  // Build FPC badges for disability impact
+  // Build FPC badges for disability impact (icon + label, full title in tooltip/aria)
   const fpcBadges = fpcCodes.map(code => {
     const info = FPC_LABELS[code];
     if (!info) return "";
-    return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
+    return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${info.icon ?? ""}${escapeHTML(info.label)}</span>`;
   }).join("");
 
   card.innerHTML = `
@@ -526,9 +579,7 @@ function buildCard(num, entry) {
     </header>
     ${fpcCodes.length > 0
       ? `<div class="fpc-section" aria-label="Disability groups affected by this criterion">
-          <span class="fpc-section-label">
-            <a href="https://www.section508.gov/develop/mapping-wcag-to-fpc/" target="_blank" rel="noopener noreferrer" title="Section 508 Functional Performance Criteria mapping">Disability Impact:</a>
-          </span>
+          <span class="fpc-section-label">Disabilities affected:</span>
           ${fpcBadges}
         </div>`
       : ""
@@ -651,7 +702,7 @@ function renderTable() {
       ? fpcCodes.map(code => {
           const info = FPC_LABELS[code];
           if (!info) return escapeHTML(code);
-          return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${escapeHTML(info.label)}</span>`;
+          return `<span class="fpc-badge fpc-badge-${escapeAttr(code)}" title="${escapeAttr(info.title)}" aria-label="${escapeAttr(info.title)}">${info.icon ?? ""}${escapeHTML(info.label)}</span>`;
         }).join(" ")
       : '<span class="no-data">—</span>';
 
@@ -682,7 +733,7 @@ function renderTable() {
           <th scope="col">Roles</th>
           <th scope="col"><a href="https://section508coordinators.github.io/TrustedTester/index.html" target="_blank" rel="noopener noreferrer" style="color:#fff">Trusted Tester</a></th>
           <th scope="col">ARRM Tasks</th>
-          <th scope="col"><a href="https://www.section508.gov/develop/mapping-wcag-to-fpc/" target="_blank" rel="noopener noreferrer" style="color:#fff" title="Section 508 Functional Performance Criteria">Disability Impact</a></th>
+          <th scope="col">Disability Impact</th>
           <th scope="col">Coverage</th>
         </tr>
       </thead>

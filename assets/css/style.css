@@ -460,7 +460,9 @@ main {
 }
 
 .fpc-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 2px 7px;
   border-radius: 10px;
   font-size: 0.68rem;
@@ -468,6 +470,14 @@ main {
   font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
   white-space: nowrap;
   cursor: default;
+}
+
+/* Disability icon inside a badge — scales with the badge font size */
+.dis-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 /* Vision */

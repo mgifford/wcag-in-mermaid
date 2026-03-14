@@ -1,0 +1,12 @@
+<!-- Non-speaking — Without Speech -->
+<!-- WCAG Spine disability icon: microphone outline with a solid diagonal slash -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+     role="img" aria-labelledby="nonspeaking-title nonspeaking-desc">
+  <title id="nonspeaking-title">Non-speaking</title>
+  <desc id="nonspeaking-desc">A microphone outline with a solid diagonal slash indicating no speech or voice</desc>
+  <rect fill="none" stroke="currentColor" stroke-width="1.5" x="7" y="2.5" width="6" height="9" rx="3"/>
+  <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        d="M5.5 11a5 5 0 0 0 9 0"/>
+  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M10 16v2M8 18h4"/>
+  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3.5 3.5L16.5 16.5"/>
+</svg>

@@ -1,0 +1,12 @@
+<!-- Color Blind — Without Perception of Color -->
+<!-- WCAG Spine disability icon: eye outline with dashed diagonal slash -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+     role="img" aria-labelledby="colorblind-title colorblind-desc">
+  <title id="colorblind-title">Color Blind</title>
+  <desc id="colorblind-desc">An eye outline with a dashed diagonal slash indicating inability to perceive color</desc>
+  <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"
+        d="M1.5 10C4 5.5 7 3.5 10 3.5S16 5.5 18.5 10C16 14.5 13 16.5 10 16.5S4 14.5 1.5 10Z"/>
+  <circle cx="10" cy="10" r="2.5" fill="currentColor" opacity="0.45"/>
+  <path stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-dasharray="3 2.5" d="M3.5 3.5L16.5 16.5"/>
+</svg>

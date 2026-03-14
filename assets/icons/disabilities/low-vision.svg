@@ -1,0 +1,12 @@
+<!-- Low Vision — Limited Vision -->
+<!-- WCAG Spine disability icon: partial eye arc with magnifying glass overlay -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+     role="img" aria-labelledby="lv-title lv-desc">
+  <title id="lv-title">Low Vision</title>
+  <desc id="lv-desc">An eye arc with a magnifying glass indicating limited or reduced vision</desc>
+  <path fill="none" stroke="currentColor" stroke-width="1.5"
+        d="M1.5 8.5C3.5 5 6.5 3 10 3S16.5 5 18.5 8.5"/>
+  <circle cx="10" cy="8.5" r="2" fill="currentColor" opacity="0.55"/>
+  <circle cx="14" cy="14.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M16.5 17L19 19.5"/>
+</svg>

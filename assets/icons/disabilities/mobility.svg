@@ -1,0 +1,11 @@
+<!-- Mobility Impairment — Limited Reach & Strength -->
+<!-- WCAG Spine disability icon: circle boundary with arrow stopped by a vertical barrier -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+     role="img" aria-labelledby="mobility-title mobility-desc">
+  <title id="mobility-title">Mobility Impairment</title>
+  <desc id="mobility-desc">A circle with an arrow reaching toward a vertical barrier, indicating limited reach and strength</desc>
+  <circle cx="9" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        fill="none" d="M6 10h5M9.5 7.5L12 10l-2.5 2.5"/>
+  <path stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="M14 6v8"/>
+</svg>
