@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-04-08",
+    "generated": "2026-04-09",
     "wcag_version": "2.2",
     "sources": {
       "act_rules": "https://raw.githubusercontent.com/w3c/wcag-act-rules/main/wcag-mapping.json",
@@ -139,7 +139,7 @@
         "qualweb": []
       }
     },
-    "alfa_version": "0.114.0",
+    "alfa_version": "0.114.1",
     "data_quality": {
       "ai_generated_fields": [
         "manual.tt_steps",
