@@ -207,7 +207,7 @@ To answer the natural question *"which parts of this project are AI-generated?"*
 
 The following safeguards are in place for AI-generated code:
 
-- **Automated CI** runs on every commit: Playwright + Axe-core (0 violations required), Lighthouse CI (100 % accessibility score required), and Python unit tests (`python3 -m pytest`).
+- **Automated CI** runs on every commit: Playwright + Axe-core (0 violations required), Lighthouse CI (100% accessibility score required), and Python unit tests (`python3 -m pytest`).
 - **Daily data sync** re-runs `sync_data.py` against live W3C/DHS endpoints and redeploys; failures are visible in the [Actions tab](https://github.com/mgifford/wcag-spine/actions).
 - **Maintainer review** — all AI-generated PRs are reviewed by the project maintainer before merging.
 - **Not yet fully audited** — a comprehensive independent human code review of the full codebase has not yet been completed. Contributions and reviews are welcome via the [issue queue](https://github.com/mgifford/wcag-spine/issues).
