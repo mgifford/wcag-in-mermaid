@@ -66,7 +66,28 @@ The WCAG Spine dashboard (`index.html`) provides:
 Our CI pipeline validates:
 
 - **Data sync** — `sync_accessibility.yml` runs daily to keep WCAG data current
+- **Accessibility Gate** — Continuous audits via Playwright (Axe-core) and Lighthouse CI
 - **Dashboard deployment** — GitHub Pages deployment after each sync
+
+## 9. Local Audits (Development Workflow) <a href="#9-local-audits" aria-label="Link to 9. Local Audits section">#</a>
+
+Contributors must run accessibility audits locally before pushing code:
+
+```bash
+# Install dependencies (first time only)
+npm install
+
+# Run all accessibility audits (Playwright + Lighthouse CI)
+npm run test:a11y
+
+# Run theme-specific tests in Light/Dark mode
+npm run test:playwright
+```
+
+Success criteria for PRs:
+- **0** accessibility violations via Axe-core
+- **100%** accessibility score via Lighthouse CI
+
 
 ## 9. Browser & Assistive Technology Support <a href="#9-browser--assistive-technology-support" aria-label="Link to 9. Browser & Assistive Technology Support section">#</a>
 
@@ -106,8 +127,8 @@ We regularly review and update:
 - WCAG conformance as standards evolve (targeting 2.2 AA, monitoring 3.0)
 - Visualisation components as accessibility patterns mature
 - Tool recommendations and automation examples
-- Inclusive language and terminology
+- inclusive language and terminology
 
 ---
 
-Last updated: 2026-04-12 (Data Transparency Update)
+Last updated: 2026-04-12 (Local CI/CD Setup)

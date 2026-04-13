@@ -1,0 +1,34 @@
+{
+  "name": "wcag-spine",
+  "version": "1.0.0",
+  "description": "> An interactive GitHub Pages dashboard that visualises the \"Mirror Spine\" of > WCAG 2.2 — bridging Responsibility (ARRM) and Technical Testing > (ACT, Axe-core, Alfa, Trusted Tester) for every Success Criterion.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test:playwright": "playwright test",
+    "test:lhci": "lhci autorun",
+    "test:a11y": "npm run test:playwright && npm run test:lhci",
+    "serve": "http-server . -p 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgifford/wcag-spine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mgifford/wcag-spine/issues"
+  },
+  "homepage": "https://github.com/mgifford/wcag-spine#readme",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.59.1",
+    "http-server": "^14.1.1"
+  }
+}

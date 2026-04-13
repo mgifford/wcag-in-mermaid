@@ -637,15 +637,20 @@ function buildCard(num, entry) {
             </div>`
           : ""
         }
-        ${arrmTasks.length > 0
-          ? `<details class="arrm-tasks-details">
               <summary class="arrm-tasks-summary">
-                ARRM Tasks (<a href="https://www.w3.org/WAI/planning/arrm/tasks/" target="_blank" rel="noopener noreferrer">${arrmTasks.length} task${arrmTasks.length !== 1 ? "s" : ""}</a>)
+                ARRM Tasks (${arrmTasks.length} task${arrmTasks.length !== 1 ? "s" : ""})
               </summary>
-              <ul class="arrm-task-list" aria-label="ARRM tasks for SC ${escapeHTML(num)}">
-                ${arrmTaskItems}
-              </ul>
-            </details>`
+              <div class="arrm-tasks-body">
+                <p class="arrm-tasks-link-row">
+                  <a href="https://www.w3.org/WAI/planning/arrm/tasks/" target="_blank" rel="noopener noreferrer">
+                    View ARRM task specifications on W3C &rarr;
+                  </a>
+                </p>
+                <ul class="arrm-task-list" aria-label="ARRM tasks for SC ${escapeHTML(num)}">
+                  ${arrmTaskItems}
+                </ul>
+              </div>
+
           : ""
         }
       </div>

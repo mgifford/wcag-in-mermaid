@@ -168,6 +168,16 @@ Pull requests are welcome! To add or correct a rule mapping:
 
 ---
 
+## Testing & Accessibility Audits
+To maintain our commitment to WCAG 2.2 AA, developers must run local audits:
+
+1. **Install tools**: `npm install`
+2. **Run All Audits**: `npm run test:a11y`
+   - Runs **Playwright + Axe-core** in both Light and Dark modes.
+   - Runs **Lighthouse CI** to ensure an accessibility score of 100%.
+
+---
+
 ## AI Disclosure <a href="#ai-disclosure" aria-label="Link to AI Disclosure section">#</a>
 
 Transparency about AI use is a core commitment of this project. Below is a record of every AI tool
@@ -179,7 +189,7 @@ table (see [`AGENTS.md`](AGENTS.md) for instructions).
 | Tool | Role |
 |------|------|
 | **GitHub Copilot** (Coding Agent / `copilot-swe-agent`) | Code generation, documentation authoring, PR automation, and project scaffolding throughout the build of this project |
-| **Antigravity** (AI Coding Assistant) | Removal of MermaidJS dependency; Implementation of pure HTML/CSS Spine View and data flow visualisations; Implementation of live Trusted Tester v5 scraper and data provenance source badges; Documentation updates |
+| **Antigravity** (AI Coding Assistant) | Removal of MermaidJS dependency; Implementation of pure HTML/CSS Spine View and data flow visualisations; Implementation of live Trusted Tester v5 scraper and data provenance source badges; Implementation of theme-aware (Light/Dark) accessibility CI/CD pipeline (Playwright + Axe-core + Lighthouse); Remediation of WCAG 2.2 AA violations (contrast, nested interactive, target-size) |
 
 ### Runtime AI
 
