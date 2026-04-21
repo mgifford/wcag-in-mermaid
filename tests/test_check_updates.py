@@ -300,32 +300,55 @@ class TestCheckWcagDocument(unittest.TestCase):
 # ===========================================================================
 
 class TestCheckWcag30(unittest.TestCase):
-    """check_wcag30 flags WCAG 3.0 publication when HTTP 200 is returned."""
+    """check_wcag30 flags WCAG 3.0 publication only when the document is a W3C Recommendation."""
 
-    def _make_fetch(self, status_code):
+    def _make_status(self, status_code):
         return patch.object(check_updates, "fetch_status_code", return_value=status_code)
 
-    def test_changed_when_published(self):
-        with self._make_fetch(200):
+    def _make_snippet(self, content):
+        return patch.object(check_updates, "fetch_content_snippet", return_value=content)
+
+    def test_changed_when_recommendation(self):
+        with self._make_status(200), self._make_snippet("... W3C Recommendation ..."):
             result = check_updates.check_wcag30()
         self.assertTrue(result["changed"])
         self.assertEqual(result["status"], "changed")
+        self.assertIn("Review immediately", result["detail"])
 
-    def test_not_changed_when_404(self):
-        with self._make_fetch(404):
+    def test_not_changed_when_200_but_working_draft(self):
+        with self._make_status(200), self._make_snippet("W3C Working Draft 15 January 2025"):
             result = check_updates.check_wcag30()
         self.assertFalse(result["changed"])
         self.assertEqual(result["status"], "ok")
 
-    def test_not_changed_when_unreachable(self):
-        with self._make_fetch(None):
+    def test_not_changed_when_200_but_content_unavailable(self):
+        with self._make_status(200), self._make_snippet(None):
             result = check_updates.check_wcag30()
         self.assertFalse(result["changed"])
+        self.assertEqual(result["status"], "ok")
+
+    def test_not_changed_when_404(self):
+        with self._make_status(404):
+            result = check_updates.check_wcag30()
+        self.assertFalse(result["changed"])
+        self.assertEqual(result["status"], "ok")
+
+    def test_error_when_unreachable(self):
+        with self._make_status(None):
+            result = check_updates.check_wcag30()
+        self.assertFalse(result["changed"])
+        self.assertEqual(result["status"], "error")
+        self.assertIsNone(result["http_status"])
 
     def test_http_status_included_in_result(self):
-        with self._make_fetch(404):
+        with self._make_status(404):
             result = check_updates.check_wcag30()
         self.assertEqual(result["http_status"], 404)
+
+    def test_http_status_200_included_in_result(self):
+        with self._make_status(200), self._make_snippet("W3C Working Draft"):
+            result = check_updates.check_wcag30()
+        self.assertEqual(result["http_status"], 200)
 
 
 # ===========================================================================
@@ -494,4 +517,37 @@ class TestFetchStatusCode(unittest.TestCase):
             result = check_updates.fetch_status_code("https://example.com/")
         self.assertIsNone(result)
 
+
+# ===========================================================================
+# fetch_content_snippet (mocked)
+# ===========================================================================
+
+class TestFetchContentSnippet(unittest.TestCase):
+    """fetch_content_snippet returns the first N bytes of a response as text."""
+
+    def test_returns_decoded_content(self):
+        fake_resp = MagicMock()
+        fake_resp.read.return_value = b"<html>W3C Recommendation</html>"
+        with patch.object(check_updates, "_request", return_value=fake_resp):
+            result = check_updates.fetch_content_snippet("https://example.com/")
+        self.assertIn("W3C Recommendation", result)
+
+    def test_returns_none_when_request_fails(self):
+        with patch.object(check_updates, "_request", return_value=None):
+            result = check_updates.fetch_content_snippet("https://example.com/")
+        self.assertIsNone(result)
+
+    def test_returns_none_on_read_error(self):
+        fake_resp = MagicMock()
+        fake_resp.read.side_effect = OSError("read failed")
+        with patch.object(check_updates, "_request", return_value=fake_resp):
+            result = check_updates.fetch_content_snippet("https://example.com/")
+        self.assertIsNone(result)
+
+    def test_respects_max_bytes(self):
+        fake_resp = MagicMock()
+        fake_resp.read.return_value = b"hello"
+        with patch.object(check_updates, "_request", return_value=fake_resp):
+            check_updates.fetch_content_snippet("https://example.com/", max_bytes=100)
+        fake_resp.read.assert_called_once_with(100)
 
