@@ -436,7 +436,7 @@ main {
 
 #cards-view {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 16px;
 }
 
@@ -559,6 +559,8 @@ main {
 
 .sc-col {
   padding: 10px 14px;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .sc-col + .sc-col {
@@ -573,6 +575,7 @@ main {
   margin-bottom: 6px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
 }
 
