@@ -218,6 +218,7 @@ The following safeguards are in place for AI-generated code:
 |------|:---:|------|
 | **GitHub Copilot** (Coding Agent / `copilot-swe-agent`) | Frontend · Data pipeline · Documentation | Code generation, documentation authoring, PR automation, and project scaffolding throughout the build of this project |
 | **Antigravity** (AI Coding Assistant) | Frontend · Data pipeline | Removal of MermaidJS dependency; Implementation of pure HTML/CSS Spine View and data flow visualisations; Implementation of live Trusted Tester v5 scraper and data provenance source badges; Implementation of theme-aware (Light/Dark) accessibility CI/CD pipeline (Playwright + Axe-core + Lighthouse); Remediation of WCAG 2.2 AA violations (contrast, nested interactive, target-size) |
+| **Claude Sonnet** (GitHub Copilot Task Agent / `claude-sonnet-4.5`) | Data pipeline | Fixed false-positive WCAG 3.0 Recommendation check in `scripts/check_updates.py` — added `fetch_content_snippet()` helper and updated `check_wcag30()` to verify "W3C Recommendation" in page content rather than relying solely on HTTP 200; updated unit tests accordingly |
 
 ### Runtime AI
 

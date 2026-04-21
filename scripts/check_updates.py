@@ -117,6 +117,17 @@ def fetch_status_code(url: str) -> int | None:
         return None
 
 
+def fetch_content_snippet(url: str, max_bytes: int = 4096) -> str | None:
+    """Fetch the first *max_bytes* of *url* as a decoded string, or None on error."""
+    resp = _request(url)
+    if resp is None:
+        return None
+    try:
+        return resp.read(max_bytes).decode("utf-8", errors="replace")
+    except OSError:
+        return None
+
+
 # ---------------------------------------------------------------------------
 # Individual checks
 # ---------------------------------------------------------------------------
@@ -257,19 +268,44 @@ def check_wcag_document() -> dict:
 
 
 def check_wcag30() -> dict:
-    """Check whether a WCAG 3.0 document has been published at the W3C."""
+    """Check whether WCAG 3.0 has been published as a W3C Recommendation.
+
+    HTTP 200 alone is not sufficient — WCAG 3.0 has existed as a Working Draft
+    (also HTTP 200) for years.  This check fetches the first few KB of the
+    document and looks for the string "W3C Recommendation", which W3C TR pages
+    display prominently in the document header only once a specification has
+    reached Recommendation status.
+    """
     status_code = fetch_status_code(WCAG30_DOC_URL)
-    published = status_code is not None and status_code == 200
+    if status_code is None:
+        return {
+            "name": "WCAG 3.0 publication",
+            "status": "error",
+            "http_status": None,
+            "changed": False,
+            "detail": f"Could not reach {WCAG30_DOC_URL}.",
+        }
+    if status_code != 200:
+        return {
+            "name": "WCAG 3.0 publication",
+            "status": "ok",
+            "http_status": status_code,
+            "changed": False,
+            "detail": f"Not yet published (HTTP {status_code}).",
+        }
+    # URL returned 200 — confirm it is a Recommendation, not just a draft.
+    snippet = fetch_content_snippet(WCAG30_DOC_URL)
+    is_recommendation = snippet is not None and "W3C Recommendation" in snippet
     return {
         "name": "WCAG 3.0 publication",
-        "status": "changed" if published else "ok",
+        "status": "changed" if is_recommendation else "ok",
         "http_status": status_code,
-        "changed": published,
+        "changed": is_recommendation,
         "detail": (
-            f"⚠️ WCAG 3.0 appears to be published at {WCAG30_DOC_URL} "
-            f"(HTTP {status_code}). Review immediately."
-            if published
-            else f"Not yet published (HTTP {status_code})."
+            f"⚠️ WCAG 3.0 appears to be published as a W3C Recommendation at "
+            f"{WCAG30_DOC_URL}. Review immediately."
+            if is_recommendation
+            else "Document is available (HTTP 200) but is not yet a W3C Recommendation."
         ),
     }
 
